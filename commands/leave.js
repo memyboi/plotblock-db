@@ -10,9 +10,10 @@ module.exports = {
     } else {
 
 function sendLeaveMsg(message, roleName, roleEmoji) {
-      const channel = client.channels.cache.find(channel => channel.name === "team-changes")
-      channel.send("`" + message.author.tag + "` has left `" + roleName + "` " + roleEmoji + " !")
-    }
+  const channel = client.channels.cache.find(channel => channel.name === "team-changes")
+  channel.send("`" + message.author.tag + "` has left `" + roleName + "` " + roleEmoji + " !")
+}
+  if (message.guild == null) return message.reply("You cannot do this command in DMs.");
     if (args[1] == "diamond" || args[1] == "d") {
       const roleNameLeader = "Team Diamond Leader"
       const roleName = "Team Diamond"

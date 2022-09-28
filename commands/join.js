@@ -25,6 +25,7 @@ module.exports = {
     if (talkedRecently.has(message.author.id)) {
       message.channel.send("Please wait " + commandDelay + " second(s) until you can use this command again");
     } else {
+      if (message.guild == null) return message.reply("You cannot do this command in DMs.");
     
       
     let dLeaderAmnt = 0;

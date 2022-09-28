@@ -10,6 +10,7 @@ module.exports = {
     if (talkedRecently.has(message.author.id)) {
       message.channel.send("Please wait " + commandDelay + " second(s) until you can use this command again");
     } else {
+      if (message.guild == null) return message.reply("You cannot do this command in DMs.");
       if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'ModPerms')) return message.reply("You do not have the permission to do this command!")
       if (!args[1]) return message.reply("Please specify a user id!")
       
