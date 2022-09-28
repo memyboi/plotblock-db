@@ -14,7 +14,7 @@ module.exports = {
       const member = message.mentions.members.first();
       if (!member) return message.reply("Please specify a member!")
       
-      if (!member.kickable) return message.reply("You cannot kick this user!")
+      if (!member.kickable) return message.reply("You cannot warn this user!")
 
       
       args.shift()

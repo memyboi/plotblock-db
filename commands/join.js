@@ -14,6 +14,10 @@ const okrow = new ActionRowBuilder()
       .setStyle(ButtonStyle.Secondary),
   )
 
+function sendJoinMsg(client, message, roleName, roleEmoji, position) {
+  const channel = client.channels.cache.find(channel => channel.name === "team-changes")
+  channel.send("`" + message.author.tag + "` has joined `" + roleName + "` as `" + position + "` " + roleEmoji + " !")
+}
 module.exports = {
   name: 'join',
   description: 'Join the team you specify if possible.',
@@ -21,10 +25,7 @@ module.exports = {
     if (talkedRecently.has(message.author.id)) {
       message.channel.send("Please wait " + commandDelay + " second(s) until you can use this command again");
     } else {
-    function sendJoinMsg(message, roleName, roleEmoji, position) {
-      const channel = client.channels.cache.find(channel => channel.name === "team-changes")
-      channel.send("`" + message.author.tag + "` has joined `" + roleName + "` as `" + position + "` " + roleEmoji + " !")
-    }
+    
       
     let dLeaderAmnt = 0;
     let diamondLeader;
@@ -132,7 +133,7 @@ module.exports = {
         message.guild.members.cache.get(message.author.id).roles.add(roleleader);
         message.guild.members.cache.get(message.author.id).roles.add(roleteam);
         message.reply("Successfully joined " + roleName + " as the Leader.");
-        sendJoinMsg(message, roleName, roleEmoji, "Leader")
+        sendJoinMsg(client, message, roleName, roleEmoji, "Leader")
       }
     } else if (args[1] == "pearl" || args[1] == "p" ) {
       let hasDLRole = message.member.roles.cache.find(role => role.name == "Team Diamond Leader");
@@ -201,7 +202,7 @@ module.exports = {
       message.guild.members.cache.get(message.author.id).roles.add(roleleader);
       message.guild.members.cache.get(message.author.id).roles.add(roleteam);
       message.reply("Successfully joined " + roleName + " as the Leader.");
-      sendJoinMsg(message, roleName, roleEmoji, "Leader")
+      sendJoinMsg(client, message, roleName, roleEmoji, "Leader")
       }
     } else if (args[1] == "platinum" || args[1] == "plat" || args[1] == "pt") {
       let hasDLRole = message.member.roles.cache.find(role => role.name == "Team Diamond Leader");
@@ -270,7 +271,7 @@ module.exports = {
       message.guild.members.cache.get(message.author.id).roles.add(roleleader);
       message.guild.members.cache.get(message.author.id).roles.add(roleteam);
       message.reply("Successfully joined " + roleName + " as the Leader.");
-      sendJoinMsg(message, roleName, roleEmoji, "Leader")
+      sendJoinMsg(client, message, roleName, roleEmoji, "Leader")
       }
     } else {
       message.reply("Please specify a team name (type it out in full)!")
