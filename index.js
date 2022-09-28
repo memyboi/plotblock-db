@@ -28,11 +28,10 @@ for(const file of commandFiles){
   client.commands.set(command.name, command)
 }
 
-function sendJoinMsg(message, roleName, roleEmoji, position) {
-  const channel = client.channels.cache.find(channel => channel.name === "team-changes")
-  channel.send("`" + message.author.tag + "` has joined `" + roleName + "` as `" + position + "` " + roleEmoji + " !")
+function sendJoinMsg(guild, joiner, roleName, roleEmoji, position) {
+  const channel = guild.channels.cache.find(channel => channel.name === "team-changes")
+  channel.send("`" + joiner.tag + "` has joined `" + roleName + "` as `" + position + "` " + roleEmoji + " !")
 }
-
 function getUserFromMention(mention) {
 	if (!mention) return;
 
