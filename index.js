@@ -51,7 +51,7 @@ const prefix = '?';
 client.on("messageCreate", async message => {
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
     let args = message.content.substring(prefix.length).toLowerCase().split(" ")
-    if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'verified bozo')) return message.reply("You must be verified to use me!")
+    if (message.guild != null) { if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'verified bozo')) return message.reply("You must be verified to use me!") }
     switch(args[0]){
       case 'roles':
         client.commands.get('roles').execute(message, args, client);
