@@ -1,6 +1,6 @@
-var manual = false
+var manual = true
 
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle, messageLink } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
 module.exports = {
   name: 'guildmemberadd',

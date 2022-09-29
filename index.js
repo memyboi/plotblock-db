@@ -333,7 +333,7 @@ client.on('interactionCreate', async interaction => {
 
     const tos = new EmbedBuilder()
       .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("**Please read the following to be able to play on the Plot Block Minecraft Server:**\n**You must own:**\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+      .setDescription("**Please read the following to be able to play on the Plot Block Minecraft Server:**\n**You must own:**\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n**Please acknowledge the fact that this is a lifesteal server. If you die in the game, you lose a heart.**\n**Please acknowledge that people will attack, raid and fight you. This is standard for a minecraft server.**\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
       .setColor("#ff0000")
 
     interaction.message.edit({
