@@ -10,6 +10,7 @@ module.exports = {
     if (talkedRecently.has(message.author.id)) {
       message.channel.send("Please wait " + commandDelay + " second(s) until you can use this command again");
     } else {
+      if (message.author.user.permissions.has(PermissionsBitField.Flags.Administrator)) return message.reply("You are too powerful to play the server!");
       if (message.guild == null) return message.reply("You cannot do this command in DMs.");
 
     function sendLeaveMsg(member, roleName, roleEmoji) {
