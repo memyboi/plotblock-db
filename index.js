@@ -94,18 +94,20 @@ client.on("messageCreate", async message => {
           .setColor('#ff0000')
           .setTitle("Command help:")
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('Do ' + prefix + "help [1-2] for info about me!")
+          .setDescription('Do ' + prefix + "help [1-4] for info about me!")
           .addFields(
-            { name: "Page 1", value: "Commands", inline: true },
-            { name: "Page 2", value: "Bot info", inline: true },
+            { name: "Page 1", value: "Generic commands", inline: true },
+            { name: "Page 2", value: "Team commands", inline: true },
+            { name: "Page 1", value: "Admin commands", inline: true },
+            { name: "Page 4", value: "Bot info", inline: true },
           )
           .setTimestamp()
 
         const helpEmbed1 = new EmbedBuilder()
           .setColor('#ff0000')
-          .setTitle("Command help:")
+          .setTitle("Generic commands help:")
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 1")
+          .setDescription('' + prefix + "help page 1 | Generic commands")
           .addFields(
             { name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
           )
@@ -113,9 +115,35 @@ client.on("messageCreate", async message => {
 
         const helpEmbed2 = new EmbedBuilder()
           .setColor('#ff0000')
-          .setTitle("Command help:")
+          .setTitle("Team commands help:")
           .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 2")
+          .setDescription('' + prefix + "help page 2 | Team commands")
+          .addFields(
+            { name: prefix + client.commands.get('join').name, value: client.commands.get('join').description, inline: true },
+            { name: prefix + client.commands.get('leave').name, value: client.commands.get('leave').description, inline: true },
+            { name: prefix + client.commands.get('kick').name, value: client.commands.get('kick').description, inline: true },
+          )
+          .setTimestamp()
+
+        const helpEmbed3 = new EmbedBuilder()
+          .setColor('#ff0000')
+          .setTitle("Admin commands help:")
+          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+          .setDescription('' + prefix + "help page 3 | Admin commands")
+          .addFields(
+            { name: prefix + client.commands.get('kickfs').name, value: client.commands.get('kickfs').description, inline: true },
+            { name: prefix + client.commands.get('banfs').name, value: client.commands.get('banfs').description, inline: true },
+            { name: prefix + client.commands.get('unbanfs').name, value: client.commands.get('unbanfs').description, inline: true },
+            { name: prefix + client.commands.get('warn').name, value: client.commands.get('warn').description, inline: true },
+            { name: prefix + client.commands.get('clear').name, value: client.commands.get('clear').description, inline: true },
+          )
+          .setTimestamp()
+
+        const helpEmbed4 = new EmbedBuilder()
+          .setColor('#ff0000')
+          .setTitle("Info help:")
+          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
+          .setDescription('' + prefix + "help page 4")
           .addFields(
             { name: "Who created me?", value: "DeadFry42#5445", inline: true },
             { name: "What is my purpose?", value: "My purpose is to keep the server's teams organised and to do other stuff related to this server.", inline: true },
@@ -126,6 +154,10 @@ client.on("messageCreate", async message => {
           return message.reply({ embeds: [helpEmbed1]});
         } else if (args[1] == "2") {
           return message.reply({ embeds: [helpEmbed2]});
+        } else if (args[1] == "3") {
+          return message.reply({ embeds: [helpEmbed3]});
+        } else if (args[1] == "4") {
+          return message.reply({ embeds: [helpEmbed4]});
         }
         message.reply({ embeds: [helpEmbed]});
       break;
