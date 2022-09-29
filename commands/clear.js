@@ -13,7 +13,11 @@ module.exports = {
       if (message.guild == null) return message.reply("You cannot do this command in DMs.");
       if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'ModPerms')) return message.reply("You do not have the permission to do this command!")
       const amnt = parseInt(args[1]) + 1 || 2
-      message.channel.bulkDelete(amnt)
+      message.channel.bulkDelete(amnt) .catch((err) => {
+        if (err.code == 50035) {
+          message.reply("This number is too big!")
+        }
+      })
       talkedRecently.add(message.author.id);
       setTimeout(() => {
         // Removes the user from the set after a minute
