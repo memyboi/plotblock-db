@@ -22,22 +22,34 @@ module.exports = {
       args.shift()
       const reason = args.join(" ")
       if (reason == "") {
-        member.send("You have been banned from `" + message.guild.name + "`.\nNo reason given by moderator.\n\nIf you want to be unbanned, please submit a form here:\nhttps://crystalgensmp.namelesshosting.com/unban/") .then(() => {
-          message.reply("Successfully banned " + member.user.tag + ".\nReason given: ```" + reason + "```")
+        member.send("You have been banned from `" + message.guild.name + "`.\nThere was no reason given by the moderator.\n\nIf you want to be unbanned, please submit a form here:\nhttps://discord.gg/MQzDm6KDsH") .then(() => {
+          member.ban({reason}) .then(() => {
+            message.reply("Successfully banned " + member.user.tag + ".")
+          }) .catch((err) => {
+            message.reply("This user can not be banned.")
+          })
         }) .catch((err) => {
-          message.reply("Banned successfully! However, The message was not delivered to the user.")
+          member.ban({reason}) .then(() => {
+            message.reply("Successfully banned " + member.user.tag + ", however this user does not accept DMs from me.")
+          }) .catch((err) => {
+            message.reply("This user can not be banned.")
+          })
         })
       } else {
-        member.send("You have been banned from `" + message.guild.name + "`.\nReason from moderator: " + reason + "\n\nIf you want to be unbanned, please submit a form here:\nhttps://crystalgensmp.namelesshosting.com/unban/") .then(() => {
-          message.reply("Successfully banned " + member.user.tag + ".")
+        member.send("You have been banned from `" + message.guild.name + "`.\nReason from moderator: " + reason + "\n\nIf you want to be unbanned, please submit a form here:\nhttps://discord.gg/MQzDm6KDsH") .then(() => {
+          member.ban({reason}) .then(() => {
+            message.reply("Successfully banned " + member.user.tag + ".")
+          }) .catch((err) => {
+            message.reply("This user can not be banned.")
+          })
         }) .catch((err) => {
-          message.reply("banned successfully! However, The message was not delivered to the user.")
+          member.ban({reason}) .then(() => {
+            message.reply("Successfully banned " + member.user.tag + ", however this user does not accept DMs from me.")
+          }) .catch((err) => {
+            message.reply("This user can not be banned.")
+          })
         })
       }
-      
-      setTimeout(() => {
-        member.ban({reason})
-      }, 100);
       
       talkedRecently.add(message.author.id);
       setTimeout(() => {
