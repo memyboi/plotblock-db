@@ -315,6 +315,57 @@ client.on('interactionCreate', async interaction => {
   } else if (interaction.customId == "delMsg") {
     const message = interaction.message
     message.delete();
+  } else if (interaction.customId == "tos") {
+    //type tos here
+    const row = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('acctos')
+          .setLabel('Accept and verify')
+          .setStyle(ButtonStyle.Success),
+      )
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('dectos')
+          .setLabel('Decline and leave')
+          .setStyle(ButtonStyle.Danger),
+      )
+
+    const tos = new EmbedBuilder()
+      .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
+      .setDescription("**Please read the following to be able to play on the Plot Block Minecraft Server:**\n**You must own:**\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+      .setColor("#ff0000")
+
+    interaction.message.edit({
+      content: "",
+      embeds: [tos],
+      components: [row],
+    })
+  } else if (interaction.customId == "acctos") {
+    interaction.message.edit({
+      content: "The TOS has been accepted. You are now verified.",
+      embeds: [],
+      components: [],
+    })
+    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+      const memberMesure = guild.members.cache.get("" + interaction.user.id);
+      if (memberMesure) {
+        let role = guild.roles.cache.find(role => role.name == "verified bozo");
+        memberMesure.roles.add(role)
+      }
+    })
+  } else if (interaction.customId == "dectos") {
+    interaction.message.edit({
+      content: "The TOS has been declined. You are now kicked from the server.",
+      embeds: [],
+      components: [],
+    })
+    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+      const memberMesure = guild.members.cache.get("" + interaction.user.id);
+      if (memberMesure) {
+        memberMesure.kick("Declined TOS on entry")
+      }
+    })
   }
   await interaction.deferUpdate();
 });
@@ -324,5 +375,8 @@ client.on("ready", async () => {
   client.user.setActivity(prefix + 'help for help', { type: ActivityType.Playing })
 })
 
+client.on("guildMemberAdd", function(member){
+  client.commands.get('guildmemberadd').execute(member, client);
+})
 
 client.login(process.env.token)
