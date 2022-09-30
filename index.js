@@ -317,29 +317,23 @@ client.on('interactionCreate', async interaction => {
     message.delete();
   } else if (interaction.customId == "tos") {
     //type tos here
-    const row = new ActionRowBuilder()
+    const rowpage = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
-          .setCustomId('acctos')
-          .setLabel('Accept and verify')
-          .setStyle(ButtonStyle.Success),
-      )
-      .addComponents(
-        new ButtonBuilder()
-          .setCustomId('dectos')
-          .setLabel('Decline and leave')
-          .setStyle(ButtonStyle.Danger),
+          .setCustomId('tosp2')
+          .setLabel('Next page')
+          .setStyle(ButtonStyle.Secondary),
       )
 
-    const tos = new EmbedBuilder()
+    const tosp1 = new EmbedBuilder()
       .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("**Please read the following to be able to play on the Plot Block Minecraft Server:**\n**You must own:**\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n**Please acknowledge the fact that this is a lifesteal server. If you die in the game, you lose a heart.**\n**Please acknowledge that people will attack, raid and fight you. This is standard for a minecraft server.**\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+      .setDescription("----> **Please read the following rules:** <----\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
       .setColor("#ff0000")
 
     interaction.message.edit({
       content: "",
-      embeds: [tos],
-      components: [row],
+      embeds: [tosp1],
+      components: [rowpage],
     })
   } else if (interaction.customId == "acctos") {
     interaction.message.edit({
@@ -365,6 +359,31 @@ client.on('interactionCreate', async interaction => {
       if (memberMesure) {
         memberMesure.kick("Declined TOS on entry")
       }
+    })
+  } else if (interaction.customId == "tosp2") {
+    const row = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('acctos')
+          .setLabel('Accept and verify')
+          .setStyle(ButtonStyle.Success),
+      )
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('dectos')
+          .setLabel('Decline and leave')
+          .setStyle(ButtonStyle.Danger),
+      )
+
+    const tosp2 = new EmbedBuilder()
+      .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
+      .setDescription("----> **Please read the following rules:** <----\n----> **Please acknowledge the following:** <----\n> This is a lifesteal server. You will die, and you will lose hearts.\n> This is a survival server, You will be raided, attacked and betrayed. This is standard.\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+      .setColor("#ff0000")
+
+    interaction.message.edit({
+      content: "",
+      embeds: [tosp2],
+      components: [row],
     })
   }
   await interaction.deferUpdate();
