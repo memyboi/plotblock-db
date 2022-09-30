@@ -1,4 +1,4 @@
-var manual = true
+var manual = false
 
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
