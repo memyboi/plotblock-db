@@ -1,7 +1,7 @@
 const talkedRecently = new Set();
 const commandDelay = 2.5 //seconds 
 
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionsBitField } = require('discord.js');
 
 module.exports = {
   name: 'kick',
