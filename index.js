@@ -327,7 +327,7 @@ client.on('interactionCreate', async interaction => {
 
     const tosp1 = new EmbedBuilder()
       .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("----> **Please read the following rules:** <----\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
+      .setDescription("----> **Please read the following rules:** <----\n\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
       .setColor("#ff0000")
 
     interaction.message.edit({
@@ -377,7 +377,7 @@ client.on('interactionCreate', async interaction => {
 
     const tosp2 = new EmbedBuilder()
       .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("----> **Please read the following rules:** <----\n----> **Please acknowledge the following:** <----\n> This is a lifesteal server. You will die, and you will lose hearts.\n> This is a survival server, You will be raided, attacked and betrayed. This is standard.\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+      .setDescription("----> **Please read the following rules:** <----\n\n----> **Please acknowledge the following:** <----\n> This is a lifesteal server. You will die, and you will lose hearts.\n> This is a survival server, You will be raided, attacked and betrayed. This is standard.\n> This is a modded server, You will have access to modded items and modded mechanics\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
       .setColor("#ff0000")
 
     interaction.message.edit({
@@ -391,7 +391,7 @@ client.on('interactionCreate', async interaction => {
 
 client.on("ready", async () => {
   console.log("ready and on")
-  client.user.setActivity(prefix + 'help for help', { type: ActivityType.Playing })
+  client.user.setActivity(prefix + 'help [1-4] for help', { type: ActivityType.Playing })
 })
 
 client.on("guildMemberAdd", function(member){
