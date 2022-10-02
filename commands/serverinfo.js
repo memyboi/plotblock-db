@@ -22,8 +22,11 @@ module.exports = {
             {name: "Online Players", value: response.onlinePlayers + "/" + response.maxPlayers},
             {name: "Required version", value: response.version}
           )
+
+        message.reply({embeds: [responseToUser]})
       }) .catch((err) => {
         message.reply("The server is currently unresponsive.")
+        console.log(err)
       })
 
       talkedRecently.add(message.author.id);
