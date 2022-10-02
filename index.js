@@ -89,6 +89,14 @@ client.on("messageCreate", async message => {
         client.commands.get('clear').execute(message, args, client);
       break;
 
+      case 'serverinfo':
+        client.commands.get('serverinfo').execute(message, args, client);
+      break;
+
+      case 'si':
+        client.commands.get('serverinfo').execute(message, args, client);
+      break;
+
       case 'help':
         const helpEmbed = new EmbedBuilder()
           .setColor('#ff0000')
@@ -110,6 +118,7 @@ client.on("messageCreate", async message => {
           .setDescription('' + prefix + "help page 1 | Generic commands")
           .addFields(
             { name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
+            { name: prefix + client.commands.get('serverinfo').name, value: client.commands.get('serverinfo').description, inline: true },
           )
           .setTimestamp()
 
