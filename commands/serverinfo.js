@@ -14,7 +14,7 @@ module.exports = {
       if (message.guild == null) return message.reply("You cannot do this command in DMs.");
       if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'ModPerms')) return message.reply("You do not have the permission to do this command!")
       
-      util.status("plotblockls.minehut.gg", "25565") .then((response) => {
+      util.status("plotblockls.minehut.gg", 25575) .then((response) => {
         const responseToUser = new EmbedBuilder()
           .setColor('#8FCDE8')
           .setTitle("Status of Minecraft Server:")
@@ -25,7 +25,7 @@ module.exports = {
 
         message.reply({embeds: [responseToUser]})
       }) .catch((err) => {
-        message.reply("The server is currently unresponsive.")
+        message.reply("The server is currently unresponsive. This could mean the server is currently offline. ")
         console.log(err)
       })
 
