@@ -46,6 +46,8 @@ function getUserFromMention(mention) {
 	}
 }
 
+//
+
 const prefix = '?';
 
 client.on("messageCreate", async message => {
