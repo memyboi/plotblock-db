@@ -228,11 +228,11 @@ client.on("guildMemberAdd", async function(member){
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeStyle = "#ffffff"
     //context.strokeRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#ffffff'
+    context.fillStyle = 'rgba(255,255,255,1)'
     context.font = '50px sans-serif'
     context.fillText(""+uname, 200, 100)
     //context.fillText(text, 0, 0)
-    context.fillStyle = '#c8c8c8'
+    context.fillStyle = 'rgba(155, 155, 155, 1)'
     context.font = '30px sans-serif'
     context.fillText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
@@ -246,7 +246,7 @@ client.on("guildMemberAdd", async function(member){
     context.closePath();
 
     // Clip off the region you drew on
-    // context.clip();
+    context.clip();
     context.drawImage(pfp, 14, 13, 185, 185)
 
     const a = new ActionRowBuilder()
