@@ -229,13 +229,13 @@ client.on("guildMemberAdd", async function(member){
     //context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeStyle = "#ffffff"
     //context.strokeRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#000000'
+    context.fillStyle = '#ffffff'
     context.font = '50px FONT'
-    context.strokeText("uwu", 200, 100)
+    context.fillText(""+uname, 200, 100)
     //context.fillText(text, 0, 0)
     context.fillStyle = '#c8c8c8'
     context.font = '30px FONT'
-    context.strokeText("#" + dcrim, 200, 140)
+    context.fillText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
     // Pick up the pen
     context.beginPath();
