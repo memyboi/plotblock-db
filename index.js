@@ -230,14 +230,7 @@ client.on("guildMemberAdd", async function(member){
     let text2 = "#" + dcrim
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
-    context.fillstyle = '#FFFFFF'
-    context.font = '50px arial'
-    //context.fillText(text, 200, 100)
-    context.fillText(text, 0, 0)
-    context.fillstyle = '#C8C8C8'
-    context.font = '30px arial'
-    // context.fillText(text2, 200, 140)
-    context.fillText(text2, 0, 0)
+    context.drawImage(pfp, 14, 13, 185, 185)
     context.strokeRect(0, 0, canvas.width, canvas.height);
 
     // Pick up the pen
@@ -251,7 +244,15 @@ client.on("guildMemberAdd", async function(member){
 
     // Clip off the region you drew on
     context.clip();
-    context.drawImage(pfp, 14, 13, 185, 185)
+    
+    context.fillstyle = '#FFFFFF'
+    context.font = '50px arial'
+    //context.fillText(text, 200, 100)
+    context.fillText(text, 0, 0)
+    context.fillstyle = '#C8C8C8'
+    context.font = '30px arial'
+    // context.fillText(text2, 200, 140)
+    context.fillText(text2, 0, 0)
    
 
     const a = new ActionRowBuilder()
