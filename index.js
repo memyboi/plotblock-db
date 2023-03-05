@@ -228,11 +228,11 @@ client.on("guildMemberAdd", async function(member){
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeRect(0, 0, canvas.width, canvas.height);
-    context.fillstyle = '#FFFFFF'
+    context.fillStyle = '#FFFFFF'
     context.font = '50px FONT'
     context.strokeText("" + uname, 200, 100)
     //context.fillText(text, 0, 0)
-    context.fillstyle = '#C8C8C8'
+    context.fillStyle = '#C8C8C8'
     context.font = '30px FONT'
     context.strokeText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
