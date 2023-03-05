@@ -285,7 +285,6 @@ client.on("guildMemberRemove", async member => {
 })
 
 client.on('interactionCreate', async interaction => {
-  if (interaction.guild.id != guildId) return
   if (!interaction.isButton()) return;
   
   if (interaction.customId == "acc") {
