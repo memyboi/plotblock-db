@@ -233,11 +233,11 @@ client.on("guildMemberAdd", async function(member){
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeRect(0, 0, canvas.width, canvas.height);
     context.fillstyle = '#FFFFFF'
-    context.font = '50px arial'
+    context.font = '50px sans-serif'
     context.fillText(text, 200, 100)
     //context.fillText(text, 0, 0)
     context.fillstyle = '#C8C8C8'
-    context.font = '30px arial'
+    context.font = '30px Sans Serif'
     context.fillText(text2, 200, 140)
     //context.fillText(text2, 0, 0)
     // Pick up the pen
