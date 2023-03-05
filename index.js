@@ -237,15 +237,15 @@ client.on("guildMemberAdd", async function(member){
     context.fillText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
     // Pick up the pen
-    // context.beginPath();
+    context.beginPath();
 
-    // // Start the arc to form a circle
-    // context.arc(106.5, 105.5, 92.5, 92.5, Math.PI * 1, true);
+    // Start the arc to form a circle
+    context.arc(106.5, 105.5, 92.5, 92.5, Math.PI * 1, true);
 
-    // // Put the pen down
-    // context.closePath();
+    // Put the pen down
+    context.closePath();
 
-    // // Clip off the region you drew on
+    // Clip off the region you drew on
     // context.clip();
     context.drawImage(pfp, 14, 13, 185, 185)
 
