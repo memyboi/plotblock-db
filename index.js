@@ -13,6 +13,7 @@ const xpSchema = require('./schema.js')
 
 const Canvas = require('@napi-rs/canvas');
 const GlobalFonts = require('@napi-rs/canvas')
+const path = require("path")
 
 const { Client, GatewayIntentBits, Partials, PermissionsBitField, ChannelType, TextInputBuilder, TextInputStyle, ModalBuilder, AttachmentBuilder } = require('discord.js');
 const Discord = require("discord.js");
@@ -217,7 +218,7 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async function(member){
   if (member.guild.id != guildId) return
-    GlobalFonts.registerFromPath(join(__dirname, "canvasfont.ttf"), "FONT")
+    GlobalFonts.registerFromPath("/canvasfont.ttf", "FONT")
     const canvas = Canvas.createCanvas(800, 500);
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
