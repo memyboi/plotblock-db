@@ -216,16 +216,18 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async function(member){
   if (member.guild.id != guildId) return
-  const canvas = Canvas.createCanvas(800, 500);
+    const canvas = Canvas.createCanvas(800, 500);
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
     const bg = await Canvas.loadImage('./joinbg.png')
+    const uname = await member.user.username
+    const dcrim = await member.user.discriminator
     context.fillstyle = '#FFFFFF'
     context.font = '50px arial'
-    let text = "" + member.user.username
+    let text = "" + uname
     context.fillstyle = '#C8C8C8'
     context.font = '30px arial'
-    let text2 = "#" + member.user.discriminator
+    let text2 = "#" + member.user.dcrim
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.fillstyle = '#FFFFFF'
