@@ -40,8 +40,8 @@ const commandsPath = path.join(__dirname, 'commands');
 
 const { Routes } = require('discord.js');
 const { REST } = require("@discordjs/rest")
-const clientId = "1034571745912434778"
-const guildId = "1034571523467517962"
+const clientId = process.env.clientid
+const guildId = process.env.guildid
 const token = process.env.token
 
 const commands = [];
