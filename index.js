@@ -1,6 +1,19 @@
 require('dotenv').config()
+const MongoClient = require('mongodb').MongoClient;
+const musername = process.env.MONGO_USERNAME
+const mpassword = process.env.MONGO_PASSWORD
+const mongoose = require('mongoose')
+const url = `mongodb+srv://${musername}:${mpassword}@pokemaniabot.uismgaq.mongodb.net/test`
 
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+//BUILD SETTINGS
+const devBuild = true
+const buildNum = 4
+
+const xpSchema = require('./schema.js')
+
+const Canvas = require('@napi-rs/canvas');
+
+const { Client, GatewayIntentBits, Partials, PermissionsBitField, ChannelType, TextInputBuilder, TextInputStyle, ModalBuilder, AttachmentBuilder } = require('discord.js');
 const Discord = require("discord.js");
 const client = new Client({
   intents: [
@@ -16,206 +29,274 @@ const client = new Client({
   ]
 });
 const fs = require('fs');
+const path = require('path');
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
+const okbutton = new ButtonBuilder()
+  .setCustomId('delmsg')
+  .setLabel("Ok")
+  .setStyle(ButtonStyle.Secondary)
 
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
+const commandsPath = path.join(__dirname, 'commands');
+
+const { Routes } = require('discord.js');
+const { REST } = require("@discordjs/rest")
+const clientId = "1034571745912434778"
+const guildId = "1034571523467517962"
+const token = process.env.token
+
+const commands = [];
+// Grab all the command files from the commands directory you created earlier
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
+for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
-
-  client.commands.set(command.name, command)
+  commands.push(command.data.toJSON());
 }
 
-function sendJoinMsg(guild, joiner, roleName, roleEmoji, position) {
-  const channel = guild.channels.cache.find(channel => channel.name === "team-changes")
-  channel.send("`" + joiner.tag + "` has joined `" + roleName + "` as `" + position + "` " + roleEmoji + " !")
-}
-function getUserFromMention(mention) {
-	if (!mention) return;
+console.log(REST)
 
-	if (mention.startsWith('<@') && mention.endsWith('>')) {
-		mention = mention.slice(2, -1);
+// Construct and prepare an instance of the REST module
+const rest = new REST({ version: '10' }).setToken(token);
 
-		if (mention.startsWith('!')) {
-			mention = mention.slice(1);
-		}
+// and deploy your commands!
+(async () => {
+  try {
+    console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		return client.users.cache.get(mention);
+    console.log(commands)
+
+    // The put method is used to fully refresh all commands in the guild with the current set
+    const data = await rest.put(
+      Routes.applicationGuildCommands(clientId, guildId),
+      { body: commands },
+    );
+
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+  } catch (error) {
+    // And of course, make sure you catch and log any errors!
+    console.error(error);
+  }
+})();
+
+for (const file of commandFiles) {
+	const filePath = path.join(commandsPath, file);
+	const command = require(filePath);
+	// Set a new item in the Collection with the key as the command name and the value as the exported module
+	if ('data' in command && 'execute' in command) {
+		client.commands.set(command.data.name, command);
+	} else {
+		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
 }
 
-//
+function getRandomArbitrary(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
 
-const prefix = '?';
+function setCharAt(str,index,chr) {
+  if(index > str.length-1) return str;
+  return str.substring(0,index) + chr + str.substring(index+1);
+}
+
+const addLevel = async (guildId, userId, cLevel) => {
+  try {
+    const result = await xpSchema.findOneAndUpdate({
+      guildId,
+      userId
+    }, {
+      guildId,
+      userId,
+      xp: 0,
+      $inc: {
+        level: 1,
+        coins: getRandomArbitrary(minCoinReward, maxCoinReward) * (lvlRewardMultiplier * cLevel)
+      }
+    }, {
+      upsert: true,
+      new: true
+    })
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+const addXP = async (guildId, userId, xpToAdd) => {
+  try {
+    const result = await xpSchema.findOneAndUpdate({
+      guildId,
+      userId
+    }, {
+      guildId,
+      userId,
+      $inc: {
+        xp: xpToAdd
+      }
+    }, {
+      upsert: true,
+      new: true
+    })
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+const savepersonalchatid = async (channelID, userID) => {
+  try {
+    const result = await xpSchema.findOneAndUpdate({
+      userID,
+    }, {
+      userID,
+      pchat: channelID,
+    }, {
+      upsert: true,
+      new: true
+    })
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+async function doXp(message) {
+  addXP(message.guild.id, message.author.id, getRandomArbitrary(1, 5))
+  let cLevel = 1
+  let cXp = 0
+  let oCoins = 0
+  const findRes = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
+  try {
+    cLevel = findRes[0].level
+    cXp = findRes[0].xp
+    oCoins = findRes[0].coins
+    let nextLvlUpThingy = ((cLevel * lvlMultiplier) * minXpForLvlUp)
+    if (cXp >= nextLvlUpThingy) {
+      //level up
+      addLevel(message.guild.id, message.author.id, cLevel)
+      let nCoins
+      const findRes2 = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
+      try {
+        nCoins = findRes2[0].coins
+      } catch(e) {
+        console.log(e)
+      }
+      coins = Math.floor(nCoins - oCoins)
+      message.author.send("**You've leveled up!**\n\nYou have levelled up to level " + (cLevel + 1) + "!\nYou now have " + nCoins + " Jet2 Points!") 
+    }
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+const prefix = '.';
 
 client.on("messageCreate", async message => {
+  if (message.guild.id != guildId) return
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
-    let args = message.content.substring(prefix.length).toLowerCase().split(" ")
-    if (message.guild != null) { if (!message.guild.members.cache.get(message.author.id).roles.cache.some(role => role.name === 'verified bozo')) return message.reply("You must be verified to use me!") }
-    switch(args[0]){
-      case 'roles':
-        client.commands.get('roles').execute(message, args, client);
-      break;
-
-      case 'join':
-        client.commands.get('join').execute(message, args, client);
-      break;
-
-      case 'leave':
-        client.commands.get('leave').execute(message, args, client);
-      break;
-
-      case 'kick':
-        client.commands.get('kick').execute(message, args, client);
-      break;
-
-      case 'kickfs':
-        client.commands.get('kickfs').execute(message, args, client);
-      break
-
-      case 'warn':
-        client.commands.get('warn').execute(message, args, client);
-      break;
-
-      case 'banfs':
-        client.commands.get('banfs').execute(message, args, client);
-      break;
-
-      case 'unbanfs':
-        client.commands.get('unbanfs').execute(message, args, client);
-      break;
-
-      case 'clear':
-        client.commands.get('clear').execute(message, args, client);
-      break;
-
-      case 'serverinfo':
-        client.commands.get('serverinfo').execute(message, args, client);
-      break;
-
-      case 'si':
-        client.commands.get('serverinfo').execute(message, args, client);
-      break;
-
-      case 'help':
-        const helpEmbed = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Command help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('Do ' + prefix + "help [1-4] for info about me!")
-          .addFields(
-            { name: "Page 1", value: "Generic commands", inline: true },
-            { name: "Page 2", value: "Team commands", inline: true },
-            { name: "Page 1", value: "Admin commands", inline: true },
-            { name: "Page 4", value: "Bot info", inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed1 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Generic commands help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 1 | Generic commands")
-          .addFields(
-            { name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
-            { name: prefix + client.commands.get('serverinfo').name, value: client.commands.get('serverinfo').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed2 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Team commands help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 2 | Team commands")
-          .addFields(
-            { name: prefix + client.commands.get('join').name, value: client.commands.get('join').description, inline: true },
-            { name: prefix + client.commands.get('leave').name, value: client.commands.get('leave').description, inline: true },
-            { name: prefix + client.commands.get('kick').name, value: client.commands.get('kick').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed3 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Admin commands help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 3 | Admin commands")
-          .addFields(
-            { name: prefix + client.commands.get('kickfs').name, value: client.commands.get('kickfs').description, inline: true },
-            { name: prefix + client.commands.get('banfs').name, value: client.commands.get('banfs').description, inline: true },
-            { name: prefix + client.commands.get('unbanfs').name, value: client.commands.get('unbanfs').description, inline: true },
-            { name: prefix + client.commands.get('warn').name, value: client.commands.get('warn').description, inline: true },
-            { name: prefix + client.commands.get('clear').name, value: client.commands.get('clear').description, inline: true },
-          )
-          .setTimestamp()
-
-        const helpEmbed4 = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Info help:")
-          .setAuthor({ name: message.author.username, iconURL: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}`})
-          .setDescription('' + prefix + "help page 4")
-          .addFields(
-            { name: "Who created me?", value: "DeadFry42#5445", inline: true },
-            { name: "What is my purpose?", value: "My purpose is to keep the server's teams organised and to do other stuff related to this server.", inline: true },
-          )
-          .setTimestamp()
-
-        if (args[1] == "1") {
-          return message.reply({ embeds: [helpEmbed1]});
-        } else if (args[1] == "2") {
-          return message.reply({ embeds: [helpEmbed2]});
-        } else if (args[1] == "3") {
-          return message.reply({ embeds: [helpEmbed3]});
-        } else if (args[1] == "4") {
-          return message.reply({ embeds: [helpEmbed4]});
-        }
-        message.reply({ embeds: [helpEmbed]});
-      break;
-    }
+    let lowerargs = message.content.substring(prefix.length).toLowerCase().split(" ")
+    let args = message.content.substring(prefix.length).split(" ")
   } else {
     if (message.author.bot) return;
   }
 })
 
-const okrow = new ActionRowBuilder()
-  .addComponents(
-    new ButtonBuilder()
-      .setCustomId('delMsg')
-      .setLabel('Ok')
-      .setStyle(ButtonStyle.Secondary),
+client.on("ready", async () => {
+  await mongoose.connect(
+    url,
+    {
+      keepAlive: true
+    }
   )
+  console.log("ready and on")
+  if (devBuild) {
+    client.user.setActivity('dev build ' + buildNum, { type: ActivityType.Playing })
+  } else {
+    client.user.setActivity(prefix + 'a', { type: ActivityType.Playing })
+  }
+})
 
-// setTimeout(() => {
-//     let tdid = 1019686123435479040
-//     let tpid = 1019686393506701322
-//     let tptid = 1019686451836891246
-//     let guildid = 1012028211275763753
+client.on("guildMemberAdd", async function(member){
+  if (member.guild.id != guildId) return
+  const canvas = Canvas.createCanvas(800, 500);
+    const context = canvas.getContext('2d');
+    const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
+    const bg = await Canvas.loadImage('./joinbg.png')
+    context.fillstyle = '#FFFFFF'
+    context.font = '50px arial'
+    let text = "" + member.user.username
+    context.fillstyle = '#C8C8C8'
+    context.font = '30px arial'
+    let text2 = "#" + member.user.discriminator
     
-//     client.guilds.fetch(""+guildid) .then((guild) => {
-//       console.log(guild)
-//       let tdc = guild.channels.cache.get(channel => channel.id == tdid)
-//       let tpc = guild.channels.cache.get(channel => channel.id == tpid)
-//       let tptc = guild.channels.cache.get(channel => channel.id == tptid)
-    
-//       const td = guild.roles.cache.get(role => role.name == "Team Diamond");
-//       tdc.setName("Team Diamond: " + td.members.cache.size) .catch((err) => {
-//         console.log(err)
-//       })
-    
-//       const tp = guild.roles.cache.get(role => role.name == "Team Pearl");
-//       tpc.setName("Team Pearl: " + tp.members.cache.size) .catch((err) => {
-//         console.log(err)
-//       })
-    
-//       const tpt = guild.roles.cache.get(role => role.name == "Team Platinum");
-//       tptc.setName("Team Platinum: " + tpt.members.cache.size) .catch((err) => {
-//         console.log(err)
-//       })
-//     }) .catch((err) => {
-//       console.log(err)
-//     })
-//   }, 1000);
+    context.drawImage(bg, 0, 0, canvas.width, canvas.height)
+    context.fillstyle = '#FFFFFF'
+    context.font = '50px arial'
+    context.fillText(text, 200, 100)
+    context.fillstyle = '#C8C8C8'
+    context.font = '30px arial'
+    context.fillText(text2, 200, 140)
+    context.strokeRect(0, 0, canvas.width, canvas.height);
+
+    // Pick up the pen
+    context.beginPath();
+
+    // Start the arc to form a circle
+    context.arc(106.5, 105.5, 92.5, 92.5, Math.PI * 1, true);
+
+    // Put the pen down
+    context.closePath();
+
+    // Clip off the region you drew on
+    context.clip();
+    context.drawImage(pfp, 14, 13, 185, 185)
+   
+
+    const a = new ActionRowBuilder()
+    .addComponents(
+        new ButtonBuilder()
+        .setCustomId('tos')
+        .setLabel('View ToS')
+        .setStyle(ButtonStyle.Secondary),
+    )
+
+    const newimg = new AttachmentBuilder(await canvas.encode('png'), { name: 'join-image.png' })
+    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+      guild.channels.fetch("" + process.env.welcomechannelid) .then((channel) => {
+        channel.send({ files: [newimg] })
+        member.send({
+          content: "**Welcome to the Plot Block [LIFESTEAL] server!**\nPlease read the short TOS and accept to be verified.",
+          components: [a]
+        })
+      })
+    })
+})
+
+client.on("guildMemberRemove", async member => {
+  if (member.guild.id != guildId) return
+  const id = member.user.id
+  client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+    guild.channels.fetch("" + process.env.leavingchannelid) .then(async (channel) => {
+      try {
+        channel.send("`"+member.user.tag+"` **has unfortunately left the server.**")
+
+        const findRes = await xpSchema.find({ userID: id })
+        try {
+          let pchat = findRes[0].pchat
+          console.log("plr pchat id to del: "+pchat)
+          guild.channels.fetch("" + pchat) .then((channel) => {
+            channel.delete()
+          })
+        
+        } catch(e) {
+          console.log(e);
+        }
+      } catch(e) {
+        console.log(e);
+      }
+    })
+  })
+})
 
 client.on('interactionCreate', async interaction => {
   
@@ -397,16 +478,214 @@ client.on('interactionCreate', async interaction => {
       components: [row],
     })
   }
+  if (interaction.isCommand() || interaction.isChatInputCommand()) {
+    const command = interaction.client.commands.get(interaction.commandName);
+
+    if (!command) {
+      console.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+
+    try {
+      await command.execute(interaction, client);
+    } catch (error) {
+      console.error(error);
+      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    }
+  }
   await interaction.deferUpdate();
 });
 
-client.on("ready", async () => {
-  console.log("ready and on")
-  client.user.setActivity(prefix + 'help [1-4] for help', { type: ActivityType.Playing })
-})
+// client.on('interactionCreate', async interaction => {
+//   if (interaction.guild.id != guildId) return
+//   if (interaction.isButton()) {
+//     if (interaction.customId == "viewtos") {
+//       const a = new ActionRowBuilder()
+//       .addComponents(
+//           new ButtonBuilder()
+//           .setCustomId('page2tos')
+//           .setLabel('Next page')
+//           .setStyle(ButtonStyle.Secondary),
+//       )
+//       const embed = new EmbedBuilder()
+//       .setAuthor({ name: "Poke-Mania ToS", iconURL: "https://cdn.discordapp.com/attachments/1035938005568983090/1035938036611022878/IMG_1169.PNG"})
+//       .setDescription("This is the ToS for poke-mania.\n\nPlease read the following terms:\nPlease do not infringe of any rules stated in the rules channel.\nPlease try to keep any inappropiate content off of the server, as it can be disturbing for others.\nPlease do not harass or discriminate against any user in the server.")
+//       .setColor("#ff0000")
+//       interaction.message.edit({
+//         content: "",
+//         components: [a],
+//         embeds: [embed]
+//       })
+//       interaction.deferUpdate()
+//     }
+//     if (interaction.customId == "page2tos") {
+//       const a = new ActionRowBuilder()
+//       .addComponents(
+//           new ButtonBuilder()
+//           .setCustomId('finishtos')
+//           .setLabel('I have read the ToS')
+//           .setStyle(ButtonStyle.Secondary),
+//       )
+//       const embed = new EmbedBuilder()
+//       .setAuthor({ name: "Poke-Mania ToS", iconURL: "https://cdn.discordapp.com/attachments/1035938005568983090/1035938036611022878/IMG_1169.PNG"})
+//       .setDescription("This is the ToS for poke-mania.\n\nPlease read the following terms:\nPlease do not use this server for anything malicious.")
+//       .setColor("#ff0000")
+//       interaction.message.edit({
+//         content: "",
+//         components: [a],
+//         embeds: [embed]
+//       })
+//       interaction.deferUpdate()
+//     }
+//     if (interaction.customId == "finishtos") {
+//       interaction.message.edit({
+//         content: "You have finished *step 1* of the verification process, please return to the server and finish verification.",
+//         components: [],
+//         embeds: []
+//       })
+//       client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+//         const memberMesure = guild.members.cache.get("" + interaction.user.id);
+//         if (memberMesure) {
+//           //1034577773496381621
+//           let role = guild.roles.cache.find(role => role.id == "1034575699878617200");
+//           if (memberMesure.roles.cache.some(role => role.id === '1034577773496381621')) {
+            
+//           } else {
+//             memberMesure.roles.add(role)
+//           }
+//         }
+//       })
+//       interaction.deferUpdate()
+//     }
+//     if (interaction.customId == "finishverification") {
+      
+//       let rolest1 = interaction.guild.roles.cache.find(role => role.id == "1034575699878617200");
+//       var role = interaction.guild.roles.cache.find(role => role.id === "1034577773496381621");
+//       if (interaction.member.roles.cache.some(role => role.id === '1034577773496381621')) {
+//         return interaction.reply({content: "You are already verified!", ephemeral: true})
+//       }
+//       interaction.user.send(
+//       {
+//         content: "**You have now been verified!** Have fun!"
+//       }) .catch((err) => {
+//         console.log(err)
+//       })
+//       interaction.member.roles.add(role)
+//       interaction.member.roles.remove(rolest1)
+//       const catergory = '1034576867715457184'
+//       interaction.guild.channels.create({
+//         type: ChannelType.GuildText,
+//         name: 'Your personal chat!',
+//         parent: catergory,
+//       }) .then((channel) => {
+//         channel.permissionOverwrites.create(interaction.user, {
+//           ViewChannel: true,
+//           ReadMessageHistory: true,
+//           UseApplicationCommands: true,
+//         }) .then(() => {
+//           const newname = new ButtonBuilder()
+//             .setCustomId('modalchatname')
+//             .setLabel("Set chat name")
+//             .setStyle(ButtonStyle.Primary)
+//           const row = new ActionRowBuilder().addComponents(newname);
+//           channel.send({
+//             content: "**Welcome to your own personal chat!**\nBefore you can chat in it, please set the name of your chat using the text input below! (12 character limit)\nOnce you do this, you will have access to private chats, which you can add your friends to!\nFor more help, please click this link:\nhttps://discord.com/channels/1034571523467517962/1034590738966646804\n**Do not share personal information in these chats, as they can all be seen by an <@&1035139480283258901> or higher.**",
+//             components: [row]
+//           })
+//           savepersonalchatid(channel.id, interaction.user.id)
+//         }) .catch((err) => {
+//           console.log(err)
+//         })
+//       })
+//       interaction.deferUpdate()
+//     }
+//     if (interaction.customId == "modalchatname") {
+//       const modal = new ModalBuilder()
+//         .setCustomId('setchannelname')
+//         .setTitle('Set personal chat name here...');
 
-client.on("guildMemberAdd", function(member){
-  client.commands.get('guildmemberadd').execute(member, client);
-})
+//       const txt = new TextInputBuilder()
+//         .setCustomId('newchannelname')
+//         .setLabel("Personal chat name")
+//         .setStyle(TextInputStyle.Short)
+//         .setMaxLength(20)
+//         .setRequired(true);
+  
+//       const row = new ActionRowBuilder().addComponents(txt);
+  
+//       modal.addComponents(row);
+  
+//       await interaction.showModal(modal);
+//     }
+//   }
+//   if (interaction.customId == "delmsg") {
+//     interaction.message.delete()
+//     interaction.deferUpdate()
+//   }
+//   if (interaction.customId == "acceptinv") {
+//     const msg = interaction.message
+//     const args = msg.content.split(" ")
+//     const channelid = args[1]
+//     console.log(channelid)
+//     const guildid = process.env.guildid
+//     client.guilds.fetch(""+guildid) .then(async guild => {
+//       try {
+//         client.channels.fetch(""+channelid) .then(async channel => {
+//           await channel.permissionOverwrites.create(interaction.user, {
+//             ViewChannel: true,
+//             ReadMessageHistory: true,
+//             SendMessages: true,
+//             UseApplicationCommands: true,
+//           })
+          
+//           let randomMsgs = [" just hopped in!", " has joined the chat!", " entered the chat!", " slid into chat!", " has accepted an invite to join!"]
+//           channel.send({content: "`"+interaction.user.tag+"`"+randomMsgs[getRandomArbitrary(0, randomMsgs.length)]})
+//           msg.edit({content: "You have joined the personal chat `"+channel.name+"`!", components: [new ActionRowBuilder().addComponents(okbutton)]})
+//         }) .catch((err) => {
+//           console.log(err)
+//           msg.edit({content: "The invite failed to accept!", components: [new ActionRowBuilder().addComponents(okbutton)]})
+//         })
+        
+//       } catch(e) {
+//         console.log(e)
+//         msg.edit({content: "The invite failed to accept!", components: [new ActionRowBuilder().addComponents(okbutton)]})
+//       }
+//     }) .catch((err) => {
+//       console.log(err)
+//       msg.edit({content: "There was an error accepting the invite to the chat.", components: [new ActionRowBuilder().addComponents(okbutton)]})
+//     })
+//     interaction.deferUpdate()
+//   }
+//   if (interaction.isModalSubmit) {
+//     if (interaction.customId == "setchannelname") {
+//       var newname = interaction.fields.getTextInputValue('newchannelname')
+//       var filterWords = ["shit", "fuck", "bitch", "dick", "cum", "penis", "cumbucket", "balls", "testicles", "orgasm", "cock", "white liquid", "sperm", "vagina", "reproduction", "mating", "sex", "your personal chat", "your-personal-chat"] //pls dont ratio me i have to put this here
+//       var innapropiate = false
+//       filterWords.forEach(badword => {
+//         if (newname.toLowerCase().includes(badword)) {
+//           innapropiate = true
+//         }
+//       })
+//       if (!innapropiate) {
+//         interaction.channel.setName(newname) .then(() => {
+        
+//           interaction.channel.permissionOverwrites.create(interaction.user, {
+//             ViewChannel: true,
+//             ReadMessageHistory: true,
+//             SendMessages: true,
+//             UseApplicationCommands: true,
+//           })
+//           interaction.channel.bulkDelete(1)
+//           interaction.reply({content: "You have successfully changed the chat name to `"+newname+"`!",ephemeral: true })
+//         }) .catch((e) => {
+//           console.log(e)
+//           interaction.reply({content: "There was a problem while setting the name of the channel, please try again!", ephemeral: true })
+//         })
+//       } else {
+//         interaction.reply({ content: "This new chat name contains words which have been blacklisted. >:(", ephemeral: true});
+//       }
+//     }
+//   }
+// })
 
 client.login(process.env.token)
