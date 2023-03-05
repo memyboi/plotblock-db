@@ -7,31 +7,26 @@ const rString = {
 }
 
 const schema = new mongoose.Schema({
-  teamID: rString,
-  teamLeaderID: {
+  userID: rString,
+  teamID: {
     type: String,
     default: 0,
   },
-  teamName: {
-    type: String,
-    default: "RBYGSCRSEFRLGDPPtBWB2W2XYORASSMUSUMLGPLGESwShBDSPPLASV",
-    required: true
-  },
-  teamMembers: {
+  blocked: {
     type: Array,
     default: undefined
   },
-  allies: {
-    type: Array,
-    default: undefined
+  cash: {
+    type: Number,
+    default: 0,
   },
-  truces: {
-    type: Array,
-    default: undefined
+  xp: {
+    type: Number,
+    default: 0,
   },
-  wars: {
-    type: Array,
-    default: undefined
+  lvls: {
+    type: Number,
+    default: 0,
   },
 })
-module.exports = mongoose.model('teamdata', schema, 'teamdata')
+module.exports = mongoose.model('plrdata', schema, 'plrdata')

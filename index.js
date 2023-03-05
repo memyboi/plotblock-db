@@ -23,9 +23,6 @@ const client = new Client({
   GatewayIntentBits.MessageContent,
   GatewayIntentBits.DirectMessages,
   GatewayIntentBits.GuildBans,
-  ],
-  partials: [
-  Partials.Channel
   ]
 });
 const fs = require('fs');
@@ -265,7 +262,7 @@ client.on("guildMemberAdd", async function(member){
       guild.channels.fetch("" + process.env.welcomechannelid) .then((channel) => {
         channel.send({ files: [newimg] })
         member.send({
-          content: "**Welcome to the Plot Block [LIFESTEAL] server!**\nPlease read the short TOS and accept to be verified.",
+          content: "**Welcome to Plot Block [LIFESTEAL]!**\n\nWe hope you have a good time here!\nPlease click on the button below to begin the first step of the verification process!",
           components: [a]
         })
       })
@@ -279,18 +276,6 @@ client.on("guildMemberRemove", async member => {
     guild.channels.fetch("" + process.env.leavingchannelid) .then(async (channel) => {
       try {
         channel.send("`"+member.user.tag+"` **has unfortunately left the server.**")
-
-        const findRes = await xpSchema.find({ userID: id })
-        try {
-          let pchat = findRes[0].pchat
-          console.log("plr pchat id to del: "+pchat)
-          guild.channels.fetch("" + pchat) .then((channel) => {
-            channel.delete()
-          })
-        
-        } catch(e) {
-          console.log(e);
-        }
       } catch(e) {
         console.log(e);
       }
@@ -299,8 +284,8 @@ client.on("guildMemberRemove", async member => {
 })
 
 client.on('interactionCreate', async interaction => {
-  
-	if (!interaction.isButton()) return;
+  if (interaction.guild.id != guildId) return
+  if (!interaction.isButton()) return;
   
   if (interaction.customId == "acc") {
     const message = interaction.message //message of interaction
@@ -478,6 +463,7 @@ client.on('interactionCreate', async interaction => {
       components: [row],
     })
   }
+  await interaction.deferUpdate();
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
     const command = interaction.client.commands.get(interaction.commandName);
 
@@ -493,199 +479,6 @@ client.on('interactionCreate', async interaction => {
       await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
   }
-  await interaction.deferUpdate();
-});
-
-// client.on('interactionCreate', async interaction => {
-//   if (interaction.guild.id != guildId) return
-//   if (interaction.isButton()) {
-//     if (interaction.customId == "viewtos") {
-//       const a = new ActionRowBuilder()
-//       .addComponents(
-//           new ButtonBuilder()
-//           .setCustomId('page2tos')
-//           .setLabel('Next page')
-//           .setStyle(ButtonStyle.Secondary),
-//       )
-//       const embed = new EmbedBuilder()
-//       .setAuthor({ name: "Poke-Mania ToS", iconURL: "https://cdn.discordapp.com/attachments/1035938005568983090/1035938036611022878/IMG_1169.PNG"})
-//       .setDescription("This is the ToS for poke-mania.\n\nPlease read the following terms:\nPlease do not infringe of any rules stated in the rules channel.\nPlease try to keep any inappropiate content off of the server, as it can be disturbing for others.\nPlease do not harass or discriminate against any user in the server.")
-//       .setColor("#ff0000")
-//       interaction.message.edit({
-//         content: "",
-//         components: [a],
-//         embeds: [embed]
-//       })
-//       interaction.deferUpdate()
-//     }
-//     if (interaction.customId == "page2tos") {
-//       const a = new ActionRowBuilder()
-//       .addComponents(
-//           new ButtonBuilder()
-//           .setCustomId('finishtos')
-//           .setLabel('I have read the ToS')
-//           .setStyle(ButtonStyle.Secondary),
-//       )
-//       const embed = new EmbedBuilder()
-//       .setAuthor({ name: "Poke-Mania ToS", iconURL: "https://cdn.discordapp.com/attachments/1035938005568983090/1035938036611022878/IMG_1169.PNG"})
-//       .setDescription("This is the ToS for poke-mania.\n\nPlease read the following terms:\nPlease do not use this server for anything malicious.")
-//       .setColor("#ff0000")
-//       interaction.message.edit({
-//         content: "",
-//         components: [a],
-//         embeds: [embed]
-//       })
-//       interaction.deferUpdate()
-//     }
-//     if (interaction.customId == "finishtos") {
-//       interaction.message.edit({
-//         content: "You have finished *step 1* of the verification process, please return to the server and finish verification.",
-//         components: [],
-//         embeds: []
-//       })
-//       client.guilds.fetch("" + process.env.guildid) .then((guild) => {
-//         const memberMesure = guild.members.cache.get("" + interaction.user.id);
-//         if (memberMesure) {
-//           //1034577773496381621
-//           let role = guild.roles.cache.find(role => role.id == "1034575699878617200");
-//           if (memberMesure.roles.cache.some(role => role.id === '1034577773496381621')) {
-            
-//           } else {
-//             memberMesure.roles.add(role)
-//           }
-//         }
-//       })
-//       interaction.deferUpdate()
-//     }
-//     if (interaction.customId == "finishverification") {
-      
-//       let rolest1 = interaction.guild.roles.cache.find(role => role.id == "1034575699878617200");
-//       var role = interaction.guild.roles.cache.find(role => role.id === "1034577773496381621");
-//       if (interaction.member.roles.cache.some(role => role.id === '1034577773496381621')) {
-//         return interaction.reply({content: "You are already verified!", ephemeral: true})
-//       }
-//       interaction.user.send(
-//       {
-//         content: "**You have now been verified!** Have fun!"
-//       }) .catch((err) => {
-//         console.log(err)
-//       })
-//       interaction.member.roles.add(role)
-//       interaction.member.roles.remove(rolest1)
-//       const catergory = '1034576867715457184'
-//       interaction.guild.channels.create({
-//         type: ChannelType.GuildText,
-//         name: 'Your personal chat!',
-//         parent: catergory,
-//       }) .then((channel) => {
-//         channel.permissionOverwrites.create(interaction.user, {
-//           ViewChannel: true,
-//           ReadMessageHistory: true,
-//           UseApplicationCommands: true,
-//         }) .then(() => {
-//           const newname = new ButtonBuilder()
-//             .setCustomId('modalchatname')
-//             .setLabel("Set chat name")
-//             .setStyle(ButtonStyle.Primary)
-//           const row = new ActionRowBuilder().addComponents(newname);
-//           channel.send({
-//             content: "**Welcome to your own personal chat!**\nBefore you can chat in it, please set the name of your chat using the text input below! (12 character limit)\nOnce you do this, you will have access to private chats, which you can add your friends to!\nFor more help, please click this link:\nhttps://discord.com/channels/1034571523467517962/1034590738966646804\n**Do not share personal information in these chats, as they can all be seen by an <@&1035139480283258901> or higher.**",
-//             components: [row]
-//           })
-//           savepersonalchatid(channel.id, interaction.user.id)
-//         }) .catch((err) => {
-//           console.log(err)
-//         })
-//       })
-//       interaction.deferUpdate()
-//     }
-//     if (interaction.customId == "modalchatname") {
-//       const modal = new ModalBuilder()
-//         .setCustomId('setchannelname')
-//         .setTitle('Set personal chat name here...');
-
-//       const txt = new TextInputBuilder()
-//         .setCustomId('newchannelname')
-//         .setLabel("Personal chat name")
-//         .setStyle(TextInputStyle.Short)
-//         .setMaxLength(20)
-//         .setRequired(true);
-  
-//       const row = new ActionRowBuilder().addComponents(txt);
-  
-//       modal.addComponents(row);
-  
-//       await interaction.showModal(modal);
-//     }
-//   }
-//   if (interaction.customId == "delmsg") {
-//     interaction.message.delete()
-//     interaction.deferUpdate()
-//   }
-//   if (interaction.customId == "acceptinv") {
-//     const msg = interaction.message
-//     const args = msg.content.split(" ")
-//     const channelid = args[1]
-//     console.log(channelid)
-//     const guildid = process.env.guildid
-//     client.guilds.fetch(""+guildid) .then(async guild => {
-//       try {
-//         client.channels.fetch(""+channelid) .then(async channel => {
-//           await channel.permissionOverwrites.create(interaction.user, {
-//             ViewChannel: true,
-//             ReadMessageHistory: true,
-//             SendMessages: true,
-//             UseApplicationCommands: true,
-//           })
-          
-//           let randomMsgs = [" just hopped in!", " has joined the chat!", " entered the chat!", " slid into chat!", " has accepted an invite to join!"]
-//           channel.send({content: "`"+interaction.user.tag+"`"+randomMsgs[getRandomArbitrary(0, randomMsgs.length)]})
-//           msg.edit({content: "You have joined the personal chat `"+channel.name+"`!", components: [new ActionRowBuilder().addComponents(okbutton)]})
-//         }) .catch((err) => {
-//           console.log(err)
-//           msg.edit({content: "The invite failed to accept!", components: [new ActionRowBuilder().addComponents(okbutton)]})
-//         })
-        
-//       } catch(e) {
-//         console.log(e)
-//         msg.edit({content: "The invite failed to accept!", components: [new ActionRowBuilder().addComponents(okbutton)]})
-//       }
-//     }) .catch((err) => {
-//       console.log(err)
-//       msg.edit({content: "There was an error accepting the invite to the chat.", components: [new ActionRowBuilder().addComponents(okbutton)]})
-//     })
-//     interaction.deferUpdate()
-//   }
-//   if (interaction.isModalSubmit) {
-//     if (interaction.customId == "setchannelname") {
-//       var newname = interaction.fields.getTextInputValue('newchannelname')
-//       var filterWords = ["shit", "fuck", "bitch", "dick", "cum", "penis", "cumbucket", "balls", "testicles", "orgasm", "cock", "white liquid", "sperm", "vagina", "reproduction", "mating", "sex", "your personal chat", "your-personal-chat"] //pls dont ratio me i have to put this here
-//       var innapropiate = false
-//       filterWords.forEach(badword => {
-//         if (newname.toLowerCase().includes(badword)) {
-//           innapropiate = true
-//         }
-//       })
-//       if (!innapropiate) {
-//         interaction.channel.setName(newname) .then(() => {
-        
-//           interaction.channel.permissionOverwrites.create(interaction.user, {
-//             ViewChannel: true,
-//             ReadMessageHistory: true,
-//             SendMessages: true,
-//             UseApplicationCommands: true,
-//           })
-//           interaction.channel.bulkDelete(1)
-//           interaction.reply({content: "You have successfully changed the chat name to `"+newname+"`!",ephemeral: true })
-//         }) .catch((e) => {
-//           console.log(e)
-//           interaction.reply({content: "There was a problem while setting the name of the channel, please try again!", ephemeral: true })
-//         })
-//       } else {
-//         interaction.reply({ content: "This new chat name contains words which have been blacklisted. >:(", ephemeral: true});
-//       }
-//     }
-//   }
-// })
+})
 
 client.login(process.env.token)
