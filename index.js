@@ -217,7 +217,6 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async function(member){
   if (member.guild.id != guildId) return
-    GlobalFonts.registerFromPath("/canvasfont.ttf", "FONT")
     const canvas = Canvas.createCanvas(800, 500);
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
@@ -226,29 +225,29 @@ client.on("guildMemberAdd", async function(member){
     const dcrim = member.user.discriminator
     console.log(uname+"#"+dcrim+" has joined! sending join img + verification!")
     
-    //context.drawImage(bg, 0, 0, canvas.width, canvas.height)
+    context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeStyle = "#ffffff"
     //context.strokeRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = '#ffffff'
-    context.font = '50px FONT'
+    context.font = '50px sans-serif'
     context.fillText(""+uname, 200, 100)
     //context.fillText(text, 0, 0)
     context.fillStyle = '#c8c8c8'
-    context.font = '30px FONT'
+    context.font = '30px sans-serif'
     context.fillText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
     // Pick up the pen
-    context.beginPath();
+    // context.beginPath();
 
-    // Start the arc to form a circle
-    context.arc(106.5, 105.5, 92.5, 92.5, Math.PI * 1, true);
+    // // Start the arc to form a circle
+    // context.arc(106.5, 105.5, 92.5, 92.5, Math.PI * 1, true);
 
-    // Put the pen down
-    context.closePath();
+    // // Put the pen down
+    // context.closePath();
 
-    // Clip off the region you drew on
-    context.clip();
-    //context.drawImage(pfp, 14, 13, 185, 185)
+    // // Clip off the region you drew on
+    // context.clip();
+    context.drawImage(pfp, 14, 13, 185, 185)
 
     const a = new ActionRowBuilder()
     .addComponents(
