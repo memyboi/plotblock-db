@@ -1,9 +1,9 @@
 require('dotenv').config()
 const MongoClient = require('mongodb').MongoClient;
-const musername = process.env.MONGO_USERNAME
-const mpassword = process.env.MONGO_PASSWORD
+const musername = process.env.mongouser
+const mpassword = process.env.mongopass
 const mongoose = require('mongoose')
-const url = `mongodb+srv://${musername}:${mpassword}@pokemaniabot.uismgaq.mongodb.net/test`
+const url = `mongodb+srv://${musername}:${mpassword}@plotblock.7cigzsy.mongodb.net/test`
 
 //BUILD SETTINGS
 const devBuild = true
