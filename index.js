@@ -226,10 +226,10 @@ client.on("guildMemberAdd", async function(member){
     const dcrim = member.user.discriminator
     console.log(uname+"#"+dcrim+" has joined! sending join img + verification!")
     
-    context.drawImage(bg, 0, 0, canvas.width, canvas.height)
+    //context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeStyle = "#ffffff"
-    context.strokeRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#ffffff'
+    //context.strokeRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#000000'
     context.font = '50px FONT'
     context.strokeText("" + uname, 200, 100)
     //context.fillText(text, 0, 0)
@@ -248,7 +248,7 @@ client.on("guildMemberAdd", async function(member){
 
     // Clip off the region you drew on
     context.clip();
-    context.drawImage(pfp, 14, 13, 185, 185)
+    //context.drawImage(pfp, 14, 13, 185, 185)
 
     const a = new ActionRowBuilder()
     .addComponents(
@@ -285,185 +285,184 @@ client.on("guildMemberRemove", async member => {
 })
 
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isButton()) return;
+  if (interaction.isButton()) {
+    if (interaction.customId == "acc") {
+      const message = interaction.message //message of interaction
+      const leader = message.channel.recipient
+      const msgArgs = message.content.replace("(", "").replace(")", "").split(" ")
+      const channelid = msgArgs[0]
+      const guildid = msgArgs[1]
+      const member = getUserFromMention(msgArgs[2])
   
-  if (interaction.customId == "acc") {
-    const message = interaction.message //message of interaction
-    const leader = message.channel.recipient
-    const msgArgs = message.content.replace("(", "").replace(")", "").split(" ")
-    const channelid = msgArgs[0]
-    const guildid = msgArgs[1]
-    const member = getUserFromMention(msgArgs[2])
-
-    message.edit({content: "This request from <@" + member.id + "> has been accepted."})
-    
-    message.reply("Adding <@" + member.id + "> to your team...") .then((conf) => {
-
-      client.guilds.fetch("" + guildid) .then((guild) => {
-        const memberMesure = guild.members.cache.get("" + member.id);
-        const lmemberMesure = guild.members.cache.get("" + leader.id);
+      message.edit({content: "This request from <@" + member.id + "> has been accepted."})
+      
+      message.reply("Adding <@" + member.id + "> to your team...") .then((conf) => {
+  
+        client.guilds.fetch("" + guildid) .then((guild) => {
+          const memberMesure = guild.members.cache.get("" + member.id);
+          const lmemberMesure = guild.members.cache.get("" + leader.id);
+      
+          if (memberMesure) {
+            const res = memberMesure.roles.cache.some(role => role.name == "Team Diamond Leader");
+            const res1 = memberMesure.roles.cache.some(role => role.name == "Team Pearl Leader");
+            const res2 = memberMesure.roles.cache.some(role => role.name == "Team Platinum Leader");
+            const res3 = memberMesure.roles.cache.some(role => role.name == "Team Diamond");
+            const res4 = memberMesure.roles.cache.some(role => role.name == "Team Pearl");
+            const res5 = memberMesure.roles.cache.some(role => role.name == "Team Platinum");
+            if (!res && !res1 && !res2 && !res3 && !res4 && !res5) {
+              //member is able to be added, check for which team:
+              const lres = lmemberMesure.roles.cache.some(role => role.name == "Team Diamond Leader");
+              const lres1 = lmemberMesure.roles.cache.some(role => role.name == "Team Pearl Leader");
+              const lres2 = lmemberMesure.roles.cache.some(role => role.name == "Team Platinum Leader");
+  
+              if(lres) {
+                //add to team diamond
+                let role = guild.roles.cache.find(role => role.name == "Team Diamond");
+                let emoji = process.env.diamondEmoji
+                memberMesure.roles.add(role);
+                member.send("You have been added to `Team Diamond` " + emoji + " by <@" + leader.id + ">!")
+                conf.edit({content: "Added <@" + member.id + "> to `Team Diamond`!"})
+                sendJoinMsg(guild, member, "Team Diamond", emoji, "Member")
+              } else if(lres1) {
+                //add to team pearl
+                let role = guild.roles.cache.find(role => role.name == "Team Pearl");
+                let emoji = process.env.pearlEmoji
+                memberMesure.roles.add(role);
+                member.send("You have been added to `Team Pearl` " + emoji + " by <@" + leader.id + ">!")
+                conf.edit({content: "Added <@" + member.id + "> to `Team Pearl`!"})
+                sendJoinMsg(guild, member, "Team Pearl", emoji, "Member")
+              } else if(lres2) {
+                //add to team platinum
+                let role = guild.roles.cache.find(role => role.name == "Team Platinum");
+                let emoji = process.env.platinumEmoji
+                memberMesure.roles.add(role);
+                member.send("You have been added to `Team Platinum` " + emoji + " by <@" + leader.id + ">!")
+                conf.edit({content: "Added <@" + member.id + "> to `Team Platinum`!"})
+                sendJoinMsg(guild, member, "Team Platinum", emoji, "Member")
+              } else {
+                //team undefined? send err
+                conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Your team could not be found in the server for some odd reason."})
+              }
+            } else {
+              conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Did they already join another team?"})
+            }
+          } else {
+            //member is not in the guild for some reason
+            conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Did they leave the server?"})
+          }
+        });
+      }) .catch((err) => {
+        message.reply({content: "There was an error adding <@" + member.id + "> to your team. Details:\n```" + err + "```\n\nThis is a bug in the code. Please, report this to <@529331877727698954> if possible.", components: [okrow]})
+        console.log(err)
+      })
+    } else if (interaction.customId == "dec") {
+      const message = interaction.message
+      
+      const msgArgs = message.content.replace("(", "").replace(")", "").split(" ")
+      const channelId = msgArgs[0]
+      const guildId = msgArgs[1]
+      const member = getUserFromMention(msgArgs[2])
+      const leader = message.channel.recipient
+  
+      client.guilds.fetch("" + guildId) .then((guild) => {
+        const memberMesure = guild.members.cache.get("" + leader.id);
     
         if (memberMesure) {
           const res = memberMesure.roles.cache.some(role => role.name == "Team Diamond Leader");
           const res1 = memberMesure.roles.cache.some(role => role.name == "Team Pearl Leader");
           const res2 = memberMesure.roles.cache.some(role => role.name == "Team Platinum Leader");
-          const res3 = memberMesure.roles.cache.some(role => role.name == "Team Diamond");
-          const res4 = memberMesure.roles.cache.some(role => role.name == "Team Pearl");
-          const res5 = memberMesure.roles.cache.some(role => role.name == "Team Platinum");
-          if (!res && !res1 && !res2 && !res3 && !res4 && !res5) {
-            //member is able to be added, check for which team:
-            const lres = lmemberMesure.roles.cache.some(role => role.name == "Team Diamond Leader");
-            const lres1 = lmemberMesure.roles.cache.some(role => role.name == "Team Pearl Leader");
-            const lres2 = lmemberMesure.roles.cache.some(role => role.name == "Team Platinum Leader");
-
-            if(lres) {
-              //add to team diamond
-              let role = guild.roles.cache.find(role => role.name == "Team Diamond");
-              let emoji = process.env.diamondEmoji
-              memberMesure.roles.add(role);
-              member.send("You have been added to `Team Diamond` " + emoji + " by <@" + leader.id + ">!")
-              conf.edit({content: "Added <@" + member.id + "> to `Team Diamond`!"})
-              sendJoinMsg(guild, member, "Team Diamond", emoji, "Member")
-            } else if(lres1) {
-              //add to team pearl
-              let role = guild.roles.cache.find(role => role.name == "Team Pearl");
-              let emoji = process.env.pearlEmoji
-              memberMesure.roles.add(role);
-              member.send("You have been added to `Team Pearl` " + emoji + " by <@" + leader.id + ">!")
-              conf.edit({content: "Added <@" + member.id + "> to `Team Pearl`!"})
-              sendJoinMsg(guild, member, "Team Pearl", emoji, "Member")
-            } else if(lres2) {
-              //add to team platinum
-              let role = guild.roles.cache.find(role => role.name == "Team Platinum");
-              let emoji = process.env.platinumEmoji
-              memberMesure.roles.add(role);
-              member.send("You have been added to `Team Platinum` " + emoji + " by <@" + leader.id + ">!")
-              conf.edit({content: "Added <@" + member.id + "> to `Team Platinum`!"})
-              sendJoinMsg(guild, member, "Team Platinum", emoji, "Member")
-            } else {
-              //team undefined? send err
-              conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Your team could not be found in the server for some odd reason."})
-            }
+          if (res) {
+            member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Diamond`.", components: [okrow]});
+          } else if (res1) {
+            member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Pearl`.", components: [okrow]});
+          } else if (res2) {
+            member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Platinum`.", components: [okrow]});
           } else {
-            conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Did they already join another team?"})
+            member.send({content: "You have been denied access into <@" + leader.id + ">'s Team.", components: [okrow]});
           }
+          message.edit({content: "This request from <@" + member.id + "> has been declined."})
         } else {
-          //member is not in the guild for some reason
-          conf.edit({content: "There was an error adding <@" + member.id + "> to your team. Did they leave the server?"})
+          message.edit({content: "This request from <@" + member.id + "> has been declined. However, due to an error, they have not been notified"})
         }
       });
-    }) .catch((err) => {
-      message.reply({content: "There was an error adding <@" + member.id + "> to your team. Details:\n```" + err + "```\n\nThis is a bug in the code. Please, report this to <@529331877727698954> if possible.", components: [okrow]})
-      console.log(err)
-    })
-  } else if (interaction.customId == "dec") {
-    const message = interaction.message
-    
-    const msgArgs = message.content.replace("(", "").replace(")", "").split(" ")
-    const channelId = msgArgs[0]
-    const guildId = msgArgs[1]
-    const member = getUserFromMention(msgArgs[2])
-    const leader = message.channel.recipient
-
-    client.guilds.fetch("" + guildId) .then((guild) => {
-      const memberMesure = guild.members.cache.get("" + leader.id);
-  
-      if (memberMesure) {
-        const res = memberMesure.roles.cache.some(role => role.name == "Team Diamond Leader");
-        const res1 = memberMesure.roles.cache.some(role => role.name == "Team Pearl Leader");
-        const res2 = memberMesure.roles.cache.some(role => role.name == "Team Platinum Leader");
-        if (res) {
-          member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Diamond`.", components: [okrow]});
-        } else if (res1) {
-          member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Pearl`.", components: [okrow]});
-        } else if (res2) {
-          member.send({content: "You have been denied access into <@" + leader.id + ">'s `Team Platinum`.", components: [okrow]});
-        } else {
-          member.send({content: "You have been denied access into <@" + leader.id + ">'s Team.", components: [okrow]});
-        }
-        message.edit({content: "This request from <@" + member.id + "> has been declined."})
-      } else {
-        message.edit({content: "This request from <@" + member.id + "> has been declined. However, due to an error, they have not been notified"})
-      }
-    });
-    
-    
       
-  } else if (interaction.customId == "delMsg") {
-    const message = interaction.message
-    message.delete();
-  } else if (interaction.customId == "tos") {
-    //type tos here
-    const rowpage = new ActionRowBuilder()
-      .addComponents(
-        new ButtonBuilder()
-          .setCustomId('tosp2')
-          .setLabel('Next page')
-          .setStyle(ButtonStyle.Secondary),
-      )
-
-    const tosp1 = new EmbedBuilder()
-      .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("----> **Please read the following rules:** <----\n\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
-      .setColor("#ff0000")
-
-    interaction.message.edit({
-      content: "",
-      embeds: [tosp1],
-      components: [rowpage],
-    })
-  } else if (interaction.customId == "acctos") {
-    interaction.message.edit({
-      content: "The TOS has been accepted. You are now verified.",
-      embeds: [],
-      components: [],
-    })
-    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
-      const memberMesure = guild.members.cache.get("" + interaction.user.id);
-      if (memberMesure) {
-        let role = guild.roles.cache.find(role => role.name == "verified bozo");
-        memberMesure.roles.add(role)
-      }
-    })
-  } else if (interaction.customId == "dectos") {
-    interaction.message.edit({
-      content: "The TOS has been declined. You are now kicked from the server.",
-      embeds: [],
-      components: [],
-    })
-    client.guilds.fetch("" + process.env.guildid) .then((guild) => {
-      const memberMesure = guild.members.cache.get("" + interaction.user.id);
-      if (memberMesure) {
-        memberMesure.kick("Declined TOS on entry")
-      }
-    })
-  } else if (interaction.customId == "tosp2") {
-    const row = new ActionRowBuilder()
-      .addComponents(
-        new ButtonBuilder()
-          .setCustomId('acctos')
-          .setLabel('Accept and verify')
-          .setStyle(ButtonStyle.Success),
-      )
-      .addComponents(
-        new ButtonBuilder()
-          .setCustomId('dectos')
-          .setLabel('Decline and leave')
-          .setStyle(ButtonStyle.Danger),
-      )
-
-    const tosp2 = new EmbedBuilder()
-      .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-      .setDescription("----> **Please read the following rules:** <----\n\n----> **Please acknowledge the following:** <----\n> This is a lifesteal server. You will die, and you will lose hearts.\n> This is a survival server, You will be raided, attacked and betrayed. This is standard.\n> This is a modded server, You will have access to modded items and modded mechanics\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
-      .setColor("#ff0000")
-
-    interaction.message.edit({
-      content: "",
-      embeds: [tosp2],
-      components: [row],
-    })
-  }
-  await interaction.deferUpdate();
+      
+        
+    } else if (interaction.customId == "delMsg") {
+      const message = interaction.message
+      message.delete();
+    } else if (interaction.customId == "tos") {
+      //type tos here
+      const rowpage = new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+            .setCustomId('tosp2')
+            .setLabel('Next page')
+            .setStyle(ButtonStyle.Secondary),
+        )
+  
+      const tosp1 = new EmbedBuilder()
+        .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
+        .setDescription("----> **Please read the following rules:** <----\n\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
+        .setColor("#ff0000")
+  
+      interaction.message.edit({
+        content: "",
+        embeds: [tosp1],
+        components: [rowpage],
+      })
+    } else if (interaction.customId == "acctos") {
+      interaction.message.edit({
+        content: "The TOS has been accepted. You are now verified.",
+        embeds: [],
+        components: [],
+      })
+      client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+        const memberMesure = guild.members.cache.get("" + interaction.user.id);
+        if (memberMesure) {
+          let role = guild.roles.cache.find(role => role.name == "verified bozo");
+          memberMesure.roles.add(role)
+        }
+      })
+    } else if (interaction.customId == "dectos") {
+      interaction.message.edit({
+        content: "The TOS has been declined. You are now kicked from the server.",
+        embeds: [],
+        components: [],
+      })
+      client.guilds.fetch("" + process.env.guildid) .then((guild) => {
+        const memberMesure = guild.members.cache.get("" + interaction.user.id);
+        if (memberMesure) {
+          memberMesure.kick("Declined TOS on entry")
+        }
+      })
+    } else if (interaction.customId == "tosp2") {
+      const row = new ActionRowBuilder()
+        .addComponents(
+          new ButtonBuilder()
+            .setCustomId('acctos')
+            .setLabel('Accept and verify')
+            .setStyle(ButtonStyle.Success),
+        )
+        .addComponents(
+          new ButtonBuilder()
+            .setCustomId('dectos')
+            .setLabel('Decline and leave')
+            .setStyle(ButtonStyle.Danger),
+        )
+  
+      const tosp2 = new EmbedBuilder()
+        .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
+        .setDescription("----> **Please read the following rules:** <----\n\n----> **Please acknowledge the following:** <----\n> This is a lifesteal server. You will die, and you will lose hearts.\n> This is a survival server, You will be raided, attacked and betrayed. This is standard.\n> This is a modded server, You will have access to modded items and modded mechanics\n\n**Please do not infringe any of the rules stated in the 'Rules' channel in the server.**")
+        .setColor("#ff0000")
+  
+      interaction.message.edit({
+        content: "",
+        embeds: [tosp2],
+        components: [row],
+      })
+    }
+  };
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
     const command = interaction.client.commands.get(interaction.commandName);
 
@@ -478,7 +477,9 @@ client.on('interactionCreate', async interaction => {
       console.error(error);
       await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
+    return
   }
+  await interaction.deferUpdate();
 })
 
 client.login(process.env.token)
