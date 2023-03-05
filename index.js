@@ -217,7 +217,7 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async function(member){
   if (member.guild.id != guildId) return
-    GlobalFonts.registerFromPath(fs.readdirSync("./canvasfont.ttf"), "FONT")
+    GlobalFonts.registerFromPath(join(__dirname, "canvasfont.ttf"), "FONT")
     const canvas = Canvas.createCanvas(800, 500);
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
