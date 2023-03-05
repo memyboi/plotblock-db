@@ -220,8 +220,9 @@ client.on("guildMemberAdd", async function(member){
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
     const bg = await Canvas.loadImage('./joinbg.png')
-    const uname = await member.user.username
-    const dcrim = await member.user.discriminator
+    const uname = member.user.username
+    const dcrim = member.user.discriminator
+    console.log(uname+"#"+dcrim+" has joined! sending join img + verification!")
     context.fillstyle = '#FFFFFF'
     context.font = '50px arial'
     let text = "" + uname
@@ -230,9 +231,15 @@ client.on("guildMemberAdd", async function(member){
     let text2 = "#" + dcrim
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
-    context.drawImage(pfp, 14, 13, 185, 185)
     context.strokeRect(0, 0, canvas.width, canvas.height);
-
+    context.fillstyle = '#FFFFFF'
+    context.font = '50px arial'
+    context.fillText(text, 200, 100)
+    //context.fillText(text, 0, 0)
+    context.fillstyle = '#C8C8C8'
+    context.font = '30px arial'
+    context.fillText(text2, 200, 140)
+    //context.fillText(text2, 0, 0)
     // Pick up the pen
     context.beginPath();
 
@@ -244,16 +251,7 @@ client.on("guildMemberAdd", async function(member){
 
     // Clip off the region you drew on
     context.clip();
-    
-    context.fillstyle = '#FFFFFF'
-    context.font = '50px arial'
-    //context.fillText(text, 200, 100)
-    context.fillText(text, 0, 0)
-    context.fillstyle = '#C8C8C8'
-    context.font = '30px arial'
-    // context.fillText(text2, 200, 140)
-    context.fillText(text2, 0, 0)
-   
+    context.drawImage(pfp, 14, 13, 185, 185)
 
     const a = new ActionRowBuilder()
     .addComponents(
