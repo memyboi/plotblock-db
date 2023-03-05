@@ -189,6 +189,7 @@ async function doXp(message) {
 const prefix = '.';
 
 client.on("messageCreate", async message => {
+  if (!message.guild) return
   if (message.guild.id != guildId) return
   if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
     let lowerargs = message.content.substring(prefix.length).toLowerCase().split(" ")
