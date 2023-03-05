@@ -227,12 +227,13 @@ client.on("guildMemberAdd", async function(member){
     console.log(uname+"#"+dcrim+" has joined! sending join img + verification!")
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
+    context.strokeStyle = "#ffffff"
     context.strokeRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#FFFFFF'
+    context.fillStyle = '#ffffff'
     context.font = '50px FONT'
     context.strokeText("" + uname, 200, 100)
     //context.fillText(text, 0, 0)
-    context.fillStyle = '#C8C8C8'
+    context.fillStyle = '#c8c8c8'
     context.font = '30px FONT'
     context.strokeText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
@@ -257,7 +258,7 @@ client.on("guildMemberAdd", async function(member){
         .setStyle(ButtonStyle.Secondary),
     )
 
-    const newimg = new AttachmentBuilder(await canvas.encode('png'), { name: 'join-image.png' })
+    const newimg = new AttachmentBuilder(await canvas.encode('png'), { name: uname+'#'+dcrim+'-joined.png' })
     client.guilds.fetch("" + process.env.guildid) .then((guild) => {
       guild.channels.fetch("" + process.env.welcomechannelid) .then((channel) => {
         channel.send({ files: [newimg] })
