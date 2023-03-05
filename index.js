@@ -13,7 +13,6 @@ const xpSchema = require('./schema.js')
 
 const Canvas = require('@napi-rs/canvas');
 const GlobalFonts = require('@napi-rs/canvas')
-const path = require("path")
 
 const { Client, GatewayIntentBits, Partials, PermissionsBitField, ChannelType, TextInputBuilder, TextInputStyle, ModalBuilder, AttachmentBuilder } = require('discord.js');
 const Discord = require("discord.js");
