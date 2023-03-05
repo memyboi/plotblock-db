@@ -12,6 +12,7 @@ const buildNum = 4
 const xpSchema = require('./schema.js')
 
 const Canvas = require('@napi-rs/canvas');
+const GlobalFonts = require('@napi-rs/canvas')
 
 const { Client, GatewayIntentBits, Partials, PermissionsBitField, ChannelType, TextInputBuilder, TextInputStyle, ModalBuilder, AttachmentBuilder } = require('discord.js');
 const Discord = require("discord.js");
@@ -216,6 +217,7 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async function(member){
   if (member.guild.id != guildId) return
+    GlobalFonts.registerFromPath(fs.readdirSync("./canvasfont.ttf"), "FONT")
     const canvas = Canvas.createCanvas(800, 500);
     const context = canvas.getContext('2d');
     const pfp = await Canvas.loadImage(member.displayAvatarURL({format: "png"}))
@@ -224,21 +226,19 @@ client.on("guildMemberAdd", async function(member){
     const dcrim = member.user.discriminator
     console.log(uname+"#"+dcrim+" has joined! sending join img + verification!")
     context.fillstyle = '#FFFFFF'
-    context.font = '50px arial'
-    let text = "" + uname
+    context.font = '50px FONT'
     context.fillstyle = '#C8C8C8'
-    context.font = '30px arial'
-    let text2 = "#" + dcrim
+    context.font = '30px FONT'
     
     context.drawImage(bg, 0, 0, canvas.width, canvas.height)
     context.strokeRect(0, 0, canvas.width, canvas.height);
     context.fillstyle = '#FFFFFF'
-    context.font = '50px sans-serif'
-    context.fillText(text, 200, 100)
+    context.font = '50px FONT'
+    context.fillText("" + uname, 200, 100)
     //context.fillText(text, 0, 0)
     context.fillstyle = '#C8C8C8'
-    context.font = '30px Sans Serif'
-    context.fillText(text2, 200, 140)
+    context.font = '30px FONT'
+    context.fillText("#" + dcrim, 200, 140)
     //context.fillText(text2, 0, 0)
     // Pick up the pen
     context.beginPath();
