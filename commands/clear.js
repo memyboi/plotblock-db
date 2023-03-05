@@ -9,6 +9,7 @@ module.exports = {
 			option
 				.setName("amount")
 				.setDescription("The amount of messages to clear")
+				.setRequired(true)
 			)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
 		.setDMPermission(false)
@@ -16,6 +17,6 @@ module.exports = {
 	async execute(interaction, client) {
 		var amnt = parseInt(interaction.options.getNumber("amount"))
 		interaction.channel.bulkDelete(amnt)
-		interaction.reply({content:amnt+" message(s) have been cleared!"})
+		interaction.reply({content:amnt+" message(s) have been cleared!", ephemeral: true})
 	},
 };
