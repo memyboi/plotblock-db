@@ -17,7 +17,7 @@ module.exports = {
 				.setDescription("The reason to kick this user.")
 			)
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
-		.setDMPermission(false)
+		.setDMPermission(false)//uwu
 		,
 	async execute(interaction, client) {
 		var user = parseInt(interaction.options.getUser("user"))
