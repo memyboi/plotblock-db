@@ -1,9 +1,8 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 
-
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('roles')
+		.setName('userinfo')
 		.setDescription('Lists the roles of a user')
 		.addUserOption(option => 
 			option
@@ -23,7 +22,7 @@ module.exports = {
 
 				const exampleEmbed = new EmbedBuilder()
 				.setAuthor({ name: user.username, iconURL: member.displayAvatarURL()})
-				.setDescription(`${user.username}'s role(s) => ${memberRoles}`)
+				.setDescription(`${user.username}'s information:\n> roles => ${memberRoles}\n> team => [teams not yet made, sorry!]`)
 				.setColor("#ff0000")
 				
 				interaction.reply({embeds: [exampleEmbed], ephemeral: true});

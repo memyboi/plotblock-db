@@ -31,8 +31,8 @@ module.exports = {
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
 			.setDescription("/help page 1 | Generic commands")
 			.addFields(
-			{ name: "/roles", value: "WIP", inline: true },
-			{ name: "/serverinfo", value: "WIP", inline: true },
+			{ name: "/userinfo", value: "Gives you the basic rundown of someones current statistics/situation.", inline: true },
+			{ name: "/serverinfo", value: "Gives you the basic rundown of the servers information", inline: true },
 			)
 			.setTimestamp()
 
