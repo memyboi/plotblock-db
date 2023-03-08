@@ -28,7 +28,7 @@ module.exports = {
 	async execute(interaction, client) {
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
-		var appealable = interaction.option.getBoolean("appealable")
+		var appealable = interaction.option.getBool("appealable")
 		if (!reason) {
 			console.log("aauudhdhdhdhdhdhdhdhdhdhdhedhasdfsdf")
 			if (appealable) {
