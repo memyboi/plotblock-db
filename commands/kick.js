@@ -27,21 +27,15 @@ module.exports = {
 			) .then(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
-						member.kick("No reason given by the moderator.") .then(() => {
-							interaction.reply({content: "User has been kicked. No reason given.", ephemeral: true})
-						}) .catch((e) => {
-							interaction.reply({content: "There was an error when kicking the user.\nError dump:\n```"+e+"```", ephemeral: true})
-						})
+						member.kick("No reason given by the moderator.")
+						interaction.reply({content: "User has been kicked. No reason given.", ephemeral: true})
 					})
 				})
 			}) .catch(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
-						member.kick("No reason given by the moderator. User has not been able to receive the message.") .then(() => {
-							interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
-						}) .catch((e) => {
-							interaction.reply({content: "There was an error when kicking the user.\nError dump:\n```"+e+"```", ephemeral: true})
-						})
+						member.kick("No reason given by the moderator. User has not been able to receive the message.")
+						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
 					})
 				})
 			})
@@ -50,21 +44,16 @@ module.exports = {
 			) .then(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
-						member.kick(reason) .then(() => {
-							interaction.reply({content: "User has been kicked. Reason has been given:\n```"+reason+"```", ephemeral: true})
-						}) .catch((e) => {
-							interaction.reply({content: "There was an error when kicking the user.\nError dump:\n```"+e+"```", ephemeral: true})
-						})
+						member.kick(reason)
+						interaction.reply({content: "User has been kicked. Reason has been given:\n```"+reason+"```", ephemeral: true})
+						
 					})
 				})
 			}) .catch(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
-						member.kick("No reason given by the moderator. User has not been able to receive the message.") .then(() => {
-							interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
-						}) .catch((e) => {
-							interaction.reply({content: "There was an error when kicking the user.\nError dump:\n```"+e+"```", ephemeral: true})
-						})
+						member.kick("No reason given by the moderator. User has not been able to receive the message.")
+						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
 					})
 				})
 			})
