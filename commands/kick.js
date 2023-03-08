@@ -29,7 +29,7 @@ module.exports = {
 			}) .then(() => {
 				console.log("AAAAAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-					guild.members.fetch((member) => {
+					guild.members.fetch(""+user.id) .then((member) => {
 						console.log("uwuwuwuwwu2")
 						member.kick("No reason given by the moderator.")
 						interaction.reply({content: "User has been kicked. No reason given.", ephemeral: true})
@@ -38,7 +38,7 @@ module.exports = {
 			}) .catch(() => {
 				console.log("AAAAsAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-					guild.members.fetch((member) => {
+					guild.members.fetch(""+user.id) .then((member) => {
 						console.log("uwuwuwuwwu22")
 						member.kick("No reason given by the moderator. User has not been able to receive the message.")
 						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
@@ -51,7 +51,7 @@ module.exports = {
 			}) .then(() => {
 				console.log("AAAAssAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-					guild.members.fetch((member) => {
+					guild.members.fetch(""+user.id) .then((member) => {
 						console.log("uwuwuwuwwu222")
 						member.kick(reason)
 						interaction.reply({content: "User has been kicked. Reason has been given:\n```"+reason+"```", ephemeral: true})
@@ -61,7 +61,7 @@ module.exports = {
 			}) .catch(() => {
 				console.log("AAAAsssAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-					guild.members.fetch((member) => {
+					guild.members.fetch(""+user.id) .then((member) => {
 						console.log("uwuwuwuwwu2222")
 						member.kick("No reason given by the moderator. User has not been able to receive the message.")
 						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
