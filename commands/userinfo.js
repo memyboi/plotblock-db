@@ -22,7 +22,7 @@ module.exports = {
 
 				const exampleEmbed = new EmbedBuilder()
 				.setAuthor({ name: user.username, iconURL: member.displayAvatarURL()})
-				.setDescription(`${user.username}'s information:\n> roles => ${memberRoles}\n> team => [teams not yet made, sorry!]`)
+				.setDescription(`${user.username}'s information:\n> roles => ${memberRoles}\n> team => [teams not yet made, sorry!]\n> cash => 0\n> xp => 0\n> lvls => 0`)
 				.setColor("#ff0000")
 				
 				interaction.reply({embeds: [exampleEmbed], ephemeral: true});

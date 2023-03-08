@@ -402,7 +402,7 @@ client.on('interactionCreate', async interaction => {
   
       const tosp1 = new EmbedBuilder()
         .setAuthor({ name: "Plot Block TOS", iconURL: "https://cdn.discordapp.com/attachments/1022965804523847720/1022965863793557654/IMG_1109.PNG"})
-        .setDescription("----> **Please read the following rules:** <----\n\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\n")
+        .setDescription("----> **Please read the following rules:** <----\n\n----> **You must own:** <----\n> A legit copy of Minecraft Java for Windows, Mac or Linux.\n> A computer running Windows, Mac or Linux.\n\nPlease know that this server is built around a UTC+0 timezone. All events will be made around this timezone.")
         .setColor("#ff0000")
   
       interaction.message.edit({
