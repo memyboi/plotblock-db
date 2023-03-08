@@ -73,10 +73,10 @@ module.exports = {
 			.setTimestamp()
 		var page = interaction.options.getNumber("page")
 		if (page) {
-			if (page==1) interaction.reply({embeds: [helpEmbed1]})
-			if (page==2) interaction.reply({embeds: [helpEmbed2]})
-			if (page==3) interaction.reply({embeds: [helpEmbed3]})
-			if (page==4) interaction.reply({embeds: [helpEmbed4]})
+			if (page==1) interaction.reply({embeds: [helpEmbed1], ephemeral: true})
+			if (page==2) interaction.reply({embeds: [helpEmbed2], ephemeral: true})
+			if (page==3) interaction.reply({embeds: [helpEmbed3], ephemeral: true})
+			if (page==4) interaction.reply({embeds: [helpEmbed4], ephemeral: true})
 		} else {
 			interaction.reply({embeds: [helpEmbed]})
 		}
