@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     type: String,
     default: 0,
   },
-  blocked: {
+  warns: {
     type: Array,
     default: undefined
   },
