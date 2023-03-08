@@ -35,6 +35,7 @@ module.exports = {
 				user.send({
 					content: "***You have been __banned__ by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThere is no reason given for such an outlandish action.\nYou can appeal if you think your ban was unfair at: https://discord.gg/MQzDm6KDsH"
 				}) .then(() => {
+					console.log(user)
 					user.ban("No reason given by the moderator.")
 					interaction.reply({content: "User has been banned. No reason given.", ephemeral: true})
 				}) .catch(() => {
@@ -45,6 +46,7 @@ module.exports = {
 				user.send({
 					content: "***You have been __banned__ by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThere is no reason given for such an outlandish action.\nThe moderator has stated that your ban is unappealable."
 				}) .then(() => {
+					console.log(user)
 					user.ban("No reason given by the moderator.")
 					interaction.reply({content: "User has been banned. No reason given.", ephemeral: true})
 				}) .catch(() => {
@@ -54,10 +56,12 @@ module.exports = {
 			}
 			
 		} else {
+			console.log("aauudhdhdhdhdhdhdhdhdhdhdhedhasdfsdf2222222222222")
 			if (appealable) {
 				user.send({
 					content: "***You have been __banned__ by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThe reason given is: \n```"+reason+"```\nYou can appeal if you think your ban was unfair at: https://discord.gg/MQzDm6KDsH"
 				}) .then(() => {
+					console.log(user)
 					user.ban(reason)
 					interaction.reply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 				}) .catch(() => {
@@ -68,6 +72,7 @@ module.exports = {
 				user.send({
 					content: "***You have been __banned__ by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThe reason given is: \n```"+reason+"```\nThe moderator has stated that your ban is unappealable."
 				}) .then(() => {
+					console.log(user)
 					user.ban(reason)
 					interaction.reply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 				}) .catch(() => {
