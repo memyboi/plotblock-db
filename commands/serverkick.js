@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('kick')
+		.setName('serverkick')
 		.setDescription('Kicks a player for a reason.')
 		.addUserOption(option => 
 			option
