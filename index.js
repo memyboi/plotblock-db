@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@plotblock.7cigzsy.mongodb.net/test`
 
 //BUILD SETTINGS
-const devBuild = true
+const devBuild = false
 const buildNum = 4
 
 const xpSchema = require('./schema.js')
@@ -211,7 +211,7 @@ client.on("ready", async () => {
   if (devBuild) {
     client.user.setActivity('dev build ' + buildNum, { type: ActivityType.Playing })
   } else {
-    client.user.setActivity(prefix + 'a', { type: ActivityType.Playing })
+    client.user.setActivity("/help [1-4] for help", { type: ActivityType.Playing })
   }
 })
 
