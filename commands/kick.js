@@ -23,10 +23,12 @@ module.exports = {
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
 		if (!reason) {
+			console.log("aauudhdhdhdhdhdhdhdhdhdhdhedhasdfsdf")
 			user.send({content: "***You have been kicked by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThere is no reason given for such an outlandish action.\nYou can rejoin using the link you have used previously, if it is still active."}
 			) .then(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
+						console.log("uwuwuwuwwu2")
 						member.kick("No reason given by the moderator.")
 						interaction.reply({content: "User has been kicked. No reason given.", ephemeral: true})
 					})
@@ -34,6 +36,7 @@ module.exports = {
 			}) .catch(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
+						console.log("uwuwuwuwwu22")
 						member.kick("No reason given by the moderator. User has not been able to receive the message.")
 						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
 					})
@@ -44,6 +47,7 @@ module.exports = {
 			) .then(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
+						console.log("uwuwuwuwwu222")
 						member.kick(reason)
 						interaction.reply({content: "User has been kicked. Reason has been given:\n```"+reason+"```", ephemeral: true})
 						
@@ -52,6 +56,7 @@ module.exports = {
 			}) .catch(() => {
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
+						console.log("uwuwuwuwwu2222")
 						member.kick("No reason given by the moderator. User has not been able to receive the message.")
 						interaction.reply({content: "User has been kicked, however they were unable to receive the message in DMs.", ephemeral: true})
 					})
