@@ -15,9 +15,9 @@ module.exports = {
 	async execute(interaction, client) {
 		const helpEmbed = new EmbedBuilder()
 			.setColor('#ff0000')
-			.setTitle("Command help:")
+			.setTitle("Help help:")
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-			.setDescription('Do ' + prefix + "help [1-4] for info about me!")
+			.setDescription('Do /help [1-4] for info about me!')
 			.addFields(
 			{ name: "Page 1", value: "Generic commands", inline: true },
 			{ name: "Page 2", value: "Team commands", inline: true },
@@ -29,10 +29,10 @@ module.exports = {
 			.setColor('#ff0000')
 			.setTitle("Generic commands help:")
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-			.setDescription('' + prefix + "help page 1 | Generic commands")
+			.setDescription("/help page 1 | Generic commands")
 			.addFields(
-			{ name: prefix + client.commands.get('roles').name, value: client.commands.get('roles').description, inline: true },
-			{ name: prefix + client.commands.get('serverinfo').name, value: client.commands.get('serverinfo').description, inline: true },
+			{ name: "/roles", value: "WIP", inline: true },
+			{ name: "/serverinfo", value: "WIP", inline: true },
 			)
 			.setTimestamp()
 
@@ -40,11 +40,11 @@ module.exports = {
 			.setColor('#ff0000')
 			.setTitle("Team commands help:")
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-			.setDescription('' + prefix + "help page 2 | Team commands")
+			.setDescription("/help page 2 | Team commands")
 			.addFields(
-			{ name: prefix + client.commands.get('join').name, value: client.commands.get('join').description, inline: true },
-			{ name: prefix + client.commands.get('leave').name, value: client.commands.get('leave').description, inline: true },
-			{ name: prefix + client.commands.get('kick').name, value: client.commands.get('kick').description, inline: true },
+			{ name: "/join", value: "WIP", inline: true },
+			{ name: "/leave", value: "WIP", inline: true },
+			{ name: "/kick", value: "WIP", inline: true },
 			)
 			.setTimestamp()
 
@@ -52,13 +52,12 @@ module.exports = {
 			.setColor('#ff0000')
 			.setTitle("Admin commands help:")
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-			.setDescription('' + prefix + "help page 3 | Admin commands")
+			.setDescription("/help page 3 | Admin commands")
 			.addFields(
-			{ name: prefix + client.commands.get('kickfs').name, value: client.commands.get('kickfs').description, inline: true },
-			{ name: prefix + client.commands.get('banfs').name, value: client.commands.get('banfs').description, inline: true },
-			{ name: prefix + client.commands.get('unbanfs').name, value: client.commands.get('unbanfs').description, inline: true },
-			{ name: prefix + client.commands.get('warn').name, value: client.commands.get('warn').description, inline: true },
-			{ name: prefix + client.commands.get('clear').name, value: client.commands.get('clear').description, inline: true },
+			{ name: "/serverkick", value: "Kicks a user from the server. A reason can be provided.", inline: true },
+			{ name: "/ban", value: "Bans a user from the server. A reason can be provided and the ban can be set to 'unappealable'", inline: true },
+			{ name: "/warn", value: "WIP", inline: true },
+			{ name: "/clear", value: "Clears an amount of messages that is provided.", inline: true },
 			)
 			.setTimestamp()
 
@@ -66,7 +65,7 @@ module.exports = {
 			.setColor('#ff0000')
 			.setTitle("Info help:")
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
-			.setDescription('' + prefix + "help page 4")
+			.setDescription("/help page 4")
 			.addFields(
 			{ name: "Who created me?", value: "DeadFry42#5445", inline: true },
 			{ name: "What is my purpose?", value: "My purpose is to keep the server's teams organised and to do other stuff related to this server.", inline: true },
