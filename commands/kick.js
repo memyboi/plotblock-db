@@ -24,8 +24,10 @@ module.exports = {
 		var reason = interaction.options.getString("reason")
 		if (!reason) {
 			console.log("aauudhdhdhdhdhdhdhdhdhdhdhedhasdfsdf")
-			user.send({content: "***You have been kicked by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThere is no reason given for such an outlandish action.\nYou can rejoin using the link you have used previously, if it is still active."}
-			) .then(() => {
+			user.send({
+				content: "***You have been kicked by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThere is no reason given for such an outlandish action.\nYou can rejoin using the link you have used previously, if it is still active."
+			}) .then(() => {
+				console.log("AAAAAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
 						console.log("uwuwuwuwwu2")
@@ -34,6 +36,7 @@ module.exports = {
 					})
 				})
 			}) .catch(() => {
+				console.log("AAAAsAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
 						console.log("uwuwuwuwwu22")
@@ -43,8 +46,10 @@ module.exports = {
 				})
 			})
 		} else {
-			user.send({content: "***You have been kicked by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThe reason given is: \n```"+reason+"```\nYou can rejoin using the link you have used previously, if it is still active."}
-			) .then(() => {
+			user.send({
+				content: "***You have been kicked by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!***\nThe reason given is: \n```"+reason+"```\nYou can rejoin using the link you have used previously, if it is still active."
+			}) .then(() => {
+				console.log("AAAAssAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
 						console.log("uwuwuwuwwu222")
@@ -54,6 +59,7 @@ module.exports = {
 					})
 				})
 			}) .catch(() => {
+				console.log("AAAAsssAE")
 				client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 					guild.members.fetch((member) => {
 						console.log("uwuwuwuwwu2222")
