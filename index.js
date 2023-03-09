@@ -12,8 +12,8 @@ const buildNum = 4
 
 //PLAYER LEVEL SETTINGS
 const plrlvlst = {
-  "minCashReward": 5,
-  "maxCashReward": 10,
+  "minCoinReward": 5,
+  "maxCoinReward": 10,
   "lvlMultiplier": 1.3,
   "lvlRewardMultiplier": 1.3,
   "minXpForLvlUp": 25
@@ -114,6 +114,10 @@ function setCharAt(str,index,chr) {
 
 const addLevel = async (userID, cLevel) => {
   console.log(parseInt(getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)))
+  console.log("cLevel ", cLevel)
+  console.log("mincr ", plrlvlst.minCoinReward)
+  console.log("maxcr ", plrlvlst.maxCoinReward)
+  console.log("lrm ", plrlvlst.lvlRewardMultiplier)
   try {
     const result = await plrSchema.findOneAndUpdate({
       userID
