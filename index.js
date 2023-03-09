@@ -120,8 +120,8 @@ const addLevel = async (userID, cLevel) => {
       userID,
       xp: 0,
       $inc: {
-        level: 1,
-        coins: getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)
+        lvls: 1,
+        cash: getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)
       }
     }, {
       upsert: true,
@@ -157,9 +157,9 @@ async function doXp(message) {
   let oCoins = 0
   const findRes = await plrSchema.find({ userID: message.author.id })
   try {
-    cLevel = findRes[0].level
+    cLevel = findRes[0].lvls
     cXp = findRes[0].xp
-    oCoins = findRes[0].coins
+    oCoins = findRes[0].cash
     let nextLvlUpThingy = ((cLevel * plrlvlst.lvlMultiplier) * plrlvlst.minXpForLvlUp)
     if (cXp >= nextLvlUpThingy) {
       //level up
@@ -167,7 +167,7 @@ async function doXp(message) {
       let nCoins
       const findRes2 = await plrSchema.find({ userID: message.author.id, guildId: message.guild.id })
       try {
-        nCoins = findRes2[0].coins
+        nCoins = findRes2[0].cash
       } catch(e) {
         console.log(e)
       }
@@ -185,7 +185,6 @@ client.on("messageCreate", async message => {
   if (message.guild && !message.author.bot) {
     if (getRandomArbitrary(1, 1) == 1) {
       doXp(message)
-      console.log("xp gained!!!!")
     }
   }
 })
