@@ -188,7 +188,7 @@ const prefix = '.';
 
 client.on("messageCreate", async message => {
   if (message.guild && !message.author.bot) {
-    if (getRandomArbitrary(1, 1) == 1) {
+    if (getRandomArbitrary(1, 3) == 1) {
       doXp(message)
     }
   }
