@@ -12,8 +12,8 @@ const buildNum = 4
 
 //PLAYER LEVEL SETTINGS
 const plrlvlst = {
-  "minCashReward": 1,
-  "maxCashReward": 1.5,
+  "minCashReward": 5,
+  "maxCashReward": 10,
   "lvlMultiplier": 1.3,
   "lvlRewardMultiplier": 1.3,
   "minXpForLvlUp": 25
