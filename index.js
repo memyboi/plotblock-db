@@ -177,7 +177,7 @@ async function doXp(message) {
         console.log(e)
       }
       coins = Math.floor(nCoins - oCoins)
-      message.author.send("**You've leveled up!**\n\nYou have leveled up to level " + (cLevel + 1) + "!\nYou now have " + nCoins + " cash!") 
+      message.author.send("**You've leveled up!**\n\nYou have leveled up to level " + (cLevel + 1) + "!\nYou now have " + nCoins + " cash! (+"+coins+")") 
     }
   } catch(e) {
     console.log(e)
