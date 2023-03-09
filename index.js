@@ -11,8 +11,13 @@ const devBuild = false
 const buildNum = 4
 
 //PLAYER LEVEL SETTINGS
-const plrlvlstjson = require("./plrLvlSettings.json")
-const plrlvlst = JSON.parse(plrlvlstjson)
+const plrlvlst = {
+  "minCashReward": 1,
+  "maxCashReward": 1.5,
+  "lvlMultiplier": 1.3,
+  "lvlRewardMultiplier": 1.3,
+  "minXpForLvlUp": 25
+}
 
 console.log(plrlvlst)
 
@@ -180,6 +185,7 @@ client.on("messageCreate", async message => {
   if (message.guild && !message.author.bot) {
     if (getRandomArbitrary(1, 3) == 1) {
       doXp(message)
+      console.log("xp gained!!!!")
     }
   }
 })
