@@ -4,12 +4,19 @@ const musername = process.env.mongouser
 const mpassword = process.env.mongopass
 const mongoose = require('mongoose')
 const url = `mongodb+srv://${musername}:${mpassword}@plotblock.7cigzsy.mongodb.net/test`
+const fs = require('fs');
 
 //BUILD SETTINGS
 const devBuild = false
 const buildNum = 4
 
-const xpSchema = require('./schema.js')
+//PLAYER LEVEL SETTINGS
+const plrlvlstjson = require("./plrLvlSettings.json")
+const plrlvlst = JSON.parse(plrlvlstjson)
+
+console.log(plrlvlst)
+
+const plrSchema = require('./schema.js')
 
 const Canvas = require('@napi-rs/canvas');
 const { GlobalFonts } = require('@napi-rs/canvas')
@@ -26,7 +33,7 @@ const client = new Client({
   GatewayIntentBits.GuildBans,
   ]
 });
-const fs = require('fs');
+
 const path = require('path');
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
@@ -100,18 +107,16 @@ function setCharAt(str,index,chr) {
   return str.substring(0,index) + chr + str.substring(index+1);
 }
 
-const addLevel = async (guildId, userId, cLevel) => {
+const addLevel = async (userId, cLevel) => {
   try {
-    const result = await xpSchema.findOneAndUpdate({
-      guildId,
+    const result = await plrSchema.findOneAndUpdate({
       userId
     }, {
-      guildId,
       userId,
       xp: 0,
       $inc: {
         level: 1,
-        coins: getRandomArbitrary(minCoinReward, maxCoinReward) * (lvlRewardMultiplier * cLevel)
+        coins: getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)
       }
     }, {
       upsert: true,
@@ -122,13 +127,11 @@ const addLevel = async (guildId, userId, cLevel) => {
   }
 }
 
-const addXP = async (guildId, userId, xpToAdd) => {
+const addXP = async (userId, xpToAdd) => {
   try {
-    const result = await xpSchema.findOneAndUpdate({
-      guildId,
+    const result = await plrSchema.findOneAndUpdate({
       userId
     }, {
-      guildId,
       userId,
       $inc: {
         xp: xpToAdd
@@ -142,45 +145,29 @@ const addXP = async (guildId, userId, xpToAdd) => {
   }
 }
 
-const savepersonalchatid = async (channelID, userID) => {
-  try {
-    const result = await xpSchema.findOneAndUpdate({
-      userID,
-    }, {
-      userID,
-      pchat: channelID,
-    }, {
-      upsert: true,
-      new: true
-    })
-  } catch(e) {
-    console.log(e)
-  }
-}
-
 async function doXp(message) {
-  addXP(message.guild.id, message.author.id, getRandomArbitrary(1, 5))
+  addXP(message.author.id, getRandomArbitrary(1, 3))
   let cLevel = 1
   let cXp = 0
   let oCoins = 0
-  const findRes = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
+  const findRes = await plrSchema.find({ userId: message.author.id, guildId: message.guild.id })
   try {
     cLevel = findRes[0].level
     cXp = findRes[0].xp
     oCoins = findRes[0].coins
-    let nextLvlUpThingy = ((cLevel * lvlMultiplier) * minXpForLvlUp)
+    let nextLvlUpThingy = ((cLevel * plrlvlst.lvlMultiplier) * plrlvlst.minXpForLvlUp)
     if (cXp >= nextLvlUpThingy) {
       //level up
-      addLevel(message.guild.id, message.author.id, cLevel)
+      addLevel(message.author.id, cLevel)
       let nCoins
-      const findRes2 = await xpSchema.find({ userId: message.author.id, guildId: message.guild.id })
+      const findRes2 = await plrSchema.find({ userId: message.author.id, guildId: message.guild.id })
       try {
         nCoins = findRes2[0].coins
       } catch(e) {
         console.log(e)
       }
       coins = Math.floor(nCoins - oCoins)
-      message.author.send("**You've leveled up!**\n\nYou have levelled up to level " + (cLevel + 1) + "!\nYou now have " + nCoins + " Jet2 Points!") 
+      message.author.send("**You've leveled up!**\n\nYou have leveled up to level " + (cLevel + 1) + "!\nYou now have " + nCoins + " cash!") 
     }
   } catch(e) {
     console.log(e)
@@ -190,13 +177,10 @@ async function doXp(message) {
 const prefix = '.';
 
 client.on("messageCreate", async message => {
-  if (!message.guild) return
-  if (message.guild.id != guildId) return
-  if (message.content.toLowerCase().startsWith(prefix) && !message.author.bot) {
-    let lowerargs = message.content.substring(prefix.length).toLowerCase().split(" ")
-    let args = message.content.substring(prefix.length).split(" ")
-  } else {
-    if (message.author.bot) return;
+  if (message.guild && !message.author.bot) {
+    if (getRandomArbitrary(1, 3) == 1) {
+      doXp(message)
+    }
   }
 })
 

@@ -1,0 +1,7 @@
+{
+    "minCashReward": 1,
+    "maxCashReward": 1.5,
+    "lvlMultiplier": 1.3,
+    "lvlRewardMultiplier": 1.3,
+    "minXpForLvlUp": 25
+}

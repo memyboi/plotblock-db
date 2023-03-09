@@ -8,6 +8,10 @@ const rString = {
 
 const schema = new mongoose.Schema({
   userID: rString,
+  minecraftUUID: {
+    type: String,
+    default: ""
+  },
   teamID: {
     type: String,
     default: 0,
