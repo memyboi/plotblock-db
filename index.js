@@ -112,12 +112,12 @@ function setCharAt(str,index,chr) {
   return str.substring(0,index) + chr + str.substring(index+1);
 }
 
-const addLevel = async (userId, cLevel) => {
+const addLevel = async (userID, cLevel) => {
   try {
     const result = await plrSchema.findOneAndUpdate({
-      userId
+      userID
     }, {
-      userId,
+      userID,
       xp: 0,
       $inc: {
         level: 1,
@@ -132,12 +132,12 @@ const addLevel = async (userId, cLevel) => {
   }
 }
 
-const addXP = async (userId, xpToAdd) => {
+const addXP = async (userID, xpToAdd) => {
   try {
     const result = await plrSchema.findOneAndUpdate({
-      userId
+      userID
     }, {
-      userId,
+      userID,
       $inc: {
         xp: xpToAdd
       }
@@ -155,7 +155,7 @@ async function doXp(message) {
   let cLevel = 1
   let cXp = 0
   let oCoins = 0
-  const findRes = await plrSchema.find({ userId: message.author.id, guildId: message.guild.id })
+  const findRes = await plrSchema.find({ userID: message.author.id })
   try {
     cLevel = findRes[0].level
     cXp = findRes[0].xp
@@ -165,7 +165,7 @@ async function doXp(message) {
       //level up
       addLevel(message.author.id, cLevel)
       let nCoins
-      const findRes2 = await plrSchema.find({ userId: message.author.id, guildId: message.guild.id })
+      const findRes2 = await plrSchema.find({ userID: message.author.id, guildId: message.guild.id })
       try {
         nCoins = findRes2[0].coins
       } catch(e) {
