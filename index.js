@@ -113,6 +113,7 @@ function setCharAt(str,index,chr) {
 }
 
 const addLevel = async (userID, cLevel) => {
+  console.log(parseInt(getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)))
   try {
     const result = await plrSchema.findOneAndUpdate({
       userID
@@ -121,7 +122,7 @@ const addLevel = async (userID, cLevel) => {
       xp: 0,
       $inc: {
         lvls: 1,
-        cash: getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel)
+        cash: parseInt(getRandomArbitrary(plrlvlst.minCoinReward, plrlvlst.maxCoinReward) * (plrlvlst.lvlRewardMultiplier * cLevel))
       }
     }, {
       upsert: true,
