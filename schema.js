@@ -30,7 +30,7 @@ const schema = new mongoose.Schema({
   },
   lvls: {
     type: Number,
-    default: 0,
+    default: 1,
   },
 })
 module.exports = mongoose.model('plrdata', schema, 'plrdata')
