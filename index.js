@@ -259,6 +259,8 @@ client.on("guildMemberAdd", async function(member){
           content: "**Welcome to Plot Block [LIFESTEAL]!**\n\nWe hope you have a good time here!\nPlease click on the button below to begin the first step of the verification process!",
           components: [a]
         })
+        var talkrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
+        member.roles.add(talkrole)
       })
     })
 })
@@ -413,8 +415,10 @@ client.on('interactionCreate', async interaction => {
       client.guilds.fetch("" + process.env.guildid) .then((guild) => {
         const memberMesure = guild.members.cache.get("" + interaction.user.id);
         if (memberMesure) {
-          let role = guild.roles.cache.find(role => role.name == "verified bozo");
+          let role = guild.roles.cache.find(role => role.id == "1022631935614406730");
           memberMesure.roles.add(role)
+          var talkrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
+          if (!memberMesure.roles.cache.some(talkrole)) memberMesure.roles.add(talkrole)
         }
       })
     } else if (interaction.customId == "dectos") {
