@@ -24,6 +24,7 @@ const muteuser = function(time, user, client) {
 			if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id = "1084582068316549252")) {
 				member.roles.remove(talkingrole)
 				member.roles.add(role)
+				user.send({content:"Because you have recieved too many warnings, you have been muted for "+ms(time)+"."})
 				setTimeout(() => {
 					if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id = "1084582068316549252")) {
 						member.roles.remove(role)
