@@ -40,6 +40,8 @@ module.exports = {
 					member.roles.add(talkingrole)
 					interaction.reply({content: "User has been unmuted.", ephemeral: true})
 					user.send({content: "*You have been unmuted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nPlease do re-read the rules so you do not get punished again."})
+				} else {
+					interaction.reply({content: "This user may not be muted!", ephemeral: true})
 				}
 			})
 		})
