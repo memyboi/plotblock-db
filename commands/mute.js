@@ -48,7 +48,7 @@ module.exports = {
 			guild.members.fetch(""+user.id) .then((member) => {
 				if (length) {
 					var timeout = ms(length)
-					if (!member.roles.cache.some(role => role) && member.roles.cache.some(role => talkingrole)) {
+					if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id = "1084582068316549252")) {
 						//not muted, mute
 						member.roles.remove(talkingrole)
 						member.roles.add(role)
@@ -77,7 +77,7 @@ module.exports = {
 						interaction.reply({content: "User may already be muted!", ephemeral: true})
 					}
 				} else {
-					if (!member.roles.cache.some(role => role) && member.roles.cache.some(role => talkingrole)) {
+					if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id == "1084582068316549252")) {
 						//not muted, mute
 						member.roles.remove(talkingrole)
 						member.roles.add(role)
