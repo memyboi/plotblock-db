@@ -1,5 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 
+let warn = class {
+    constructor(
+        reason,
+		id,
+		timestamp
+        ) {
+
+        this.reason = reason
+		this.timestamp = timestamp
+		this.id = id
+      }
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,7 +42,29 @@ module.exports = {
 			user.send({content: "*You have been warned by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."})
 			interaction.reply({content: "User has been warned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 		}
-		// this part will add a record of this into the users data
-		// return to this when data is being worked on.
+		const UserID = user.id
+		const plrSchema = require("../schema.js")
+		const id = (new Date()).getTime()
+		if (!reason) reason = "There is no reason."
+		try {
+			const result = await plrSchema.findOneAndUpdate({
+				userID
+			}, {
+				userID,
+				$addToSet: {
+					warns: new warn(
+						reason,
+						id,
+						"UTC+00 s/mi/h/d/mo/y: "+(new Date()).getUTCSeconds()+":"+(new Date()).getUTCMinutes()+":"+(new Date()).getUTCHours()+":"+(new Date()).getUTCDay()+":"+(new Date()).getUTCMonth()+":"+(new Date()).getUTCFullYear()
+					)
+				}
+			}, {
+				upsert: true,
+				new: true
+			})
+			console.log(result)
+		} catch(e) {
+			console.log(e)
+		}
 	},
 };

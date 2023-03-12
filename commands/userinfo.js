@@ -31,7 +31,7 @@ module.exports = {
 
 					const exampleEmbed = new EmbedBuilder()
 						.setAuthor({ name: user.username, iconURL: member.displayAvatarURL()})
-						.setDescription(`${user.username}'s information:\n> minecraft name => ${mcname}\n> team => ${teamname}\n> cash => ${cash}\n> xp => ${xp}\n> lvls => ${lvls}\n> roles => ${memberRoles}`)
+						.setDescription(`${user.username}'s information:\n> minecraft name => ${mcname}\n> team => ${teamname}\n> cash => `+"$"+`${cash}\n> xp => X:${xp}\n> lvls => L:${lvls}\n> roles => ${memberRoles}`)
 						.setColor("#ff0000")
 					
 					interaction.reply({embeds: [exampleEmbed], ephemeral: true});
