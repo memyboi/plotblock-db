@@ -42,7 +42,7 @@ module.exports = {
 			user.send({content: "*You have been warned by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."})
 			interaction.reply({content: "User has been warned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 		}
-		const UserID = user.id
+		const userID = user.id
 		const plrSchema = require("../schema.js")
 		const id = (new Date()).getTime()
 		if (!reason) reason = "There is no reason."
