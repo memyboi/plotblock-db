@@ -40,7 +40,7 @@ module.exports = {
 	async execute(interaction, client) {
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
-		var length = interaction.options.getString("length")
+		var length = interaction.options.getString("time")
 		
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
