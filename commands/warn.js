@@ -55,7 +55,7 @@ module.exports = {
 					warns: new warn(
 						reason,
 						id,
-						"UTC+00 s/mi/h/d/mo/y: "+(new Date()).getUTCSeconds()+":"+(new Date()).getUTCMinutes()+":"+(new Date()).getUTCHours()+":"+(new Date()).getUTCDay()+":"+(new Date()).getUTCMonth()+":"+(new Date()).getUTCFullYear()
+						"UTC+00 s/mi/h/d/mo/y: "+(new Date()).getUTCSeconds()+":"+(new Date()).getUTCMinutes()+":"+(new Date()).getUTCHours()+":"+(new Date()).getDay()+":"+(new Date()).getUTCMonth()+":"+(new Date()).getUTCFullYear()
 					)
 				}
 			}, {
