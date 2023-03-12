@@ -58,6 +58,8 @@ module.exports = {
 			{ name: "/ban", value: "Bans a user from the server. A reason can be provided and the ban can be set to 'unappealable'", inline: true },
 			{ name: "/warn", value: "Warns a user for misbehaving. A reason can be provided.", inline: true },
 			{ name: "/clear", value: "Clears an amount of messages that is provided.", inline: true },
+			{ name: "/mute", value: "Mutes a user for a reason and an optional amount of time.", inline: true },
+			{ name: "/unmute", value: "Unmutes a user.", inline: true },
 			)
 			.setTimestamp()
 

@@ -1,9 +1,10 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const ms = require("ms");
 
-let warn = class {
+let mute = class {
     constructor(
         reason,
+		length,
 		id,
 		timestamp
         ) {
@@ -11,6 +12,7 @@ let warn = class {
         this.reason = reason
 		this.timestamp = timestamp
 		this.id = id
+		this.length = length
       }
 }
 
@@ -106,6 +108,32 @@ module.exports = {
 				
 			})
 		})
-		
+		const userID = user.id
+		const plrSchema = require("../schema.js")
+		const id = (new Date()).getTime()
+		if (!reason) reason = "There is no reason."
+		if (!length) length = "Permanent"
+		if (length) length = ms(ms(length))
+		try {
+			const result = await plrSchema.findOneAndUpdate({
+				userID
+			}, {
+				userID,
+				$addToSet: {
+					mutes: new mute(
+						reason,
+						length,
+						id,
+						"UTC+00 s/mi/h/d/mo/y: "+(new Date()).getUTCSeconds()+":"+(new Date()).getUTCMinutes()+":"+(new Date()).getUTCHours()+":"+(new Date()).getDay()+":"+(new Date()).getUTCMonth()+":"+(new Date()).getUTCFullYear()
+					)
+				}
+			}, {
+				upsert: true,
+				new: true
+			})
+			console.log(result)
+		} catch(e) {
+			console.log(e)
+		}
 	},
 };

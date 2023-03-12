@@ -24,6 +24,18 @@ const schema = new mongoose.Schema({
     type: Array,
     default: undefined
   },
+  mutes: {
+    type: Array,
+    default: undefined
+  },
+  kicks: {
+    type: Array,
+    default: undefined
+  },
+  bans: {
+    type: Array,
+    default: undefined
+  },
   cash: {
     type: Number,
     default: 0,
