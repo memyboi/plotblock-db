@@ -32,7 +32,7 @@ module.exports = {
 		.addStringOption(option => 
 			option
 				.setName("time")
-				.setDescription("The amount of time that the member should be muted for")
+				.setDescription("The amount of time that the member should be muted for.")
 			)
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
 		.setDMPermission(false)
@@ -41,6 +41,10 @@ module.exports = {
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
 		var length = interaction.options.getString("time")
+
+		console.log("length: "+length)
+		console.log("length ms1: "+ms(length))
+		console.log("length ms2: "+ms(ms(length)))
 		
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
