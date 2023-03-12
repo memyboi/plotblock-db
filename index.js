@@ -417,8 +417,7 @@ client.on('interactionCreate', async interaction => {
         if (memberMesure) {
           let role = guild.roles.cache.find(role => role.id == "1022631935614406730");
           memberMesure.roles.add(role)
-          var talkrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
-          if (!memberMesure.roles.cache.some(talkrole)) memberMesure.roles.add(talkrole)
+          if (!memberMesure.roles.cache.some(role => role.id == "1084582068316549252")) memberMesure.roles.add(talkrole)
         }
       })
     } else if (interaction.customId == "dectos") {
