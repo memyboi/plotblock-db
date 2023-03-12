@@ -16,12 +16,12 @@ let warn = class {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('mute')
-		.setDescription('Mute a user for a reason.')
+		.setName('unmute')
+		.setDescription('Unmute a user for a reason.')
 		.addUserOption(option => 
 			option
 				.setName("user")
-				.setDescription("The user to mute.")
+				.setDescription("The user to unmute.")
 				.setRequired(true)
 			)
 		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
