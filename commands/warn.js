@@ -28,7 +28,7 @@ module.exports = {
 				.setName("reason")
 				.setDescription("The reason to warn this user.")
 			)
-		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers)
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {

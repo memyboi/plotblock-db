@@ -36,7 +36,7 @@ module.exports = {
 				.setName("time")
 				.setDescription("The amount of time that the member should be muted for.")
 			)
-		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
+		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers)
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {
