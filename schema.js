@@ -49,7 +49,7 @@ const schema = new mongoose.Schema({
     default: 1,
   },
   verifytimestamp: {
-    type: string,
+    type: String,
     default: "0",
   },
 })
