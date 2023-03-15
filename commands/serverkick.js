@@ -1,5 +1,17 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 
+let kick = class {
+    constructor(
+        reason,
+		id,
+		timestamp
+        ) {
+
+        this.reason = reason
+		this.timestamp = timestamp
+		this.id = id
+      }
+}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -69,6 +81,28 @@ module.exports = {
 				})
 			})
 		}
-		
+		const userID = user.id
+		const plrSchema = require("../schema.js")
+		const id = (new Date()).getTime()
+		if (!reason) reason = "There is no reason."
+		try {
+			await plrSchema.findOneAndUpdate({
+				userID
+			}, {
+				userID,
+				$addToSet: {
+					kicks: new kick(
+						reason,
+						id,
+						"UTC+00 s/mi/h/d/mo/y: "+(new Date()).getUTCSeconds()+":"+(new Date()).getUTCMinutes()+":"+(new Date()).getUTCHours()+":"+(new Date()).getDate()+":"+(new Date()).getUTCMonth()+":"+(new Date()).getUTCFullYear()
+					)
+				}
+			}, {
+				upsert: true,
+				new: true
+			})
+		} catch(e) {
+			console.log(e)
+		}
 	},
 };

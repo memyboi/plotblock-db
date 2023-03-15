@@ -48,5 +48,9 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
+  verifytimestamp: {
+    type: string,
+    default: "0",
+  },
 })
 module.exports = mongoose.model('plrdata', schema, 'plrdata')
