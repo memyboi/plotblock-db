@@ -168,9 +168,7 @@ module.exports = {
                     console.log("txtle: ",txt.length)
                     console.log("mle: ", maxlength)
                     if (txt.length > maxlength) {
-                        txt.substring(0, maxlength - 3)
-                        console.log("UUWsAdSsS")
-                        return txt+"..."
+                        return txt.substring(0, maxlength - 3)+"..."
                     } else {
                         console.log("assdsad")
                         return txt
