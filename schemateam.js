@@ -24,6 +24,10 @@ const schema = new mongoose.Schema({
     type: String,
     default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
   },
+  teamDesc: {
+    type: String,
+    default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
+  },
   allies: {
     type: Array,
     default: undefined
