@@ -42,9 +42,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
 			.setDescription("/help page 2 | Team commands")
 			.addFields(
-			{ name: "/join", value: "WIP", inline: true },
-			{ name: "/leave", value: "WIP", inline: true },
-			{ name: "/kick", value: "WIP", inline: true },
+			{ name: "/clan", value: "WIP", inline: true },
 			)
 			.setTimestamp()
 
@@ -54,7 +52,7 @@ module.exports = {
 			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
 			.setDescription("/help page 3 | Admin commands")
 			.addFields(
-			{ name: "/serverkick", value: "Kicks a user from the server. A reason can be provided.", inline: true },
+			{ name: "/kick", value: "Kicks a user from the server. A reason can be provided.", inline: true },
 			{ name: "/ban", value: "Bans a user from the server. A reason can be provided and the ban can be set to 'unappealable'", inline: true },
 			{ name: "/warn", value: "Warns a user for misbehaving. A reason can be provided.", inline: true },
 			{ name: "/clear", value: "Clears an amount of messages that is provided.", inline: true },
