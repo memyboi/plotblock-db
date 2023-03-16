@@ -173,7 +173,7 @@ module.exports = {
                         {name: (page*10) - 3+"> "+t7, value: " "},
                         {name: (page*10) - 2+"> "+t8, value: " "},
                         {name: (page*10) - 1+"> "+t9, value: " "},
-                        {name: (page*10)+"> "+t10, value: ""},
+                        {name: (page*10)+"> "+t10, value: " "},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
