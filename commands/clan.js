@@ -164,15 +164,15 @@ module.exports = {
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+(page*10)-9+"-"+page*10)
                     .addFields(
-                        {name: (page*10) - 9+"> "+t1, value: ""},
-                        {name: (page*10) - 8+"> "+t2, value: ""},
-                        {name: (page*10) - 7+"> "+t3, value: ""},
-                        {name: (page*10) - 6+"> "+t4, value: ""},
-                        {name: (page*10) - 5+"> "+t5, value: ""},
-                        {name: (page*10) - 4+"> "+t6, value: ""},
-                        {name: (page*10) - 3+"> "+t7, value: ""},
-                        {name: (page*10) - 2+"> "+t8, value: ""},
-                        {name: (page*10) - 1+"> "+t9, value: ""},
+                        {name: (page*10) - 9+"> "+t1, value: " "},
+                        {name: (page*10) - 8+"> "+t2, value: " "},
+                        {name: (page*10) - 7+"> "+t3, value: " "},
+                        {name: (page*10) - 6+"> "+t4, value: " "},
+                        {name: (page*10) - 5+"> "+t5, value: " "},
+                        {name: (page*10) - 4+"> "+t6, value: " "},
+                        {name: (page*10) - 3+"> "+t7, value: " "},
+                        {name: (page*10) - 2+"> "+t8, value: " "},
+                        {name: (page*10) - 1+"> "+t9, value: " "},
                         {name: (page*10)+"> "+t10, value: ""},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})

@@ -16,6 +16,10 @@ const schema = new mongoose.Schema({
     type: String,
     default: 0
   },
+  users: {
+    type: Array,
+    default: undefined
+  },
   teamName: {
     type: String,
     default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
