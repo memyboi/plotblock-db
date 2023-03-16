@@ -101,7 +101,7 @@ module.exports = {
 		,
 	async execute(interaction, client) {
 		var cmd = interaction.options.getSubcommand()
-        if (interaction.user.username != "DeadFry42") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however."})
+        if (interaction.user.username != "DeadFry42" || interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
         if (cmd == "list") {
             //list all clans. top 10, multiple pages
         } else if (cmd == "info") {
