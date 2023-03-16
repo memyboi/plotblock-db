@@ -164,6 +164,8 @@ module.exports = {
                 try { var a = result[(page*10) - 1].teamName; var b = result[(page*10) - 1].teamDesc; if (!a) {t10 = ""} else {t10 = a} if (!b) {d10 = " "} else {d10 = b} } catch(e) {}
                 const truncateText = function(txt, maxlength) {
                     if (!txt) return " "
+                    console.log("txtle: ",txt.length)
+                    console.log("mle: ", maxlength)
                     if (txt.length > maxlength) {
                         txt.substring(0, maxlength - 3)
                         console.log("UUWsAdSsS")
