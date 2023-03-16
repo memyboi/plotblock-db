@@ -15,7 +15,7 @@ let kick = class {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('serverkick')
+		.setName('kick')
 		.setDescription('Kicks a player for a reason.')
 		.addUserOption(option => 
 			option

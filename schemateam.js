@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
   },
   teamName: {
     type: String,
-    default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShBDSPPLASV"
+    default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
   },
   allies: {
     type: Array,
@@ -29,6 +29,10 @@ const schema = new mongoose.Schema({
     default: undefined
   },
   wars: {
+    type: Array,
+    default: undefined
+  },
+  blacklist: {
     type: Array,
     default: undefined
   },
