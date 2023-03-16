@@ -162,11 +162,12 @@ module.exports = {
                 try { var a = result[(page*10) - 1].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
                 try { var a = result[(page*10)].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
                 const getpropertext = function(offset, string) {
-                    if (nothinInnit) return " "
-                    if (!string) { if (offset == 9 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return } }
-                    var currentmax = (page*10)
-                    var num = currentmax - offset
-                    return "> "+num+" - "+string
+                    if (!nothinInnit) {
+                        if (!string) { if (offset == 9 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return " "} }
+                        var currentmax = (page*10)
+                        var num = currentmax - offset
+                        return "> "+num+" - "+string
+                    }
                 }
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
