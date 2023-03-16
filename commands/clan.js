@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
 const { off } = require('process');
 
 module.exports = {
@@ -209,10 +209,14 @@ module.exports = {
                     .setCustomId("goleftclanpage-"+page)
                     .setEmoji("⬅️")
                     .setDisabled(checkifpossible(11))
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("")
                 var right = new ButtonBuilder()
                     .setCustomId("gorightclanpage-"+page)
                     .setEmoji("➡️")
                     .setDisabled(checkifpossible(-1))
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("")
                 interaction.reply({embeds: [embed], components: [left, right], ephemeral: true})
             } else {
                 interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
