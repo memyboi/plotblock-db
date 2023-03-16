@@ -163,11 +163,13 @@ module.exports = {
                 try { var a = result[(page*10) - 2].teamName; var b = result[(page*10) - 2].teamDesc; if (!a) {t9 = ""} else {t9 = a} if (!b) {d9 = " "} else {d9 = b} }  catch(e) {}
                 try { var a = result[(page*10) - 1].teamName; var b = result[(page*10) - 1].teamDesc; if (!a) {t10 = ""} else {t10 = a} if (!b) {d10 = " "} else {d10 = b} } catch(e) {}
                 const truncateText = function(txt, maxlength) {
+                    if (!txt) return " "
                     if (txt.length > maxlength) {
                         txt.substring(0, maxlength - 3)
                         console.log("UUWsAdSsS")
                         return txt+"..."
                     } else {
+                        console.log("assdsad")
                         return txt
                     }
                 }
