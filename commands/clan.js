@@ -43,6 +43,16 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand
+                .setName("kick")
+                .setDescription("Kick a user out of your clan.")
+                .addUserOption(option =>
+                    option
+                        .setName("user")
+                        .setDescription("The person to kick out of the clan.")
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
                 .setName("disband")
                 .setDescription("Disband your own clan.")
         )
@@ -96,33 +106,103 @@ module.exports = {
                         .setRequired(true)
                 )
         )
+        .addSubcommandGroup(subcommandgroup =>
+            subcommandgroup
+                .setName("blacklist")
+                .setDescription("Disable someones ability to request to join your clan.")
+                .addSubcommand(subcommand =>
+                    subcommand
+                        .setName("add")
+                        .setDescription("Add anyone to your clans blacklist")
+                        .addUserOption(option =>
+                            option
+                                .setName("user")
+                                .setDescription("The user to blacklist from your clan.")
+                        )
+                )
+                .addSubcommand(subcommand =>
+                    subcommand
+                        .setName("remove")
+                        .setDescription("Remove anyone from your clans blacklist")
+                        .addUserOption(option =>
+                            option
+                                .setName("user")
+                                .setDescription("The user to unblacklist from your clan.")
+                        )
+                )
+        )
 		.setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {
+        var cmdg = interaction.options.getSubcommandGroup()
 		var cmd = interaction.options.getSubcommand()
+        const teamschema = require("../schemateam.js")
+        const plrschema = require("../schema.js")
+        //temp:
         if (interaction.user.username != "DeadFry42" || interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
+
         if (cmd == "list") {
-            //list all clans. top 10, multiple pages
+            const result = await teamschema.find()
+            var page = 1
+            //10 results per page
+
+            if (result) {
+                var embed = new EmbedBuilder()
+                    .setTitle("All clans (Page "+page+")")
+                    .setDescription("Page "+page+": "+(page*10)-9+"-"+page*10)
+                    .addFields(
+                        {name: (page*10) - 9+"> "+result[(page*10) - 9].teamName, value: ""},
+                        {name: (page*10) - 8+"> "+result[(page*10) - 8].teamName, value: ""},
+                        {name: (page*10) - 7+"> "+result[(page*10) - 7].teamName, value: ""},
+                        {name: (page*10) - 6+"> "+result[(page*10) - 6].teamName, value: ""},
+                        {name: (page*10) - 5+"> "+result[(page*10) - 5].teamName, value: ""},
+                        {name: (page*10) - 4+"> "+result[(page*10) - 4].teamName, value: ""},
+                        {name: (page*10) - 3+"> "+result[(page*10) - 3].teamName, value: ""},
+                        {name: (page*10) - 2+"> "+result[(page*10) - 2].teamName, value: ""},
+                        {name: (page*10) - 1+"> "+result[(page*10) - 1].teamName, value: ""},
+                        {name: (page*10)+"> "+result[(page*10)].teamName, value: ""},
+                    )
+                interaction.reply({embeds: [embed], ephemeral: true})
+            } else {
+                interaction.reply({content: "There is no clan data!", ephemeral: true})
+            }
         } else if (cmd == "info") {
+            //string "clan"
             //make an embed with clan info.
         }else if (cmd == "create") {
-            //create a clan, needs 2 be lvl 5, costs 250 cash
+            //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
         } else if (cmd == "join") {
+            //string "clan"
             //send a req to join a clan, needs 2 be lvl 3 to do so.
         } else if (cmd == "leave") {
-            //leave a clan. cannot be urs
+            //leave a clan. cannot be urs. make a confirmation message before you leaved
+        } else if (cmd == "kick") {
+            //user "user"
+            //kick a user out of ur clan. u have to own clan.
         } else if (cmd == "disband") {
             //remove clan. has to be urs. make a confirmation message before you disband. twice.
         } else if (cmd == "war") {
+            //string "clan"
             //start war w/ another clan. u have to own a clan. make a confirmation message before you start war.
         } else if (cmd == "ally") {
+            //string "clan"
             //ally w/ another clan. u have to own clan. make a confirmation message before you ally.
         } else if (cmd == "unally") {
+            //string "clan"
             //break ties w/ another clan. u have to own clan. make a confirmation message before you unally.
         } else if (cmd == "settings") {
+            //string "setting"
+            //string "value"
             //change some settings abt the clan. u have to own clan
+        } else if (cmdg == "blacklist") {
+            if (cmd == "add") {
+                //user "user"
+                //add a user to the clans blacklist. u have to own.
+            } else if (cmd == "remove") {
+                //user "user"
+                //remove a user from the clans blacklist. u have to own.
+            }
         }
-        
 	},
 };
