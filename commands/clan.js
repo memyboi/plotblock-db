@@ -140,7 +140,7 @@ module.exports = {
         const teamschema = require("../schemateam.js")
         const plrschema = require("../schema.js")
         //temp:
-        if (interaction.user.username != "DeadFry42" || interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
+        if (interaction.user.username != "DeadFry42" && interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
 
         if (cmd == "list") {
             const result = await teamschema.find()
@@ -148,20 +148,30 @@ module.exports = {
             //10 results per page
 
             if (result) {
+                var t1 = result[(page*10) - 9].teamName; if (!t1) {t1 = ""}
+                var t2 = result[(page*10) - 8].teamName; if (!t2) {t2 = ""}
+                var t3 = result[(page*10) - 7].teamName; if (!t3) {t3 = ""}
+                var t4 = result[(page*10) - 6].teamName; if (!t4) {t4 = ""}
+                var t5 = result[(page*10) - 5].teamName; if (!t5) {t5 = ""}
+                var t6 = result[(page*10) - 4].teamName; if (!t6) {t6 = ""}
+                var t7 = result[(page*10) - 3].teamName; if (!t7) {t7 = ""}
+                var t8 = result[(page*10) - 2].teamName; if (!t8) {t8 = ""}
+                var t9 = result[(page*10) - 1].teamName; if (!t9) {t9 = ""}
+                var t10 = result[(page*10)].teamName; if (!t10) {t10 = ""}
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+(page*10)-9+"-"+page*10)
                     .addFields(
-                        {name: (page*10) - 9+"> "+result[(page*10) - 9].teamName, value: ""},
-                        {name: (page*10) - 8+"> "+result[(page*10) - 8].teamName, value: ""},
-                        {name: (page*10) - 7+"> "+result[(page*10) - 7].teamName, value: ""},
-                        {name: (page*10) - 6+"> "+result[(page*10) - 6].teamName, value: ""},
-                        {name: (page*10) - 5+"> "+result[(page*10) - 5].teamName, value: ""},
-                        {name: (page*10) - 4+"> "+result[(page*10) - 4].teamName, value: ""},
-                        {name: (page*10) - 3+"> "+result[(page*10) - 3].teamName, value: ""},
-                        {name: (page*10) - 2+"> "+result[(page*10) - 2].teamName, value: ""},
-                        {name: (page*10) - 1+"> "+result[(page*10) - 1].teamName, value: ""},
-                        {name: (page*10)+"> "+result[(page*10)].teamName, value: ""},
+                        {name: (page*10) - 9+"> "+t1, value: ""},
+                        {name: (page*10) - 8+"> "+t2, value: ""},
+                        {name: (page*10) - 7+"> "+t3, value: ""},
+                        {name: (page*10) - 6+"> "+t4, value: ""},
+                        {name: (page*10) - 5+"> "+t5, value: ""},
+                        {name: (page*10) - 4+"> "+t6, value: ""},
+                        {name: (page*10) - 3+"> "+t7, value: ""},
+                        {name: (page*10) - 2+"> "+t8, value: ""},
+                        {name: (page*10) - 1+"> "+t9, value: ""},
+                        {name: (page*10)+"> "+t10, value: ""},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
