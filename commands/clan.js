@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, PermissionFlagsBits } = require('discord.js');
+const { off } = require('process');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -182,6 +183,9 @@ module.exports = {
                         return "> "+num+" - "+string
                     }
                 }
+                const checkifpossible = function(offset) {
+                    if (result[(page*10)-offset].teamName) {return false} else {return true}
+                }
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
@@ -200,15 +204,11 @@ module.exports = {
                 var left = new ButtonBuilder()
                     .setCustomId("goleftclanpage-"+page)
                     .setEmoji("⬅️")
-                    .setDisabled(() => {
-                        if (result[(page*10)-11].teamName) {return false} else {return true}
-                    })
+                    .setDisabled(checkifpossible(11))
                 var right = new ButtonBuilder()
                     .setCustomId("gorightclanpage-"+page)
                     .setEmoji("➡️")
-                    .setDisabled(() => {
-                        if (result[(page*10)+1].teamName) {return false} else {return true}
-                    })
+                    .setDisabled(checkifpossible(-1))
                 interaction.reply({embeds: [embed], components: [left, right], ephemeral: true})
             } else {
                 interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
