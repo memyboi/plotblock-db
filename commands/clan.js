@@ -160,20 +160,25 @@ module.exports = {
                 try { var a = result[(page*10) - 2].teamName; if (!a) {t8 = ""} else {t8 = a} } catch(e) {}
                 try { var a = result[(page*10) - 1].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
                 try { var a = result[(page*10)].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
+                const getpropertext = function(offset, string) {
+                    var currentmax = (page*10)
+                    var num = currentmax - offset
+                    return "> "+num+" - "+string
+                }
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
-                    .setDescription("Page "+page+": "+(page*10)-9+"-"+page*10)
+                    .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
                     .addFields(
-                        {name: (page*10) - 9+"> "+t1, value: " "},
-                        {name: (page*10) - 8+"> "+t2, value: " "},
-                        {name: (page*10) - 7+"> "+t3, value: " "},
-                        {name: (page*10) - 6+"> "+t4, value: " "},
-                        {name: (page*10) - 5+"> "+t5, value: " "},
-                        {name: (page*10) - 4+"> "+t6, value: " "},
-                        {name: (page*10) - 3+"> "+t7, value: " "},
-                        {name: (page*10) - 2+"> "+t8, value: " "},
-                        {name: (page*10) - 1+"> "+t9, value: " "},
-                        {name: (page*10)+"> "+t10, value: " "},
+                        {name: getpropertext(9, t1), value: " "},
+                        {name: getpropertext(8, t2), value: " "},
+                        {name: getpropertext(7, t3), value: " "},
+                        {name: getpropertext(6, t4), value: " "},
+                        {name: getpropertext(5, t5), value: " "},
+                        {name: getpropertext(4, t6), value: " "},
+                        {name: getpropertext(3, t7), value: " "},
+                        {name: getpropertext(2, t8), value: " "},
+                        {name: getpropertext(1, t9), value: " "},
+                        {name: getpropertext(0, t10), value: " "},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
