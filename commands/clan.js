@@ -151,19 +151,19 @@ module.exports = {
             if (result) {
                 var nothinInnit = false
                 var t1 = ""; var t2 = ""; var t3 = ""; var t4 = ""; var t5 = ""; var t6 = ""; var t7 = ""; var t8 = ""; var t9 = ""; var t10 = "";
-                try { var a = result[(page*10) - 9].teamName; if (!a) {t1 = ""} else {t1 = a} } catch(e) {}
-                try { var a = result[(page*10) - 8].teamName; if (!a) {t2 = ""} else {t2 = a} } catch(e) {}
-                try { var a = result[(page*10) - 7].teamName; if (!a) {t3 = ""} else {t3 = a} } catch(e) {}
-                try { var a = result[(page*10) - 6].teamName; if (!a) {t4 = ""} else {t4 = a} } catch(e) {}
-                try { var a = result[(page*10) - 5].teamName; if (!a) {t5 = ""} else {t5 = a} } catch(e) {}
-                try { var a = result[(page*10) - 4].teamName; if (!a) {t6 = ""} else {t6 = a} } catch(e) {}
-                try { var a = result[(page*10) - 3].teamName; if (!a) {t7 = ""} else {t7 = a} } catch(e) {}
-                try { var a = result[(page*10) - 2].teamName; if (!a) {t8 = ""} else {t8 = a} } catch(e) {}
-                try { var a = result[(page*10) - 1].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
-                try { var a = result[(page*10)].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
+                try { var a = result[(page*10) - 10].teamName; if (!a) {t1 = ""} else {t1 = a} } catch(e) {}
+                try { var a = result[(page*10) - 9].teamName; if (!a) {t2 = ""} else {t2 = a} } catch(e) {}
+                try { var a = result[(page*10) - 8].teamName; if (!a) {t3 = ""} else {t3 = a} } catch(e) {}
+                try { var a = result[(page*10) - 7].teamName; if (!a) {t4 = ""} else {t4 = a} } catch(e) {}
+                try { var a = result[(page*10) - 6].teamName; if (!a) {t5 = ""} else {t5 = a} } catch(e) {}
+                try { var a = result[(page*10) - 5].teamName; if (!a) {t6 = ""} else {t6 = a} } catch(e) {}
+                try { var a = result[(page*10) - 4].teamName; if (!a) {t7 = ""} else {t7 = a} } catch(e) {}
+                try { var a = result[(page*10) - 3].teamName; if (!a) {t8 = ""} else {t8 = a} } catch(e) {}
+                try { var a = result[(page*10) - 2].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
+                try { var a = result[(page*10) - 1].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
                 const getpropertext = function(offset, string) {
                     if (!nothinInnit) {
-                        if (!string) { if (offset == 9 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return " "} }
+                        if (!string) { if (offset == 10 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return " "} }
                         var currentmax = (page*10)
                         var num = currentmax - offset
                         return "> "+num+" - "+string
@@ -173,16 +173,16 @@ module.exports = {
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
                     .addFields(
-                        {name: getpropertext(9, t1), value: " "},
-                        {name: getpropertext(8, t2), value: " "},
-                        {name: getpropertext(7, t3), value: " "},
-                        {name: getpropertext(6, t4), value: " "},
-                        {name: getpropertext(5, t5), value: " "},
-                        {name: getpropertext(4, t6), value: " "},
-                        {name: getpropertext(3, t7), value: " "},
-                        {name: getpropertext(2, t8), value: " "},
-                        {name: getpropertext(1, t9), value: " "},
-                        {name: getpropertext(0, t10), value: " "},
+                        {name: getpropertext(10, t1), value: " "},
+                        {name: getpropertext(9, t2), value: " "},
+                        {name: getpropertext(8, t3), value: " "},
+                        {name: getpropertext(7, t4), value: " "},
+                        {name: getpropertext(6, t5), value: " "},
+                        {name: getpropertext(5, t6), value: " "},
+                        {name: getpropertext(4, t7), value: " "},
+                        {name: getpropertext(3, t8), value: " "},
+                        {name: getpropertext(2, t9), value: " "},
+                        {name: getpropertext(1, t10), value: " "},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
