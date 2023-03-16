@@ -165,7 +165,7 @@ module.exports = {
                     if (!nothinInnit) {
                         if (!string) { if (offset == 10 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return " "} }
                         var currentmax = (page*10)
-                        var num = currentmax - offset
+                        var num = currentmax - (offset+1)
                         return "> "+num+" - "+string
                     }
                 }
