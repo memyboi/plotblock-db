@@ -205,7 +205,7 @@ client.on("ready", async () => {
   if (devBuild) {
     client.user.setActivity('dev build ' + buildNum, { type: ActivityType.Playing })
   } else {
-    client.user.setActivity("/help [1-4] for help", { type: ActivityType.Playing })
+    client.user.setActivity("/help | Plotblock management", { type: ActivityType.Playing })
   }
 })
 

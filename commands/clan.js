@@ -147,17 +147,19 @@ module.exports = {
             var page = 1
             //10 results per page
 
+            console.log(result)
             if (result) {
-                var t1 = result[(page*10) - 9].teamName; if (!t1) {t1 = ""}
-                var t2 = result[(page*10) - 8].teamName; if (!t2) {t2 = ""}
-                var t3 = result[(page*10) - 7].teamName; if (!t3) {t3 = ""}
-                var t4 = result[(page*10) - 6].teamName; if (!t4) {t4 = ""}
-                var t5 = result[(page*10) - 5].teamName; if (!t5) {t5 = ""}
-                var t6 = result[(page*10) - 4].teamName; if (!t6) {t6 = ""}
-                var t7 = result[(page*10) - 3].teamName; if (!t7) {t7 = ""}
-                var t8 = result[(page*10) - 2].teamName; if (!t8) {t8 = ""}
-                var t9 = result[(page*10) - 1].teamName; if (!t9) {t9 = ""}
-                var t10 = result[(page*10)].teamName; if (!t10) {t10 = ""}
+                var t1 = ""; var t2 = ""; var t3 = ""; var t4 = ""; var t5 = ""; var t6 = ""; var t7 = ""; var t8 = ""; var t9 = ""; var t10 = "";
+                try { var a = result[(page*10) - 9].teamName; if (!a) {t1 = ""} else {t1 = a} } catch(e) {}
+                try { var a = result[(page*10) - 8].teamName; if (!a) {t2 = ""} else {t2 = a} } catch(e) {}
+                try { var a = result[(page*10) - 7].teamName; if (!a) {t3 = ""} else {t3 = a} } catch(e) {}
+                try { var a = result[(page*10) - 6].teamName; if (!a) {t4 = ""} else {t4 = a} } catch(e) {}
+                try { var a = result[(page*10) - 5].teamName; if (!a) {t5 = ""} else {t5 = a} } catch(e) {}
+                try { var a = result[(page*10) - 4].teamName; if (!a) {t6 = ""} else {t6 = a} } catch(e) {}
+                try { var a = result[(page*10) - 3].teamName; if (!a) {t7 = ""} else {t7 = a} } catch(e) {}
+                try { var a = result[(page*10) - 2].teamName; if (!a) {t8 = ""} else {t8 = a} } catch(e) {}
+                try { var a = result[(page*10) - 1].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
+                try { var a = result[(page*10)].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+(page*10)-9+"-"+page*10)
@@ -175,7 +177,7 @@ module.exports = {
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
-                interaction.reply({content: "There is no clan data!", ephemeral: true})
+                interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
             }
         } else if (cmd == "info") {
             //string "clan"
