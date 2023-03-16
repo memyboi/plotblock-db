@@ -186,16 +186,16 @@ module.exports = {
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
                     .addFields(
-                        {name: getpropertext(10, t1), value: truncateText(d1, 15)},
-                        {name: getpropertext(9, t2), value: truncateText(d2, 15)},
-                        {name: getpropertext(8, t3), value: truncateText(d3, 15)},
-                        {name: getpropertext(7, t4), value: truncateText(d4, 15)},
-                        {name: getpropertext(6, t5), value: truncateText(d5, 15)},
-                        {name: getpropertext(5, t6), value: truncateText(d6, 15)},
-                        {name: getpropertext(4, t7), value: truncateText(d7, 15)},
-                        {name: getpropertext(3, t8), value: truncateText(d8, 15)},
-                        {name: getpropertext(2, t9), value: truncateText(d9, 15)},
-                        {name: getpropertext(1, t10), value: truncateText(d10, 15)},
+                        {name: getpropertext(10, t1), value: truncateText(d1, 40)},
+                        {name: getpropertext(9, t2), value: truncateText(d2, 40)},
+                        {name: getpropertext(8, t3), value: truncateText(d3, 40)},
+                        {name: getpropertext(7, t4), value: truncateText(d4, 40)},
+                        {name: getpropertext(6, t5), value: truncateText(d5, 40)},
+                        {name: getpropertext(5, t6), value: truncateText(d6, 40)},
+                        {name: getpropertext(4, t7), value: truncateText(d7, 40)},
+                        {name: getpropertext(3, t8), value: truncateText(d8, 40)},
+                        {name: getpropertext(2, t9), value: truncateText(d9, 40)},
+                        {name: getpropertext(1, t10), value: truncateText(d10, 40)},
                     )
                 interaction.reply({embeds: [embed], ephemeral: true})
             } else {
