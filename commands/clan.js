@@ -152,16 +152,16 @@ module.exports = {
                 var nothinInnit = false
                 var t1 = ""; var t2 = ""; var t3 = ""; var t4 = ""; var t5 = ""; var t6 = ""; var t7 = ""; var t8 = ""; var t9 = ""; var t10 = "";
                 var d1 = ""; var d2 = ""; var d3 = ""; var d4 = ""; var d5 = ""; var d6 = ""; var d7 = ""; var d8 = ""; var d9 = ""; var d10 = "";
-                try { var a = result[(page*10) - 10].teamName; var b = result[(page*10) - 10].teamDesc; if (!a) {t1 = ""} else {t1 = a} if (!b) {d1 = " "} else {d1 = b} } catch(e) {}
-                try { var a = result[(page*10) - 9].teamName; var b = result[(page*10) - 9].teamDesc; if (!a) {t2 = ""} else {t2 = a} if (!b) {d2 = " "} else {d2 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 8].teamName; var b = result[(page*10) - 8].teamDesc; if (!a) {t3 = ""} else {t3 = a} if (!b) {d3 = " "} else {d3 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 7].teamName; var b = result[(page*10) - 7].teamDesc; if (!a) {t4 = ""} else {t4 = a} if (!b) {d4 = " "} else {d4 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 6].teamName; var b = result[(page*10) - 6].teamDesc; if (!a) {t5 = ""} else {t5 = a} if (!b) {d5 = " "} else {d5 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 5].teamName; var b = result[(page*10) - 5].teamDesc; if (!a) {t6 = ""} else {t6 = a} if (!b) {d6 = " "} else {d6 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 4].teamName; var b = result[(page*10) - 4].teamDesc; if (!a) {t7 = ""} else {t7 = a} if (!b) {d7 = " "} else {d7 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 3].teamName; var b = result[(page*10) - 3].teamDesc; if (!a) {t8 = ""} else {t8 = a} if (!b) {d8 = " "} else {d8 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 2].teamName; var b = result[(page*10) - 2].teamDesc; if (!a) {t9 = ""} else {t9 = a} if (!b) {d9 = " "} else {d9 = b} }  catch(e) {}
-                try { var a = result[(page*10) - 1].teamName; var b = result[(page*10) - 1].teamDesc; if (!a) {t10 = ""} else {t10 = a} if (!b) {d10 = " "} else {d10 = b} } catch(e) {}
+                try { var a = result[(page*10) - 10].teamName; var b = result[(page*10) - 10].teamDesc; if (!a) {t1 = ""} else {t1 = a}; if (!b) {d1 = " "} else {d1 = b} } catch(e) {}
+                try { var a = result[(page*10) - 9].teamName; var b = result[(page*10) - 9].teamDesc; if (!a) {t2 = ""} else {t2 = a}; if (!b) {d2 = " "} else {d2 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 8].teamName; var b = result[(page*10) - 8].teamDesc; if (!a) {t3 = ""} else {t3 = a}; if (!b) {d3 = " "} else {d3 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 7].teamName; var b = result[(page*10) - 7].teamDesc; if (!a) {t4 = ""} else {t4 = a}; if (!b) {d4 = " "} else {d4 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 6].teamName; var b = result[(page*10) - 6].teamDesc; if (!a) {t5 = ""} else {t5 = a}; if (!b) {d5 = " "} else {d5 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 5].teamName; var b = result[(page*10) - 5].teamDesc; if (!a) {t6 = ""} else {t6 = a}; if (!b) {d6 = " "} else {d6 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 4].teamName; var b = result[(page*10) - 4].teamDesc; if (!a) {t7 = ""} else {t7 = a}; if (!b) {d7 = " "} else {d7 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 3].teamName; var b = result[(page*10) - 3].teamDesc; if (!a) {t8 = ""} else {t8 = a}; if (!b) {d8 = " "} else {d8 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 2].teamName; var b = result[(page*10) - 2].teamDesc; if (!a) {t9 = ""} else {t9 = a}; if (!b) {d9 = " "} else {d9 = b} }  catch(e) {}
+                try { var a = result[(page*10) - 1].teamName; var b = result[(page*10) - 1].teamDesc; if (!a) {t10 = ""} else {t10 = a}; if (!b) {d10 = " "} else {d10 = b} } catch(e) {}
                 const truncateText = function(txt, maxlength) {
                     if (!txt) return " "
                     console.log(txt)
