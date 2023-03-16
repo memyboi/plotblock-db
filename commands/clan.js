@@ -184,7 +184,11 @@ module.exports = {
                     }
                 }
                 const checkifpossible = function(offset) {
-                    if (result[(page*10)-offset].teamName) {return false} else {return true}
+                    try {
+                        if (result[(page*10)-offset].teamName) {return false} else {return true}
+                    } catch(e) {
+                        return false
+                    }
                 }
                 var embed = new EmbedBuilder()
                     .setTitle("All clans (Page "+page+")")
