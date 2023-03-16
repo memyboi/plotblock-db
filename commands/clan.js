@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -186,18 +186,30 @@ module.exports = {
                     .setTitle("All clans (Page "+page+")")
                     .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
                     .addFields(
-                        {name: getpropertext(10, t1), value: truncateText(d1, 40)},
-                        {name: getpropertext(9, t2), value: truncateText(d2, 40)},
-                        {name: getpropertext(8, t3), value: truncateText(d3, 40)},
-                        {name: getpropertext(7, t4), value: truncateText(d4, 40)},
-                        {name: getpropertext(6, t5), value: truncateText(d5, 40)},
-                        {name: getpropertext(5, t6), value: truncateText(d6, 40)},
-                        {name: getpropertext(4, t7), value: truncateText(d7, 40)},
-                        {name: getpropertext(3, t8), value: truncateText(d8, 40)},
-                        {name: getpropertext(2, t9), value: truncateText(d9, 40)},
-                        {name: getpropertext(1, t10), value: truncateText(d10, 40)},
+                        {name: getpropertext(10, t1), value: truncateText(d1, 75)},
+                        {name: getpropertext(9, t2), value: truncateText(d2, 75)},
+                        {name: getpropertext(8, t3), value: truncateText(d3, 75)},
+                        {name: getpropertext(7, t4), value: truncateText(d4, 75)},
+                        {name: getpropertext(6, t5), value: truncateText(d5, 75)},
+                        {name: getpropertext(5, t6), value: truncateText(d6, 75)},
+                        {name: getpropertext(4, t7), value: truncateText(d7, 75)},
+                        {name: getpropertext(3, t8), value: truncateText(d8, 75)},
+                        {name: getpropertext(2, t9), value: truncateText(d9, 75)},
+                        {name: getpropertext(1, t10), value: truncateText(d10, 75)},
                     )
-                interaction.reply({embeds: [embed], ephemeral: true})
+                var left = new ButtonBuilder()
+                    .setCustomId("goleftclanpage-"+page)
+                    .setEmoji("⬅️")
+                    .setDisabled(() => {
+                        if (result[(page*10)-11].teamName) {return false} else {return true}
+                    })
+                var right = new ButtonBuilder()
+                    .setCustomId("gorightclanpage-"+page)
+                    .setEmoji("➡️")
+                    .setDisabled(() => {
+                        if (result[(page*10)+1].teamName) {return false} else {return true}
+                    })
+                interaction.reply({embeds: [embed], components: [left, right], ephemeral: true})
             } else {
                 interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
             }
