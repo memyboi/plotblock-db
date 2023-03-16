@@ -149,6 +149,7 @@ module.exports = {
 
             console.log(result)
             if (result) {
+                var nothinInnit = false
                 var t1 = ""; var t2 = ""; var t3 = ""; var t4 = ""; var t5 = ""; var t6 = ""; var t7 = ""; var t8 = ""; var t9 = ""; var t10 = "";
                 try { var a = result[(page*10) - 9].teamName; if (!a) {t1 = ""} else {t1 = a} } catch(e) {}
                 try { var a = result[(page*10) - 8].teamName; if (!a) {t2 = ""} else {t2 = a} } catch(e) {}
@@ -161,7 +162,8 @@ module.exports = {
                 try { var a = result[(page*10) - 1].teamName; if (!a) {t9 = ""} else {t9 = a} } catch(e) {}
                 try { var a = result[(page*10)].teamName; if (!a) {t10 = ""} else {t10 = a} } catch(e) {}
                 const getpropertext = function(offset, string) {
-                    if (!string) { if (offset == 0 &&  t1 == "") {return "There is no clan data."} else {return } }
+                    if (nothinInnit) return " "
+                    if (!string) { if (offset == 9 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return } }
                     var currentmax = (page*10)
                     var num = currentmax - offset
                     return "> "+num+" - "+string
