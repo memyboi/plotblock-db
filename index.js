@@ -457,6 +457,92 @@ client.on('interactionCreate', async interaction => {
         embeds: [tosp2],
         components: [row],
       })
+    } else if (interaction.customId.contains("-go")) {
+      var page = parseInt(interaction.customId)
+      const result = await teamschema.find()
+            //10 results per page
+
+            console.log(result)
+            if (result) {
+                var nothinInnit = false
+                var t1 = ""; var t2 = ""; var t3 = ""; var t4 = ""; var t5 = ""; var t6 = ""; var t7 = ""; var t8 = ""; var t9 = ""; var t10 = "";
+                var d1 = ""; var d2 = ""; var d3 = ""; var d4 = ""; var d5 = ""; var d6 = ""; var d7 = ""; var d8 = ""; var d9 = ""; var d10 = "";
+                try { var daresult = result[(page*10) - 10]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t1 = ""} else {t1 = a}; if (!b) {d1 = " "} else {console.log(b); d1 = b} } catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 9]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t2 = ""} else {t2 = a}; if (!b) {d2 = " "} else {console.log(b); d2 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 8]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t3 = ""} else {t3 = a}; if (!b) {d3 = " "} else {console.log(b); d3 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 7]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t4 = ""} else {t4 = a}; if (!b) {d4 = " "} else {console.log(b); d4 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 6]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t5 = ""} else {t5 = a}; if (!b) {d5 = " "} else {console.log(b); d5 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 5]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t6 = ""} else {t6 = a}; if (!b) {d6 = " "} else {console.log(b); d6 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 4]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t7 = ""} else {t7 = a}; if (!b) {d7 = " "} else {console.log(b); d7 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 3]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t8 = ""} else {t8 = a}; if (!b) {d8 = " "} else {console.log(b); d8 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 2]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t9 = ""} else {t9 = a}; if (!b) {d9 = " "} else {console.log(b); d9 = b} }  catch(e) {console.log(e)}
+                try { var daresult = result[(page*10) - 1]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t10 = ""} else {t10 = a}; if (!b) {d10 = " "} else {console.log(b); d10 = b} } catch(e) {console.log(e)}
+                const truncateText = function(txt, maxlength) {
+                    if (!txt) return " "
+                    if (txt.length > maxlength) {
+                        return txt.substring(0, maxlength - 3)+"..."
+                    } else {
+                        return txt
+                    }
+                }
+                const getpropertext = function(offset, string) {
+                    if (!nothinInnit) {
+                        if (!string) { if (offset == 10 && t1 == "") {nothingInnit = true; return "There is no clan data."} else {return " "} }
+                        var currentmax = (page*10)
+                        var num = 1+currentmax - offset
+                        return "> "+num+" - "+string
+                    }
+                }
+                const checkifpossible = function(offset) {
+                    try {
+                        if (result[(page*10)-offset].teamName) {return true} else {return false}
+                    } catch(e) {
+                        return false
+                    }
+                }
+                var embed = new EmbedBuilder()
+                    .setTitle("All clans (Page "+page+")")
+                    .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
+                    .addFields(
+                        {name: getpropertext(10, t1), value: truncateText(d1, 75)},
+                        {name: getpropertext(9, t2), value: truncateText(d2, 75)},
+                        {name: getpropertext(8, t3), value: truncateText(d3, 75)},
+                        {name: getpropertext(7, t4), value: truncateText(d4, 75)},
+                        {name: getpropertext(6, t5), value: truncateText(d5, 75)},
+                        {name: getpropertext(5, t6), value: truncateText(d6, 75)},
+                        {name: getpropertext(4, t7), value: truncateText(d7, 75)},
+                        {name: getpropertext(3, t8), value: truncateText(d8, 75)},
+                        {name: getpropertext(2, t9), value: truncateText(d9, 75)},
+                        {name: getpropertext(1, t10), value: truncateText(d10, 75)},
+                    )
+                var leftdis = new ButtonBuilder()
+                    .setCustomId("-goleftclanpage")
+                    .setDisabled(true)
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("⬅️")
+                var rightdis = new ButtonBuilder()
+                    .setCustomId("-gorightclanpage")
+                    .setDisabled(true)
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("➡️")
+                var left = new ButtonBuilder()
+                    .setCustomId((page-1)+"-goleftclanpage")
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("⬅️")
+                var right = new ButtonBuilder()
+                    .setCustomId((page+1)+"-gorightclanpage")
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("➡️")
+                var leftchosen;
+                var rightchosen;
+                if (checkifpossible(11) == true) {leftchosen = left} else {leftchosen = leftdis}
+                if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
+                var row = new ActionRowBuilder()
+                    .addComponents(leftchosen, rightchosen)
+                interaction.reply({embeds: [embed], components: [row], ephemeral: true})
+            } else {
+                interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
+            }
     }
   };
   if (interaction.isCommand() || interaction.isChatInputCommand()) {

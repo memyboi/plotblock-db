@@ -183,7 +183,6 @@ module.exports = {
                     try {
                         if (result[(page*10)-offset].teamName) {return true} else {return false}
                     } catch(e) {
-                        console.log(e)
                         return false
                     }
                 }
@@ -203,26 +202,26 @@ module.exports = {
                         {name: getpropertext(1, t10), value: truncateText(d10, 75)},
                     )
                 var leftdis = new ButtonBuilder()
-                    .setCustomId("goleftclanpage-"+page)
+                    .setCustomId("-goleftclanpage")
                     .setDisabled(true)
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("⬅️")
                 var rightdis = new ButtonBuilder()
-                    .setCustomId("gorightclanpage-"+page)
+                    .setCustomId("-gorightclanpage")
                     .setDisabled(true)
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("➡️")
                 var left = new ButtonBuilder()
-                    .setCustomId("goleftclanpage-"+page)
+                    .setCustomId((page-1)+"-goleftclanpage")
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("⬅️")
                 var right = new ButtonBuilder()
-                    .setCustomId("gorightclanpage-"+page)
+                    .setCustomId((page+1)+"-gorightclanpage")
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("➡️")
                 var leftchosen;
                 var rightchosen;
-                if (checkifpossible(10) == true) {leftchosen = left} else {leftchosen = leftdis}
+                if (checkifpossible(11) == true) {leftchosen = left} else {leftchosen = leftdis}
                 if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
                 var row = new ActionRowBuilder()
                     .addComponents(leftchosen, rightchosen)
