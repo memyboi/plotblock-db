@@ -205,6 +205,16 @@ module.exports = {
                         {name: getpropertext(2, t9), value: truncateText(d9, 75)},
                         {name: getpropertext(1, t10), value: truncateText(d10, 75)},
                     )
+                var leftdis = new ButtonBuilder()
+                    .setCustomId("goleftclanpage-"+page)
+                    .setDisabled(true)
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("⬅️")
+                var rightdis = new ButtonBuilder()
+                    .setCustomId("gorightclanpage-"+page)
+                    .setDisabled(true)
+                    .setStyle(ButtonStyle.Secondary)
+                    .setLabel("➡️")
                 var left = new ButtonBuilder()
                     .setCustomId("goleftclanpage-"+page)
                     .setDisabled(checkifpossible(11))
@@ -215,7 +225,11 @@ module.exports = {
                     .setDisabled(checkifpossible(-1))
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("➡️")
-                interaction.reply({embeds: [embed], components: [left, right], ephemeral: true})
+                var leftchosen;
+                var rightchosen;
+                if (checkifpossible(11) == true) {leftchosen = left} else {leftchosen = leftdis}
+                if (checkifpossible(-1) == true) {rightchosen = right} else {rightchosen = rightdis}
+                interaction.reply({embeds: [embed], components: [leftchosen, rightchosen], ephemeral: true})
             } else {
                 interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
             }

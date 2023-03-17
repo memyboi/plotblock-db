@@ -22,11 +22,11 @@ const schema = new mongoose.Schema({
   },
   teamName: {
     type: String,
-    default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
+    default: ""
   },
   teamDesc: {
     type: String,
-    default: "RBYGSCRSEFRLGDPPtHGSSBWB2W2XYORASSMUSUMLGPLGESwShSwDLCShDLCBDSPPLASVSDLCVDLC"
+    default: "No description."
   },
   allies: {
     type: Array,
