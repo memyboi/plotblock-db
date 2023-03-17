@@ -165,13 +165,9 @@ module.exports = {
                 try { var daresult = result[(page*10) - 1]; var a = daresult.teamName; var b = daresult.teamDesc; if (!a) {t10 = ""} else {t10 = a}; if (!b) {d10 = " "} else {console.log(b); d10 = b} } catch(e) {console.log(e)}
                 const truncateText = function(txt, maxlength) {
                     if (!txt) return " "
-                    console.log(txt)
-                    console.log("txtle: ",txt.length)
-                    console.log("mle: ", maxlength)
                     if (txt.length > maxlength) {
                         return txt.substring(0, maxlength - 3)+"..."
                     } else {
-                        console.log("assdsad")
                         return txt
                     }
                 }
@@ -185,8 +181,9 @@ module.exports = {
                 }
                 const checkifpossible = function(offset) {
                     try {
-                        if (result[(page*10)-offset].teamName) {return false} else {return true}
+                        if (result[(page*10)-offset].teamName) {return true} else {return false}
                     } catch(e) {
+                        console.log(e)
                         return false
                     }
                 }
