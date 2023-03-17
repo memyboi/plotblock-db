@@ -541,9 +541,9 @@ client.on('interactionCreate', async interaction => {
                 if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
                 var row = new ActionRowBuilder()
                     .addComponents(leftchosen, rightchosen)
-                interaction.message.edit({embeds: [embed], components: [row], ephemeral: true})
+                interaction.reply({embeds: [embed], components: [row], ephemeral: true})
             } else {
-                interaction.message.edit({embeds: [], components: [], content: "There was an error getting the team data.", ephemeral: true})
+                interaction.reply({embeds: [], components: [], content: "There was an error getting the team data.", ephemeral: true})
             }
     }
   };
@@ -563,7 +563,6 @@ client.on('interactionCreate', async interaction => {
     }
     return
   }
-  await interaction.deferUpdate();
 })
 
 client.login(process.env.token)
