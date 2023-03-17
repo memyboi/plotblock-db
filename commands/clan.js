@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits } = require('discord.js');
 const { off } = require('process');
 
 module.exports = {
@@ -229,7 +229,9 @@ module.exports = {
                 var rightchosen;
                 if (checkifpossible(11) == true) {leftchosen = left} else {leftchosen = leftdis}
                 if (checkifpossible(-1) == true) {rightchosen = right} else {rightchosen = rightdis}
-                interaction.reply({embeds: [embed], components: [leftchosen, rightchosen], ephemeral: true})
+                var row = new ActionRowBuilder()
+                    .addComponents(leftchosen, rightchosen)
+                interaction.reply({embeds: [embed], components: [row], ephemeral: true})
             } else {
                 interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
             }
