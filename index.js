@@ -541,9 +541,9 @@ client.on('interactionCreate', async interaction => {
                 if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
                 var row = new ActionRowBuilder()
                     .addComponents(leftchosen, rightchosen)
-                interaction.reply({embeds: [embed], components: [row], ephemeral: true})
+                interaction.edit({embeds: [embed], components: [row], ephemeral: true})
             } else {
-                interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
+                interaction.edit({embeds: [], components: [], content: "There was an error getting the team data.", ephemeral: true})
             }
     }
   };
