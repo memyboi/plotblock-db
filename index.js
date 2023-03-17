@@ -458,8 +458,8 @@ client.on('interactionCreate', async interaction => {
         components: [row],
       })
     } else if (interaction.customId.includes("-go")) {
-      const teamschema = require("../schemateam.js")
-      const plrschema = require("../schema.js")
+      const teamschema = require("./schemateam.js")
+      const plrschema = require("./schema.js")
       var page = parseInt(interaction.customId)
       const result = await teamschema.find()
             //10 results per page
