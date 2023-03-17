@@ -214,18 +214,16 @@ module.exports = {
                     .setLabel("➡️")
                 var left = new ButtonBuilder()
                     .setCustomId("goleftclanpage-"+page)
-                    .setDisabled(checkifpossible(11))
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("⬅️")
                 var right = new ButtonBuilder()
                     .setCustomId("gorightclanpage-"+page)
-                    .setDisabled(checkifpossible(-1))
                     .setStyle(ButtonStyle.Secondary)
                     .setLabel("➡️")
                 var leftchosen;
                 var rightchosen;
-                if (checkifpossible(11) == true) {leftchosen = left} else {leftchosen = leftdis}
-                if (checkifpossible(-1) == true) {rightchosen = right} else {rightchosen = rightdis}
+                if (checkifpossible(10) == true) {leftchosen = left} else {leftchosen = leftdis}
+                if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
                 var row = new ActionRowBuilder()
                     .addComponents(leftchosen, rightchosen)
                 interaction.reply({embeds: [embed], components: [row], ephemeral: true})
