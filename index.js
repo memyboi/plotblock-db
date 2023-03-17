@@ -457,7 +457,7 @@ client.on('interactionCreate', async interaction => {
         embeds: [tosp2],
         components: [row],
       })
-    } else if (interaction.customId.contains("-go")) {
+    } else if (interaction.customId.includes("-go")) {
       var page = parseInt(interaction.customId)
       const result = await teamschema.find()
             //10 results per page
