@@ -10,17 +10,21 @@ const schema = new mongoose.Schema({
   teamID: rString,
   createTime: {
     type: String,
-    default: 0
+    default: "0"
   },
   leaderID: {
     type: String,
-    default: 0
+    default: "0"
   },
   users: {
     type: Array,
     default: undefined
   },
   teamName: {
+    type: String,
+    default: ""
+  },
+  teamShort: {
     type: String,
     default: ""
   },
