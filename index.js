@@ -503,21 +503,24 @@ client.on('interactionCreate', async interaction => {
                         return false
                     }
                 }
-                var embed = new EmbedBuilder()
-                    .setTitle("All clans (Page "+page+")")
-                    .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
-                    .addFields(
-                      {name: getpropertext(10, t1), value: truncateText(d1, 75)+"\nCode:"+c1},
-                      {name: getpropertext(9, t2), value: truncateText(d2, 75)+"\nCode: "+c2},
-                      {name: getpropertext(8, t3), value: truncateText(d3, 75)+"\nCode: "+c3},
-                      {name: getpropertext(7, t4), value: truncateText(d4, 75)+"\nCode: "+c4},
-                      {name: getpropertext(6, t5), value: truncateText(d5, 75)+"\nCode: "+c5},
-                      {name: getpropertext(5, t6), value: truncateText(d6, 75)+"\nCode: "+c6},
-                      {name: getpropertext(4, t7), value: truncateText(d7, 75)+"\nCode: "+c7},
-                      {name: getpropertext(3, t8), value: truncateText(d8, 75)+"\nCode: "+c8},
-                      {name: getpropertext(2, t9), value: truncateText(d9, 75)+"\nCode: "+c9},
-                      {name: getpropertext(1, t10), value: truncateText(d10, 75)+"\nCode: "+c10},
-                    )
+                const code = function(code) {
+                  if (code) {return "\nCode: "+code} else {return ""}
+              }
+              var embed = new EmbedBuilder()
+                  .setTitle("All clans (Page "+page+")")
+                  .setDescription("Page "+page+": "+((page*10)-9)+"-"+(page*10))
+                  .addFields(
+                      {name: getpropertext(10, t1), value: truncateText(d1, 75)+code(c1)},
+                      {name: getpropertext(9, t2), value: truncateText(d2, 75)+code(c2)},
+                      {name: getpropertext(8, t3), value: truncateText(d3, 75)+code(c3)},
+                      {name: getpropertext(7, t4), value: truncateText(d4, 75)+code(c4)},
+                      {name: getpropertext(6, t5), value: truncateText(d5, 75)+code(c5)},
+                      {name: getpropertext(5, t6), value: truncateText(d6, 75)+code(c6)},
+                      {name: getpropertext(4, t7), value: truncateText(d7, 75)+code(c7)},
+                      {name: getpropertext(3, t8), value: truncateText(d8, 75)+code(c8)},
+                      {name: getpropertext(2, t9), value: truncateText(d9, 75)+code(c9)},
+                      {name: getpropertext(1, t10), value: truncateText(d10, 75)+code(c10)},
+                  )
                 var leftdis = new ButtonBuilder()
                     .setCustomId("-goleftclanpage")
                     .setDisabled(true)
