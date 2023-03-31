@@ -247,7 +247,7 @@ module.exports = {
                 const createdTime = clan.createTime
                 const internalIconId = clan.teamImgId
 
-                const members = clan.members
+                const members = clan.users
                     .map((member) => member.user.username+"#"+member.user.discriminator);
 
                 var emb = new EmbedBuilder()
