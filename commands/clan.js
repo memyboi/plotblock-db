@@ -263,7 +263,7 @@ module.exports = {
                     .setTitle(clanName)
                     .setDescription("Full description: "+clanDesc+"\n\nCurrent members: \n"+members+"\n\nAllies: \n"+allies+"\n\nTruces: \n"+truces+"\n\nWars: \n"+wars+"\n\nBlacklisted members: \n"+blacklist)
                     .setColor(clanColour)
-                    .setFooter(clanCode)
+                    .setFooter({text: clanCode})
 
                 interaction.reply({embeds: [emb], ephemeral: true})
             } catch(e) {
