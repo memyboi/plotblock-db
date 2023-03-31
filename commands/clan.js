@@ -236,6 +236,29 @@ module.exports = {
         } else if (cmd == "info") {
             //string "clan"
             //make an embed with clan info.
+            const clanCodeOld = interaction.options.getString("clan")
+            const result = await teamschema.find( { teamShort: clanCodeOld } )
+            try {
+                const clan = result[0] //clan info
+                const clanName = clan.teamName
+                const clanDesc = clan.teamDesc
+                const clanCode = clan.teamShort
+                const leaderID = clan.leaderID
+                const createdTime = clan.createTime
+                const internalIconId = clan.teamImgId
+
+                const members = clan.members
+                    .map((member) => member.user.username+"#"+member.user.discriminator);
+
+                var emb = new EmbedBuilder()
+                    .setTitle(clanName)
+                    .setDescription("Clan code: "+clanCode+"\n\n"+clanDesc+"\n\nMembers: \n"+members)
+
+                interaction.reply({embeds: [emb], ephemeral: true})
+            } catch(e) {
+                interaction.reply({content: "The clan could not be found!", ephemeral: true})
+                console.log(e)
+            }
         }else if (cmd == "create") {
             //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
         } else if (cmd == "join") {

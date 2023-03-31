@@ -20,6 +20,10 @@ const schema = new mongoose.Schema({
     type: Array,
     default: undefined
   },
+  teamImgId: {
+    type: String,
+    default: "0"
+  },
   teamName: {
     type: String,
     default: ""
