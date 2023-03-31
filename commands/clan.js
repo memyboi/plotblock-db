@@ -17,7 +17,7 @@ module.exports = {
                 .addStringOption(option => 
                     option
                         .setName("clan")
-                        .setDescription("The clan to get the info of. Please type in their name.")
+                        .setDescription("The clan to get the info of. Please type in the 4 digit team code.")
                         .setRequired(true)
                 )
         )
@@ -248,17 +248,27 @@ module.exports = {
                 const createdTime = clan.createTime
                 const internalIconId = clan.teamImgId
 
-                const members = clan.users
-                    .map((member) => member.user.username+"#"+member.user.discriminator);
-                const allies = clan.allies
-                    .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);
-                const truces = clan.truces
-                    .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);
-                const wars = clan.wars
-                    .map((war) => war.title);
-                const blacklist = clan.blacklist
-                    .map((member) => member.user.username+"#"+member.user.discriminator);
-
+                const members = ""
+                const allies = ""
+                const truces = ""
+                const wars = ""
+                const blacklist = ""
+                try {if (clan.users) {
+                    members = clan.users
+                .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
+                try {if (clan.allies) {
+                    allies = clan.allies
+                .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
+                try {if (clan.truces) {
+                    truces = clan.truces
+                .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);}} catch(e) {}
+                try {if (clan.wars) {
+                    wars = clan.wars
+                .map((war) => war.title+"");}} catch(e) {}
+                try {if (clan.blacklist) {
+                    blacklist = clan.blacklist
+                .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
+                
                 var emb = new EmbedBuilder()
                     .setTitle(clanName)
                     .setDescription("Full description: "+clanDesc+"\n\nCurrent members: \n"+members+"\n\nAllies: \n"+allies+"\n\nTruces: \n"+truces+"\n\nWars: \n"+wars+"\n\nBlacklisted members: \n"+blacklist)
