@@ -243,16 +243,27 @@ module.exports = {
                 const clanName = clan.teamName
                 const clanDesc = clan.teamDesc
                 const clanCode = clan.teamShort
+                const clanColour = clan.teamColour
                 const leaderID = clan.leaderID
                 const createdTime = clan.createTime
                 const internalIconId = clan.teamImgId
 
                 const members = clan.users
                     .map((member) => member.user.username+"#"+member.user.discriminator);
+                const allies = clan.allies
+                    .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);
+                const truces = clan.truces
+                    .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);
+                const wars = clan.wars
+                    .map((war) => war.title);
+                const blacklist = clan.blacklist
+                    .map((blacklistedMember) => blacklistedMember.user.username+"#"+blacklistedMember.user.discriminator);
 
                 var emb = new EmbedBuilder()
                     .setTitle(clanName)
-                    .setDescription("Clan code: "+clanCode+"\n\n"+clanDesc+"\n\nMembers: \n"+members)
+                    .setDescription("Full description: "+clanDesc+"\n\nCurrent members: \n"+members+"\n\nAllies: \n"+allies+"\n\nTruces: \n"+truces+"\n\nWars: \n"+wars+"\n\nBlacklisted members: \n"+blacklist)
+                    .setColor(clanColour)
+                    .setFooter(clanCode)
 
                 interaction.reply({embeds: [emb], ephemeral: true})
             } catch(e) {

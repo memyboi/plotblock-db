@@ -24,6 +24,10 @@ const schema = new mongoose.Schema({
     type: String,
     default: "0"
   },
+  teamColour: {
+    type: String,
+    default: "0xffffff"
+  },
   teamName: {
     type: String,
     default: ""
