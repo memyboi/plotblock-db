@@ -248,11 +248,19 @@ module.exports = {
                 const createdTime = clan.createTime
                 const internalIconId = clan.teamImgId
 
-                const members = ""
-                const allies = ""
-                const truces = ""
-                const wars = ""
-                const blacklist = ""
+                const leader = "None!"
+
+                client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+                    guild.members.fetch(""+leaderID) .then((member) => {
+                        leader = member.user.usernane+"#"+member.user.discriminator
+                    })
+                })
+
+                const members = "No members!"
+                const allies = "No allies."
+                const truces = "No truces."
+                const wars = "No concurrent wars."
+                const blacklist = "No blacklisted members."
                 try {if (clan.users) {
                     members = clan.users
                 .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
@@ -271,7 +279,7 @@ module.exports = {
                 
                 var emb = new EmbedBuilder()
                     .setTitle(clanName)
-                    .setDescription("Full description: "+clanDesc+"\n\n__**Current members:**__ \n"+members+"\n__**Allies:**__ \n"+allies+"\n__**Truces:**__ \n"+truces+"\n__**Wars**__: \n"+wars+"\n__**Blacklisted members:**__ \n"+blacklist)
+                    .setDescription("Full description: "+clanDesc+"\n\n__**Leader:**__ \n"+leader+"\n\n__**Current members:**__ \n"+members+"\n__**Allies:**__ \n"+allies+"\n__**Truces:**__ \n"+truces+"\n__**Wars**__: \n"+wars+"\n__**Blacklisted members:**__ \n"+blacklist)
                     .setColor(clanColour)
                     .setFooter({text: "---\nClan code - "+clanCode})
 
