@@ -248,7 +248,7 @@ module.exports = {
                 const createdTime = clan.createTime
                 const internalIconId = clan.teamImgId
 
-                const leader = "None!"
+                let leader = "None!"
 
                 client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                     guild.members.fetch(""+leaderID) .then((member) => {
@@ -256,11 +256,11 @@ module.exports = {
                     })
                 })
 
-                const members = "No members!"
-                const allies = "No allies."
-                const truces = "No truces."
-                const wars = "No concurrent wars."
-                const blacklist = "No blacklisted members."
+                let members = "No members!"
+                let allies = "No allies."
+                let truces = "No truces."
+                let wars = "No concurrent wars."
+                let blacklist = "No blacklisted members."
                 try {if (clan.users) {
                     members = clan.users
                 .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
