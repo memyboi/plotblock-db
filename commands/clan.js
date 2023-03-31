@@ -271,9 +271,9 @@ module.exports = {
                 
                 var emb = new EmbedBuilder()
                     .setTitle(clanName)
-                    .setDescription("Full description: "+clanDesc+"\n\nCurrent members: \n"+members+"\n\nAllies: \n"+allies+"\n\nTruces: \n"+truces+"\n\nWars: \n"+wars+"\n\nBlacklisted members: \n"+blacklist)
+                    .setDescription("Full description: "+clanDesc+"\n\n__**Current members:**__ \n"+members+"\n__**Allies:**__ \n"+allies+"\n__**Truces:**__ \n"+truces+"\n__**Wars**__: \n"+wars+"\n__**Blacklisted members:**__ \n"+blacklist)
                     .setColor(clanColour)
-                    .setFooter({text: clanCode})
+                    .setFooter({text: "---\nClan code - "+clanCode})
 
                 interaction.reply({embeds: [emb], ephemeral: true})
             } catch(e) {
