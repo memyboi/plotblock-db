@@ -257,7 +257,7 @@ module.exports = {
                 const wars = clan.wars
                     .map((war) => war.title);
                 const blacklist = clan.blacklist
-                    .map((blacklistedMember) => blacklistedMember.user.username+"#"+blacklistedMember.user.discriminator);
+                    .map((member) => member.user.username+"#"+member.user.discriminator);
 
                 var emb = new EmbedBuilder()
                     .setTitle(clanName)
