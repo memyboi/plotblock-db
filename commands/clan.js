@@ -273,7 +273,7 @@ module.exports = {
                 client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                     guild.members.fetch(""+leaderID) .then((member) => {
                         console.log("leaderfound")
-                        leader = member.user.usernane+"#"+member.user.discriminator
+                        leader = member.user.username+"#"+member.user.discriminator
 
                         var emb = new EmbedBuilder()
                             .setTitle(clanName)
