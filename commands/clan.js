@@ -249,13 +249,6 @@ module.exports = {
                 const internalIconId = clan.teamImgId
 
                 let leader = "None!"
-
-                client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-                    guild.members.fetch(""+leaderID) .then((member) => {
-                        leader = member.user.usernane+"#"+member.user.discriminator
-                    })
-                })
-
                 let members = "No members!"
                 let allies = "No allies."
                 let truces = "No truces."
@@ -276,14 +269,22 @@ module.exports = {
                 try {if (clan.blacklist) {
                     blacklist = clan.blacklist
                 .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
-                
-                var emb = new EmbedBuilder()
-                    .setTitle(clanName)
-                    .setDescription("Full description: "+clanDesc+"\n\n__**Leader:**__ \n"+leader+"\n\n__**Current members:**__ \n"+members+"\n__**Allies:**__ \n"+allies+"\n__**Truces:**__ \n"+truces+"\n__**Wars**__: \n"+wars+"\n__**Blacklisted members:**__ \n"+blacklist)
-                    .setColor(clanColour)
-                    .setFooter({text: "---\nClan code - "+clanCode})
 
-                interaction.reply({embeds: [emb], ephemeral: true})
+                client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+                    guild.members.fetch(""+leaderID) .then((member) => {
+                        console.log("leaderfound")
+                        leader = member.user.usernane+"#"+member.user.discriminator
+
+                        var emb = new EmbedBuilder()
+                            .setTitle(clanName)
+                            .setDescription("Full description: "+clanDesc+"\n\n__**Leader:**__ \n"+leader+"\n__**Current members:**__ \n"+members+"\n__**Allies:**__ \n"+allies+"\n__**Truces:**__ \n"+truces+"\n__**Wars**__: \n"+wars+"\n__**Blacklisted members:**__ \n"+blacklist)
+                            .setColor(clanColour)
+                            .setFooter({text: "---\nClan code - "+clanCode})
+
+                        interaction.reply({embeds: [emb], ephemeral: true})
+                    })
+                })
+                
             } catch(e) {
                 interaction.reply({content: "The clan could not be found!", ephemeral: true})
                 console.log(e)
