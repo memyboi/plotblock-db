@@ -28,7 +28,7 @@ const schema = new mongoose.Schema({
     type: String,
     default: "0xffffff"
   },
-  teamName: {
+  teamName: {   
     type: String,
     default: ""
   },

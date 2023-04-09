@@ -78,7 +78,7 @@ module.exports = {
 			if (page==3) interaction.reply({embeds: [helpEmbed3], ephemeral: true})
 			if (page==4) interaction.reply({embeds: [helpEmbed4], ephemeral: true})
 		} else {
-			interaction.reply({embeds: [helpEmbed]})
+			interaction.reply({embeds: [helpEmbed], ephemeral: true})
 		}
 	},
 };
