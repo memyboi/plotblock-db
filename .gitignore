@@ -1,9 +1,1 @@
 node_modules
-node_modules/.package-lock.json
-node_modules/@napi-rs/canvas/index.d.ts
-node_modules/@napi-rs/canvas/index.js
-node_modules/@napi-rs/canvas/load-image.js
-node_modules/@napi-rs/canvas/package.json
-node_modules/@napi-rs/canvas/README.md
-node_modules/@napi-rs/canvas-win32-x64-msvc/package.json
-node_modules/@napi-rs/canvas-win32-x64-msvc/skia.win32-x64-msvc.node
