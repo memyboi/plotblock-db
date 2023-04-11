@@ -665,7 +665,20 @@ const verifyDiscordUser = async (data) => {
           .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
           .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
           .setTimestamp()
-      user.send({embeds: [verify], components: [row]}) .then(() => {
+      user.send({embeds: [verify], components: [row]}) .then(async () => {
+        try {
+          const result = await plrSchema.findOneAndUpdate({
+            userID
+          }, {
+            userID,
+            lastVerificationTimestamp: 0,
+          }, {
+            upsert: true,
+            new: true
+          })
+        } catch(e) {
+          console.log(e)
+        }
         goneGood = true
       })
     } catch(e) {

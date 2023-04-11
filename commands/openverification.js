@@ -12,7 +12,7 @@ module.exports = {
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+user.id) .then(async (member) => {
 				if (member.roles.cache.some(role => role.id === "1022631935614406730")) {
-					interaction.reply({content: "You already have a verified minecraft account ("+mcname+")!", ephemeral: true})
+					interaction.reply({content: "You are already verified!", ephemeral: true})
 				} else {
 					const plrSchema = require("../schema.js")
 					const findRes = await plrSchema.find({ userID: user.id })
@@ -24,6 +24,9 @@ module.exports = {
 								.then(async (player) => {
 									mcname = player.name
 									interaction.reply({content: "You already have a verified minecraft account ("+mcname+")!", ephemeral: true})
+									try {
+										member.roles.add(member.roles.cache.find(role => role.id === "1022631935614406730"))
+									} catch {}
 								}) .catch((e) => {
 	
 								})
