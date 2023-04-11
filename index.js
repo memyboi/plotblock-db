@@ -40,8 +40,24 @@ const client = new Client({
 });
 
 const path = require('path');
-const express = require("express")
 const axios = require('axios')
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 3000
+ 
+app.use(express.urlencoded({ extended: true }))
+ 
+app.post('/link', (req, res) => {
+    const discordUsername = req.body.discordUsername
+    // TODO: handle the request and send a response
+    res.send('Success')
+})
+ 
+app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`)
+})
+
+
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
 const okbutton = new ButtonBuilder()
