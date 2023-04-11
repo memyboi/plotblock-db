@@ -18,7 +18,7 @@ module.exports = {
 					const findRes = await plrSchema.find({ userID: user.id })
 					try {
 						let mcname = "None!" //findRes[0].minecraftUUID (processing needed, https://api.mojang.com/user/profile/)
-						if (typeof findRes[0].minecraftUUID != undefined) {
+						if (findRes[0].minecraftUUID) {
 							fetch("https://api.mojang.com/user/profile/"+findRes[0].minecraftUUID)
 								.then(data => data.json())
 								.then(async (player) => {
@@ -29,26 +29,29 @@ module.exports = {
 										member.roles.add(verifyRole)
 									} catch {}
 								}) .catch((e) => {
-	
+
 								})
-						} 
-					} catch(e) {
-						const userID = user.id
-						try {
-							const result = await plrSchema.findOneAndUpdate({
-							  userID
-							}, {
-							  userID,
-							  lastVerificationTimestamp: Date.now()
-							}, {
-							  upsert: true,
-							  new: true
-							})
-						} catch(e) {
-							console.log(e)
+						} else {
+							const userID = user.id
+							try {
+								const result = await plrSchema.findOneAndUpdate({
+									userID
+								}, {
+									userID,
+									lastVerificationTimestamp: Date.now()
+								}, {
+									upsert: true,
+									new: true
+								})
+							} catch(e) {
+								console.log(e)
+							}
+							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
 						}
-						interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
+					} catch(e) {
+						console.log("There was an error while opening up verification..")
 					}
+					
 				}
 			})
 		})
