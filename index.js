@@ -645,7 +645,7 @@ const verifyDiscordUser = async (data) => {
       const findRes = await plrSchema.find({ userID: user.id })
       try {
         const lastVerificationTimestamp = findRes[0].lastVerificationTimestamp
-        if (lastVerificationTimestamp + 300 < Date.now()) { // 5 min verification time
+        if (lastVerificationTimestamp + 300000 < Date.now()) { // 5 min verification time
           goneGood = false
           return false
         }
