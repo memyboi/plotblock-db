@@ -600,7 +600,7 @@ const verifyDiscordUser = async (data) => {
     const verify = new EmbedBuilder()
         .setColor('#ff0000')
         .setTitle("Verification")
-        .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+        .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
         .setDescription("You were sent a verification request from "+mcName+".\nWould you like to verify as this user?")
         .setTimestamp()
     user.send({embeds: [verify]}) .then(() => {
