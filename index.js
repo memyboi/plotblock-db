@@ -597,7 +597,13 @@ const verifyDiscordUser = async (data) => {
   console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
   try {
     const user = client.users.cache.find(u => u.username === dcName)
-    user.send({content: "A user named `"+mcName+"` is trying to verify as you. Is this you?"}) .then(() => {
+    const verify = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Verification")
+        .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+        .setDescription("You were sent a verification request from "+mcName+".\nWould you like to verify as this user?")
+        .setTimestamp()
+    user.send({embeds: [verify]}) .then(() => {
       goneGood = true
     })
   } catch(e) {

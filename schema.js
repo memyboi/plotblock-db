@@ -8,6 +8,10 @@ const rString = {
 
 const schema = new mongoose.Schema({
   userID: rString,
+  lastVerificationTimestamp: {
+    type: Number,
+    default: 0,
+  },
   minecraftName: {
     type: String,
     default: ""
