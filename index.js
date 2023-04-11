@@ -587,8 +587,8 @@ client.on('interactionCreate', async interaction => {
   }
 })
  
-const verifyDiscordUser = async (discordUsername) => {
-    console.log("verify this bozo")
+const verifyDiscordUser = async (discordUsername, discordTag, minecraftUsername) => {
+    console.log(discordUsername, discordTag, minecraftUsername)
     return true
 }
  
@@ -597,7 +597,7 @@ app.post('/link/mc-dc', async (req, res) => {
     const discordTag = req.body.discordTag
     const minecraftUsername = req.body.minecraftName
 
-    const isVerified = await verifyDiscordUser(discordUsername)
+    const isVerified = await verifyDiscordUser(discordUsername, discordTag, minecraftUsername)
     if (isVerified) {
         res.send('Success')
     } else {
