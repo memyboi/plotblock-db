@@ -567,6 +567,10 @@ client.on('interactionCreate', async interaction => {
             } else {
                 interaction.reply({embeds: [], components: [], content: "There was an error getting the team data.", ephemeral: true})
             }
+    } else if (interaction.customId.includes("Verifywith-")) {
+      
+    } else if (interaction.customId.includes("Declinewith-")) {
+
     }
   };
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
@@ -611,7 +615,7 @@ const verifyDiscordUser = async (data) => {
         .setColor('#ff0000')
         .setTitle("Verification")
         .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
-        .setDescription("You were sent a verification request from "+mcName+".\nWould you like to verify as this user?")
+        .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?")
         .setTimestamp()
     user.send({embeds: [verify], components: [row]}) .then(() => {
       goneGood = true
