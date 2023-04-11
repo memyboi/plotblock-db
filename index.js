@@ -65,6 +65,9 @@ const okbutton = new ButtonBuilder()
   .setLabel("Ok")
   .setStyle(ButtonStyle.Secondary)
 
+const okrow = new ActionRowBuilder()
+  .addComponents(okbutton)
+
 client.commands = new Discord.Collection();
 
 const commandsPath = path.join(__dirname, 'commands');
