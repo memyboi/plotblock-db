@@ -597,7 +597,6 @@ const verifyDiscordUser = async (data) => {
 }
  
 app.post('/link/mc-dc', async (req, res) => {
-  console.log(req)
   const data = req.body.data
 
   const isVerified = await verifyDiscordUser(data)
