@@ -582,7 +582,6 @@ client.on('interactionCreate', async interaction => {
       fetch(`https://api.mojang.com/users/profiles/minecraft/${mcName}`)
         .then(data => data.json())
         .then(async (player) => {
-          const plrId = player.id
           console.log(player)
           const plrId = player.id
           try {
