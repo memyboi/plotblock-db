@@ -667,6 +667,7 @@ const verifyDiscordUser = async (data) => {
           .setTimestamp()
       user.send({embeds: [verify], components: [row]}) .then(async () => {
         try {
+          const userID = user.id
           const result = await plrSchema.findOneAndUpdate({
             userID
           }, {
