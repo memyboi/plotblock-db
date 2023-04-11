@@ -40,6 +40,8 @@ const client = new Client({
 });
 
 const path = require('path');
+const express = require("express")
+const axios = require('axios')
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ActivityType, ButtonStyle } = require('discord.js');
 
 const okbutton = new ButtonBuilder()
@@ -568,5 +570,21 @@ client.on('interactionCreate', async interaction => {
     return
   }
 })
+ 
+const verifyDiscordUser = async (discordUsername) => {
+    console.log("verify this bozo")
+    return true
+}
+ 
+app.post('/link', async (req, res) => {
+    const discordUsername = req.body.discordUsername
+    const isVerified = await verifyDiscordUser(discordUsername)
+    if (isVerified) {
+        res.send('Success')
+    } else {
+        res.status(400).send('Invalid Discord username')
+    }
+})
+
 
 client.login(process.env.token)
