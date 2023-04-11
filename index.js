@@ -592,8 +592,11 @@ const verifyDiscordUser = async (discordUsername) => {
     return true
 }
  
-app.post('/', async (req, res) => {
-    const discordUsername = req.body.discordUsername
+app.post('/link/mc-dc', async (req, res) => {
+    const discordUsername = req.body.discordName
+    const discordTag = req.body.discordTag
+    const minecraftUsername = req.body.minecraftName
+
     const isVerified = await verifyDiscordUser(discordUsername)
     if (isVerified) {
         res.send('Success')
