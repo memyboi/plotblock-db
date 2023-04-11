@@ -25,7 +25,7 @@ module.exports = {
 									mcname = player.name
 									interaction.reply({content: "You already have a verified minecraft account ("+mcname+")!", ephemeral: true})
 									try {
-										const verifyRole = member.roles.cache.find(role => role.id === "1022631935614406730")
+										const verifyRole = guild.roles.cache.find(role => role.id === "1022631935614406730")
 										member.roles.add(verifyRole)
 									} catch {}
 								}) .catch((e) => {
