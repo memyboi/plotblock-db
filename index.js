@@ -588,13 +588,11 @@ client.on('interactionCreate', async interaction => {
 })
  
 const verifyDiscordUser = async (data) => {
-  const args = ""+data.split("|")
+  const args = ((""+data.split("|")).join("")).split(",")
   const dcName = args[0]
   const dcTag = args[2]
   const mcName = args[1]
   console.log(data)
-  console.log(args)
-  console.log(dcName)
   console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
   const id = client.users.cache.find(u => u.tag === dcName+"#"+dcTag).id
   console.log(id+"????")
