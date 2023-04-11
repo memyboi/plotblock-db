@@ -405,8 +405,8 @@ client.on('interactionCreate', async interaction => {
       
         
     } else if (interaction.customId == "delMsg") {
-      const message = interaction.message
-      message.delete();
+      interaction.message.delete()
+      interaction.deferUpdate()
     } else if (interaction.customId == "tos") {
       //type tos here
       const rowpage = new ActionRowBuilder()
@@ -579,7 +579,7 @@ client.on('interactionCreate', async interaction => {
         .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
         .setDescription("You have verified to __"+mcName+"__!")
         .setTimestamp()
-      const { data } = fetch(`https://api.minetools.eu/uuid/${mcName}`)
+      fetch(`https://api.mojang.com/users/profiles/minecraft/${mcName}`)
         .then(data => data.json())
         .then(async ({ player }) => {
           try {
