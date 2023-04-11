@@ -582,13 +582,15 @@ client.on('interactionCreate', async interaction => {
       fetch(`https://api.mojang.com/users/profiles/minecraft/${mcName}`)
         .then(data => data.json())
         .then(async ({ player }) => {
+          console.log(player)
+          const plrId = player.id
           try {
             const result = await plrSchema.findOneAndUpdate({
               userID
             }, {
               userID,
               minecraftName: mcName,
-              minecraftUUID: player.id,
+              minecraftUUID: plrId,
             }, {
               upsert: true,
               new: true
