@@ -597,13 +597,23 @@ const verifyDiscordUser = async (data) => {
   console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
   try {
     const user = client.users.cache.find(u => u.username === dcName)
+    const accept = new ButtonBuilder()
+      .setCustomId("Verifywith-"+mcName)
+      .setLabel("Accept")
+      .setStyle(ButtonStyle.Success)
+    const decline = new ButtonBuilder()
+      .setCustomId("Declinewith-"+mcName)
+      .setLabel("Decline")
+      .setStyle(ButtonStyle.Danger)
+    const row = new ActionRowBuilder()
+      .addComponents(accept, decline)
     const verify = new EmbedBuilder()
         .setColor('#ff0000')
         .setTitle("Verification")
         .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
         .setDescription("You were sent a verification request from "+mcName+".\nWould you like to verify as this user?")
         .setTimestamp()
-    user.send({embeds: [verify]}) .then(() => {
+    user.send({embeds: [verify], components: [row]}) .then(() => {
       goneGood = true
     })
   } catch(e) {
