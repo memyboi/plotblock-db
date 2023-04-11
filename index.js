@@ -641,7 +641,6 @@ const verifyDiscordUser = async (data) => {
     console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
     try {
       const user = client.users.cache.find(u => u.username === dcName)
-      const userID = user.id
       const findRes = await plrSchema.find({ userID: user.id })
       try {
         const lastVerificationTimestamp = findRes[0].lastVerificationTimestamp
