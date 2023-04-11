@@ -588,7 +588,7 @@ client.on('interactionCreate', async interaction => {
 })
  
 const verifyDiscordUser = async (data) => {
-  const args = ((""+data.split("|")).join("")).split(",")
+  const args = (""+data.split("|")).split(",")
   const dcName = args[0]
   const dcTag = args[2]
   const mcName = args[1]
