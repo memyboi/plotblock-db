@@ -592,7 +592,7 @@ const verifyDiscordUser = async (discordUsername) => {
     return true
 }
  
-app.post('/link', async (req, res) => {
+app.post('/', async (req, res) => {
     const discordUsername = req.body.discordUsername
     const isVerified = await verifyDiscordUser(discordUsername)
     if (isVerified) {
