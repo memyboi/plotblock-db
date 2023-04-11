@@ -594,7 +594,7 @@ const verifyDiscordUser = async (data) => {
   const mcName = args[1]
   console.log(data)
   console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
-  const id = client.users.cache.find(u => u.tag === dcName+"#"+dcTag).id
+  const id = client.users.cache.find(u => u.username === dcName, u.discriminator === dcTag).id
   console.log(id+"????")
   return true
 }
