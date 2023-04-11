@@ -568,9 +568,41 @@ client.on('interactionCreate', async interaction => {
                 interaction.reply({embeds: [], components: [], content: "There was an error getting the team data.", ephemeral: true})
             }
     } else if (interaction.customId.includes("Verifywith-")) {
-      
+      const mcName = interaction.customId.split("-")[1]
+      const accepted = new EmbedBuilder()
+        .setColor('#00ff00')
+        .setTitle("Accepted!")
+        .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+        .setDescription("You have verified to __"+mcName+"__!")
+        .setTimestamp()
+      const { data } = fetch(`https://api.minetools.eu/uuid/${mcName}`)
+        .then(data => data.json())
+        .then(async ({ player }) => {
+          try {
+            const result = await plrSchema.findOneAndUpdate({
+              userID
+            }, {
+              userID,
+              minecraftName: mcName,
+              minecraftUUID: player.id,
+            }, {
+              upsert: true,
+              new: true
+            })
+          } catch(e) {
+            console.log(e)
+          }
+          interaction.edit({embeds: [accepted], components: [okrow]})
+      });
     } else if (interaction.customId.includes("Declinewith-")) {
-
+      const mcName = interaction.customId.split("-")[1]
+      const accepted = new EmbedBuilder()
+        .setColor('#ff0000')
+        .setTitle("Declined.")
+        .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+        .setDescription("You have declined to verify to __"+mcName+"__!")
+        .setTimestamp()
+      interaction.edit({embeds: [accepted], components: [okrow]})
     }
   };
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
