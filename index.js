@@ -596,7 +596,7 @@ client.on('interactionCreate', async interaction => {
           } catch(e) {
             console.log(e)
           }
-          interaction.edit({embeds: [accepted], components: [okrow]})
+          interaction.message.edit({embeds: [accepted], components: [okrow]})
       });
     } else if (interaction.customId.includes("Declinewith-")) {
       const mcName = interaction.customId.split("-")[1]
@@ -606,7 +606,7 @@ client.on('interactionCreate', async interaction => {
         .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
         .setDescription("You have declined to verify to __"+mcName+"__!")
         .setTimestamp()
-      interaction.edit({embeds: [accepted], components: [okrow]})
+      interaction.message.edit({embeds: [accepted], components: [okrow]})
     }
   };
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
