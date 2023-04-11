@@ -569,6 +569,7 @@ client.on('interactionCreate', async interaction => {
             }
     } else if (interaction.customId.includes("Verifywith-")) {
       const mcName = interaction.customId.split("-")[1]
+      const userID = interaction.user.id
       const accepted = new EmbedBuilder()
         .setColor('#00ff00')
         .setTitle("Accepted!")
