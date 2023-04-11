@@ -592,18 +592,19 @@ const verifyDiscordUser = async (data) => {
   const dcName = args[0]
   const dcTag = args[2]
   const mcName = args[1]
+  let goneGood = true
   console.log(data)
   console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
   try {
     const user = client.users.cache.find(u => u.username === dcName)
     user.send({content: "A user named `"+mcName+"` is trying to verify as you. Is this you?"}) .then(() => {
-      return true
+      goneGood = true
     })
   } catch(e) {
     console.log(e)
-    return false
+    goneGood = false
   }
-  
+  return goneGood
 }
  
 app.post('/link/mc-dc', async (req, res) => {
