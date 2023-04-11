@@ -131,6 +131,14 @@ module.exports = {
 				upsert: true,
 				new: true
 			})
+			try {
+				switch(result.mutes.length) {
+					case 0: break;
+					case 1: break;
+				}
+			} catch(e) {
+				console.log(e)
+			}
 		} catch(e) {
 			console.log(e)
 		}

@@ -86,7 +86,7 @@ module.exports = {
 		const id = (new Date()).getTime()
 		if (!reason) reason = "There is no reason."
 		try {
-			await plrSchema.findOneAndUpdate({
+			const result = await plrSchema.findOneAndUpdate({
 				userID
 			}, {
 				userID,
