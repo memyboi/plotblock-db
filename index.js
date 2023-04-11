@@ -630,37 +630,53 @@ client.on('interactionCreate', async interaction => {
 })
  
 const verifyDiscordUser = async (data) => {
-  const args = (""+data.split("|")).split(",")
-  const dcName = args[0]
-  const dcTag = args[2]
-  const mcName = args[1]
   let goneGood = true
-  console.log(data)
-  console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
   try {
-    const user = client.users.cache.find(u => u.username === dcName)
-    const accept = new ButtonBuilder()
-      .setCustomId("Verifywith-"+mcName)
-      .setLabel("Accept")
-      .setStyle(ButtonStyle.Success)
-    const decline = new ButtonBuilder()
-      .setCustomId("Declinewith-"+mcName)
-      .setLabel("Decline")
-      .setStyle(ButtonStyle.Danger)
-    const row = new ActionRowBuilder()
-      .addComponents(accept, decline)
-    const verify = new EmbedBuilder()
-        .setColor('#ff0000')
-        .setTitle("Verification")
-        .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
-        .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?")
-        .setTimestamp()
-    user.send({embeds: [verify], components: [row]}) .then(() => {
-      goneGood = true
-    })
+    const args = (""+data.split("|")).split(",")
+    const dcName = args[0]
+    const dcTag = args[2]
+    const mcName = args[1]
+
+    console.log(data)
+    console.log(dcName+"#"+dcTag+" has recieved a request from "+mcName+" to verify as them.")
+    try {
+      const user = client.users.cache.find(u => u.username === dcName)
+      const userID = user.id
+      const findRes = await plrSchema.find({ userID: user.id })
+      try {
+        const lastVerificationTimestamp = findRes[0].lastVerificationTimestamp
+        if (lastVerificationTimestamp + 300 < Date.now()) { // 5 min verification time
+          goneGood = false
+          return false
+        }
+      } catch {}
+      const accept = new ButtonBuilder()
+        .setCustomId("Verifywith-"+mcName)
+        .setLabel("Accept")
+        .setStyle(ButtonStyle.Success)
+      const decline = new ButtonBuilder()
+        .setCustomId("Declinewith-"+mcName)
+        .setLabel("Decline")
+        .setStyle(ButtonStyle.Danger)
+      const row = new ActionRowBuilder()
+        .addComponents(accept, decline)
+      const verify = new EmbedBuilder()
+          .setColor('#ff0000')
+          .setTitle("Verification")
+          .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
+          .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
+          .setTimestamp()
+      user.send({embeds: [verify], components: [row]}) .then(() => {
+        goneGood = true
+      })
+    } catch(e) {
+      console.log(e)
+      goneGood = false
+    }
   } catch(e) {
     console.log(e)
     goneGood = false
+    return false
   }
   return goneGood
 }

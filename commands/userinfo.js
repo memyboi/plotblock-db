@@ -25,10 +25,10 @@ module.exports = {
 					let lvls = "None!" //findRes[0].lvls
 					let mcname = "None!" //findRes[0].minecraftUUID (processing needed, https://api.mojang.com/user/profile/)
 
-					if (findRes[0].cash != undefined) {cash = findRes[0].cash} 
-					if (findRes[0].xp != undefined) {xp = findRes[0].xp}
-					if (findRes[0].lvls != undefined) {lvls = findRes[0].lvls}
-					if (findRes[0].minecraftUUID != undefined) {
+					if (typeof findRes[0].cash != undefined) {cash = findRes[0].cash} 
+					if (typeof findRes[0].xp != undefined) {xp = findRes[0].xp}
+					if (typeof findRes[0].lvls != undefined) {lvls = findRes[0].lvls}
+					if (typeof findRes[0].minecraftUUID != undefined) {
 						fetch("https://api.mojang.com/user/profile/"+findRes[0].minecraftUUID)
 							.then(data => data.json())
 							.then(async (player) => {
