@@ -325,7 +325,7 @@ module.exports = {
                                         .setTitle("Create a new clan.")
                                         .setCustomId("ClCr-"+interaction.user.id)
 
-                                    await interaction.showModal()
+                                    await interaction.showModal(modal)
                                 }
                             }
                             
