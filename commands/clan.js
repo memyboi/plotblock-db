@@ -324,7 +324,7 @@ module.exports = {
                                     const modal = new ModalBuilder()
                                         .setTitle("generic")
                                         .setCustomId("createclan")
-                                        .setComponents(
+                                        .addComponents(
                                             new ActionRowBuilder()
                                             .addComponents(
                                                 new ButtonBuilder()
