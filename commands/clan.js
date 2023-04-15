@@ -242,6 +242,7 @@ module.exports = {
                         const clanCodeOld = interaction.options.getString("clan")
                         const result = await teamschema.find( { teamShort: clanCodeOld } )
                         try {
+                            const imgData = require("../data/clanImgs.js")
                             const clan = result[0] //clan info
                             const clanName = clan.teamName
                             const clanDesc = clan.teamDesc
@@ -249,7 +250,8 @@ module.exports = {
                             const clanColour = clan.teamColour
                             const leaderID = clan.leaderID
                             const createdTime = clan.createTime
-                            const internalIconId = clan.teamImgId
+                            const internalIconId = clan.teamIcon
+                            const icon = imgData[(parseInt(internalIconId)+1)+""]
 
                             let leader = "None!"
                             let members = "No members!"
@@ -283,6 +285,7 @@ module.exports = {
                                         .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
                                         .setColor(clanColour)
                                         .setFooter({text: "---\nClan code - "+clanCode})
+                                        .setThumbnail(icon)
 
                                     interaction.reply({embeds: [emb], ephemeral: true})
                                 })

@@ -1,5 +1,6 @@
 const { Int32 } = require('mongodb')
 const mongoose = require('mongoose')
+const { stringify } = require('querystring')
 
 const rString = {
   type: String,
@@ -59,6 +60,10 @@ const schema = new mongoose.Schema({
   public: {
     type: Boolean,
     default: true
+  },
+  teamIcon: {
+    type: String,
+    default: "0"
   }
 })
 module.exports = mongoose.model('teamdata', schema, 'teamdata')
