@@ -141,6 +141,7 @@ module.exports = {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
                     var cmdg = interaction.options.getSubcommandGroup()
                     var cmd = interaction.options.getSubcommand()
+                    console.log(cmd)
                     const teamschema = require("../schemateam.js")
                     const plrschema = require("../schema.js")
                     //temp:
