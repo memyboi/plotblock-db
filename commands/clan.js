@@ -297,7 +297,12 @@ module.exports = {
                                         .setFooter({text: "---\nClan code - "+clanCode})
                                         .setThumbnail("attachment://"+icon)
 
-                                    interaction.reply({embeds: [emb], ephemeral: true})
+                                    interaction.reply({embeds: [emb], files: [
+                                        {
+                                            attachment: ""+icon,
+                                            name: "icon.png"
+                                        }
+                                    ], ephemeral: true})
                                 })
                             })
                             
