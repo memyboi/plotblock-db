@@ -649,39 +649,41 @@ const verifyDiscordUser = async (data) => {
           return false
         }
       } catch {}
-      const accept = new ButtonBuilder()
-        .setCustomId("Verifywith-"+mcName)
-        .setLabel("Accept")
-        .setStyle(ButtonStyle.Success)
-      const decline = new ButtonBuilder()
-        .setCustomId("Declinewith-"+mcName)
-        .setLabel("Decline")
-        .setStyle(ButtonStyle.Danger)
-      const row = new ActionRowBuilder()
-        .addComponents(accept, decline)
-      const verify = new EmbedBuilder()
-          .setColor('#ff0000')
-          .setTitle("Verification")
-          .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
-          .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
-          .setTimestamp()
-      user.send({embeds: [verify], components: [row]}) .then(async () => {
-        try {
-          const userID = user.id
-          const result = await plrSchema.findOneAndUpdate({
-            userID
-          }, {
-            userID,
-            lastVerificationTimestamp: 0,
-          }, {
-            upsert: true,
-            new: true
-          })
-        } catch(e) {
-          console.log(e)
-        }
-        goneGood = true
-      })
+      try {
+        const accept = new ButtonBuilder()
+          .setCustomId("Verifywith-"+mcName)
+          .setLabel("Accept")
+          .setStyle(ButtonStyle.Success)
+        const decline = new ButtonBuilder()
+          .setCustomId("Declinewith-"+mcName)
+          .setLabel("Decline")
+          .setStyle(ButtonStyle.Danger)
+        const row = new ActionRowBuilder()
+          .addComponents(accept, decline)
+        const verify = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle("Verification")
+            .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
+            .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
+            .setTimestamp()
+        user.send({embeds: [verify], components: [row]}) .then(async () => {
+          try {
+            const userID = user.id
+            const result = await plrSchema.findOneAndUpdate({
+              userID
+            }, {
+              userID,
+              lastVerificationTimestamp: 0,
+            }, {
+              upsert: true,
+              new: true
+            })
+          } catch(e) {
+            console.log(e)
+          }
+          goneGood = true
+        })
+      } catch(e) {}
     } catch(e) {
       console.log(e)
       goneGood = false
