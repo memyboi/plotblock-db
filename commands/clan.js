@@ -253,6 +253,7 @@ module.exports = {
                             var icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Antonia_Sautter_Creations.png/120px-Antonia_Sautter_Creations.png"
 
                             switch (internalIconId) {
+                                case undefined: icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Antonia_Sautter_Creations.png/120px-Antonia_Sautter_Creations.png"; break;
                                 case 0: icon = "https://i.imgur.com/3I8zduR.png"; break;
                                 case 1: icon = "https://i.imgur.com/FnQrZ1J.png"; break;
                                 case 2: icon = "https://i.imgur.com/o74DInl.png"; break;
