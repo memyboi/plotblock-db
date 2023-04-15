@@ -34,7 +34,7 @@ module.exports = {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
 			var talkingrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
 			guild.members.fetch(""+user.id) .then((member) => {
-				if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id == "1084582068316549252")) {
+				if (member.roles.cache.some(role => role.id == "1084533678849392731") || !member.roles.cache.some(role => role.id == "1084582068316549252")) {
 					//muted, unmute
 					member.roles.remove(role)
 					member.roles.add(talkingrole)
