@@ -277,7 +277,7 @@ module.exports = {
 
                         var emb = new EmbedBuilder()
                             .setTitle(clanName)
-                            .setDescription("Full description => "+clanDesc+"\nLeader => "+leader+"\nCurrent members => "+members+"\nAllies => "+allies+"\nTruces => "+truces+"\nWars => "+wars+"\nBlacklisted members => "+blacklist)
+                            .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
                             .setColor(clanColour)
                             .setFooter({text: "---\nClan code - "+clanCode})
 
