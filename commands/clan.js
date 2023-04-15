@@ -310,7 +310,7 @@ module.exports = {
                     }else if (cmd == "create") {
                         //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
                         console.log("ceat cmd!1!111")
-                        const findRes = plrSchema.find({ userID: interaction.user.id })
+                        const findRes = await plrSchema.find({ userID: interaction.user.id })
                         try {
                             const cash = findRes[0].cash
                             const lvls = findRes[0].lvls
