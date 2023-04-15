@@ -35,6 +35,15 @@ module.exports = {
 									.then(data => data.json())
 									.then(async (player) => {
 										mcname = player.name
+										if (typeof findRes[0].teamID != undefined) {
+											const teamSchema = require("../schemateam.js")
+											const findResTeam = await teamSchema.find({ teamID: findres[0].teamID })
+											try {
+												teamname = findResTeam[0].teamName+" ("+findResTeam[0].teamID+")"
+											} catch(e) {
+
+											}
+										}
 										const memberRoles = member.roles.cache
 											.filter((roles) => roles.id !== interaction.guild.id)
 											.map((role) => role.toString());
