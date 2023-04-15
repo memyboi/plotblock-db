@@ -147,7 +147,7 @@ module.exports = {
                     if (interaction.user.username != "DeadFry42" && interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
 
                     if (cmd == "list") {
-                        const result = await teamschema.find()
+                        const result = await teamschema.find({ public: true })
                         var page = 1
                         //10 results per page
 

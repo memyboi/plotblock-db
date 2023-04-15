@@ -56,5 +56,9 @@ const schema = new mongoose.Schema({
     type: Array,
     default: undefined
   },
+  public: {
+    type: Boolean,
+    default: true
+  }
 })
 module.exports = mongoose.model('teamdata', schema, 'teamdata')
