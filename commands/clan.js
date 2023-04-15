@@ -249,8 +249,8 @@ module.exports = {
                             const clanColour = clan.teamColour
                             const leaderID = clan.leaderID
                             const createdTime = clan.createTime
-                            const internalIconId = clan.teamIcon
-                            const icon = ""
+                            const internalIconId = parseInt(clan.teamIcon)
+                            const icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Antonia_Sautter_Creations.png/120px-Antonia_Sautter_Creations.png"
 
                             switch (internalIconId) {
                                 case 0: icon = "https://i.imgur.com/3I8zduR.png"; break;
