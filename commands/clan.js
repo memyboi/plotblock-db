@@ -314,10 +314,10 @@ module.exports = {
                         try {
                             const cash = findRes[0].cash
                             const lvls = findRes[0].lvls
-                            if (lvls < 2) {
+                            if (lvls < 7) {
                                 interaction.reply({content: "You must be level 2 to create a clan!", ephemeral: true})
                             } else {
-                                if (cash < 250) {
+                                if (cash < 0) {
                                     interaction.reply({content: "You must have 250 cash to create a clan!", ephemeral: true})
                                 } else {
                                     //create a popup
