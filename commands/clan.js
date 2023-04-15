@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionFlagsBits, ModalBuilder } = require('discord.js');
 const { off } = require('process');
 
 module.exports = {
@@ -308,6 +308,30 @@ module.exports = {
                         }
                     }else if (cmd == "create") {
                         //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
+                        const plrSchema = require("../schema.js")
+                        const findRes = plrSchema.find({ userID: interaction.user.id })
+                        try {
+                            const cash = findRes[0].cash
+                            const lvls = findRes[0].lvls
+                            if (lvls < 2) {
+                                interaction.reply({content: "You must be level 2 to create a clan!", ephemeral: true})
+                            } else {
+                                if (cash < 250) {
+                                    interaction.reply({content: "You must have 250 cash to create a clan!", ephemeral: true})
+                                } else {
+                                    //create a popup
+                                    const modal = new EmbedBuilder()
+                                        .setTitle("Create a new clan.")
+                                        .setDescription("This is the modal that will help you in setting up your clan.")
+                                        .setAuthor({name: interaction.user.username, iconURL: interaction.user.avatarURL()})
+
+                                    await interaction.showModal(modal)
+                                }
+                            }
+                            
+                        } catch(e) {
+
+                        }
                     } else if (cmd == "join") {
                         //string "clan"
                         //send a req to join a clan, needs 2 be lvl 3 to do so.
