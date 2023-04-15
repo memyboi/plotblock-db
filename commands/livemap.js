@@ -11,7 +11,7 @@ module.exports = {
         client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then((member) => {
                 const isVerifiedRole = guild.roles.cache.find(role => role.id == "1022631935614406730")
-                if (!member.roles.has(isVerifiedRole)) {
+                if (!member.roles.cache.has(isVerifiedRole)) {
                     return interaction.reply({content: "You must verify in order to run this command!", ephemeral: true})
                 }
             })
