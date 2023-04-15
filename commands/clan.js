@@ -330,7 +330,7 @@ module.exports = {
                             }
                             
                         } catch(e) {
-
+                            console.log(e)
                         }
                     } else if (cmd == "join") {
                         //string "clan"
