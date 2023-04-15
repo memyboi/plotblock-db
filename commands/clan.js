@@ -142,13 +142,13 @@ module.exports = {
                     var cmdg = interaction.options.getSubcommandGroup()
                     var cmd = interaction.options.getSubcommand()
                     console.log(cmd)
-                    const teamschema = require("../schemateam.js")
-                    const plrschema = require("../schema.js")
+                    const teamSchema = require("../schemateam.js")
+                    const plrSchema = require("../schema.js")
                     //temp:
                     if (interaction.user.username != "DeadFry42" && interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
 
                     if (cmd == "list") {
-                        const result = await teamschema.find({ public: true })
+                        const result = await teamSchema.find({ public: true })
                         var page = 1
                         //10 results per page
 
@@ -241,7 +241,7 @@ module.exports = {
                         //string "clan"
                         //make an embed with clan info.
                         const clanCodeOld = interaction.options.getString("clan")
-                        const result = await teamschema.find( { teamShort: clanCodeOld } )
+                        const result = await teamSchema.find( { teamShort: clanCodeOld } )
                         try {
                             const clan = result[0] //clan info
                             const clanName = clan.teamName
@@ -309,7 +309,7 @@ module.exports = {
                         }
                     }else if (cmd == "create") {
                         //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
-                        const plrSchema = require("../schema.js")
+                        console.log("ceat cmd!1!111")
                         const findRes = plrSchema.find({ userID: interaction.user.id })
                         try {
                             const cash = findRes[0].cash
