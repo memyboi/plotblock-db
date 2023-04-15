@@ -320,10 +320,9 @@ module.exports = {
                                     interaction.reply({content: "You must have 250 cash to create a clan!", ephemeral: true})
                                 } else {
                                     //create a popup
-                                    const modal = new EmbedBuilder()
+                                    const modal = new ModalBuilder()
                                         .setTitle("Create a new clan.")
-                                        .setDescription("This is the modal that will help you in setting up your clan.")
-                                        .setAuthor({name: interaction.user.username, iconURL: interaction.user.avatarURL()})
+                                        .setCustomId("ClanCreate-"+interaction.user.id)
 
                                     await interaction.showModal(modal)
                                 }
