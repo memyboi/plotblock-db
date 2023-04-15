@@ -250,6 +250,7 @@ module.exports = {
                             const leaderID = clan.leaderID
                             const createdTime = clan.createTime
                             const internalIconId = clan.teamIcon
+                            const icon = ""
 
                             switch (internalIconId) {
                                 case 0: icon = "../data/clanImgs/redOrbIcon.png"
