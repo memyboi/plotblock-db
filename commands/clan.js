@@ -253,14 +253,14 @@ module.exports = {
                             const iconName = ""
 
                             switch (internalIconId) {
-                                case 0: iconName = "redOrbIcon.png";
-                                case 1: iconName = "blueOrbIcon.png"
-                                case 2: iconName = "adamantOrb.png"
-                                case 3: iconName = "lustrousOrb.png"
-                                case 4: iconName = "griseousOrb.png"
-                                case 5: iconName = "oddKeystone.png"
-                                case 6: iconName = "darkStone.png"
-                                case 7: iconName = "lightStone.png"
+                                case 0: iconName = "redOrbIcon.png"; break;
+                                case 1: iconName = "blueOrbIcon.png"; break;
+                                case 2: iconName = "adamantOrb.png"; break;
+                                case 3: iconName = "lustrousOrb.png"; break;
+                                case 4: iconName = "griseousOrb.png"; break;
+                                case 5: iconName = "oddKeystone.png"; break;
+                                case 6: iconName = "darkStone.png"; break;
+                                case 7: iconName = "lightStone.png"; break;
                             }
                             
                             const icon = "../data/clanImgs/"+iconName
