@@ -250,20 +250,18 @@ module.exports = {
                             const leaderID = clan.leaderID
                             const createdTime = clan.createTime
                             const internalIconId = clan.teamIcon
-                            const iconName = ""
+                            const icon = ""
 
                             switch (internalIconId) {
-                                case 0: iconName = "redOrbIcon.png"; break;
-                                case 1: iconName = "blueOrbIcon.png"; break;
-                                case 2: iconName = "adamantOrb.png"; break;
-                                case 3: iconName = "lustrousOrb.png"; break;
-                                case 4: iconName = "griseousOrb.png"; break;
-                                case 5: iconName = "oddKeystone.png"; break;
-                                case 6: iconName = "darkStone.png"; break;
-                                case 7: iconName = "lightStone.png"; break;
+                                case 0: icon = "https://i.imgur.com/3I8zduR.png"; break;
+                                case 1: icon = "https://i.imgur.com/FnQrZ1J.png"; break;
+                                case 2: icon = "https://i.imgur.com/o74DInl.png"; break;
+                                case 3: icon = "https://i.imgur.com/8rWy2Rd.png"; break;
+                                case 4: icon = "https://i.imgur.com/CFk4VhY.png"; break;
+                                case 5: icon = "https://i.imgur.com/xHqMarP.png"; break;
+                                case 6: icon = "https://i.imgur.com/2WMYe9L.png"; break;
+                                case 7: icon = "https://i.imgur.com/GgmEb1r.png"; break;
                             }
-                            
-                            const icon = "../data/clanImgs/"+iconName
 
                             let leader = "None!"
                             let members = "No members!"
@@ -297,14 +295,9 @@ module.exports = {
                                         .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
                                         .setColor(clanColour)
                                         .setFooter({text: "---\nClan code - "+clanCode})
-                                        .setThumbnail("attachment://"+iconName)
+                                        .setThumbnail(icon)
 
-                                    interaction.reply({embeds: [emb], files: [
-                                        {
-                                            attachment: ""+icon,
-                                            name: "icon.png"
-                                        }
-                                    ], ephemeral: true})
+                                    interaction.reply({embeds: [emb], ephemeral: true})
                                 })
                             })
                             
