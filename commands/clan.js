@@ -242,7 +242,6 @@ module.exports = {
                         const clanCodeOld = interaction.options.getString("clan")
                         const result = await teamschema.find( { teamShort: clanCodeOld } )
                         try {
-                            const imgData = require("../data/clanImgs.js")
                             const clan = result[0] //clan info
                             const clanName = clan.teamName
                             const clanDesc = clan.teamDesc
@@ -251,7 +250,17 @@ module.exports = {
                             const leaderID = clan.leaderID
                             const createdTime = clan.createTime
                             const internalIconId = clan.teamIcon
-                            const icon = imgData[(parseInt(internalIconId)+1)+""]
+
+                            switch (internalIconId) {
+                                case 0: icon = "../data/clanImgs/redOrbIcon.png"
+                                case 1: icon = "../data/clanImgs/blueOrbIcon.png"
+                                case 2: icon = "../data/clanImgs/adamantOrb.png"
+                                case 3: icon = "../data/clanImgs/lustrousOrb.png"
+                                case 4: icon = "../data/clanImgs/griseousOrb.png"
+                                case 5: icon = "../data/clanImgs/oddKeystone.png"
+                                case 6: icon = "../data/clanImgs/darkStone.png"
+                                case 7: icon = "../data/clanImgs/lightStone.png"
+                            }
 
                             let leader = "None!"
                             let members = "No members!"
@@ -285,7 +294,7 @@ module.exports = {
                                         .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
                                         .setColor(clanColour)
                                         .setFooter({text: "---\nClan code - "+clanCode})
-                                        .setThumbnail(icon)
+                                        .setThumbnail("attachment://"+icon)
 
                                     interaction.reply({embeds: [emb], ephemeral: true})
                                 })
