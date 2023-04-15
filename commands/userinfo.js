@@ -37,7 +37,7 @@ module.exports = {
 										mcname = player.name
 										if (typeof findRes[0].teamID != undefined) {
 											const teamSchema = require("../schemateam.js")
-											const findResTeam = await teamSchema.find({ teamID: findres[0].teamID })
+											const findResTeam = await teamSchema.find({ teamID: findRes[0].teamID })
 											try {
 												teamname = findResTeam[0].teamName+" ("+findResTeam[0].teamID+")"
 											} catch(e) {
