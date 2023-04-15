@@ -8,6 +8,6 @@ module.exports = {
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {
-		interaction.reply({content: "The livemap is available (here)[http://plotblock.my.pebble.host:8127/#].", ephemeral: true})
+		interaction.reply({content: "The livemap is available [here](http://plotblock.my.pebble.host:8127/#).", ephemeral: true})
 	},
 };
