@@ -39,7 +39,7 @@ module.exports = {
 											const teamSchema = require("../schemateam.js")
 											const findResTeam = await teamSchema.find({ teamID: findRes[0].teamID })
 											try {
-												teamname = findResTeam[0].teamName+" ("+findResTeam[0].teamID+")"
+												teamname = findResTeam[0].teamName+" ("+findResTeam[0].teamShort+")"
 											} catch(e) {
 
 											}
