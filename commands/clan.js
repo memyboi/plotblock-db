@@ -323,7 +323,7 @@ module.exports = {
                                     //create a popup
                                     const modal = new ModalBuilder()
                                         .setTitle("Create-a-clan.")
-                                        .setCustomId("ClCr-"+interaction.user.id)
+                                        .setCustomId("CreateClan")
 
                                     await interaction.showModal(modal)
                                 }
