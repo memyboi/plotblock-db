@@ -13,7 +13,6 @@ module.exports = {
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {
-		interaction.deferReply()
 		var user = interaction.options.getUser("user")
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+interaction.user.id) .then((runMember) => {
