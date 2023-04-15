@@ -322,8 +322,17 @@ module.exports = {
                                 } else {
                                     //create a popup
                                     const modal = new ModalBuilder()
-                                        .setTitle("Create-a-clan.")
+                                        .setTitle("generic")
                                         .setCustomId("createclan")
+                                        .setComponents(
+                                            new ActionRowBuilder()
+                                            .addComponents(
+                                                new ButtonBuilder()
+                                                    .setLabel("Create")
+                                                    .setStyle(ButtonStyle.Success)
+                                                    .setCustomId("yes")
+                                            )
+                                        )
 
                                     await interaction.showModal(modal)
                                 }
