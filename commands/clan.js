@@ -331,6 +331,7 @@ module.exports = {
                             
                         } catch(e) {
                             console.log(e)
+                            //dssss
                         }
                     } else if (cmd == "join") {
                         //string "clan"
