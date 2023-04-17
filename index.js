@@ -300,6 +300,17 @@ client.on("guildMemberRemove", async member => {
   })
 })
 
+client.on('messageCreate', async (message) => {
+  if (message.channel.id == "1025101523933466634") { //verification channel
+    try{
+      message.delete()
+    } catch(e) {
+      console.log(e)
+    }
+    
+  }
+})
+
 client.on('interactionCreate', async interaction => {
   if (interaction.isButton()) {
     if (interaction.customId == "acc") {
