@@ -208,11 +208,7 @@ async function doXp(message) {
 const prefix = '.';
 
 client.on("messageCreate", async message => {
-  if (message.guild && !message.author.bot) {
-    if (getRandomArbitrary(1, 3) == 1) {
-      doXp(message)
-    }
-  }
+  
 })
 
 client.on("ready", async () => {
@@ -301,13 +297,18 @@ client.on("guildMemberRemove", async member => {
 })
 
 client.on('messageCreate', async (message) => {
-  if (message.channel.id == "1025101523933466634") { //verification channel
-    try {
-      if (message.author) {
-        message.delete()
+  if (message.guild && !message.author.bot) {
+    if (message.channel.id == "1025101523933466634") { //verification channel
+      try {
+        if (message.author.user.id+"" != "529331877727698954") {
+          message.delete()
+        }
+      } catch(e) {
+        console.log(e)
       }
-    } catch(e) {
-      console.log(e)
+    }
+    if (getRandomArbitrary(1, 3) == 1) {
+      doXp(message)
     }
   }
 })
