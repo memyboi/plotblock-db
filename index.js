@@ -272,10 +272,6 @@ client.on("guildMemberAdd", async function(member){
     client.guilds.fetch("" + process.env.guildid) .then((guild) => {
       guild.channels.fetch("" + process.env.welcomechannelid) .then((channel) => {
         channel.send({ files: [newimg] })
-        member.send({
-          content: "**Welcome to Plot Block [LIFESTEAL]!**\n\nWe hope you have a good time here!\nPlease click on the button below to begin the first step of the verification process!",
-          components: [a]
-        })
         var talkrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
         member.roles.add(talkrole)
       })
