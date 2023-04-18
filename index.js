@@ -302,12 +302,13 @@ client.on("guildMemberRemove", async member => {
 
 client.on('messageCreate', async (message) => {
   if (message.channel.id == "1025101523933466634") { //verification channel
-    try{
-      message.delete()
+    try {
+      if (message.author) {
+        message.delete()
+      }
     } catch(e) {
       console.log(e)
     }
-    
   }
 })
 
@@ -602,6 +603,9 @@ client.on('interactionCreate', async interaction => {
               userID,
               minecraftName: mcName,
               minecraftUUID: plrId,
+              $inc: {
+                cash: 5000
+              }
             }, {
               upsert: true,
               new: true
