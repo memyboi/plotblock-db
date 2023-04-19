@@ -641,13 +641,39 @@ client.on('interactionCreate', async interaction => {
     if (interaction.customId == "ResetModal") {
       const textInp = interaction.fields.getTextInputValue("ModalTextInput")
       if (textInp == "reset my data please.") {
-        interaction.reply({content: "You have been unlinked.", ephemeral: true})
+        const userID = interaction.user.id
+        const result = await plrSchema.findOneAndUpdate({
+          userID
+        }, {
+          userID,
+          minecraftUUID: "",
+          minecraftName: "",
+        }, {
+          upsert: true,
+          new: true
+        })
+        if (result) {
+          client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+            guild.members.fetch(""+interaction.user.id) .then(async (member) => {
+              try {
+                const role = guild.roles.cache.find(role => role.id == "1022631935614406730")
+                await member.roles.remove(role)
+              } catch(e) {
+                interaction.reply({content: "There was an error unlinking step 2. Please try again later.", ephemeral: true})
+              }
+            })
+        })
+          interaction.reply({content: "You have successfully unlinked.", ephemeral: true})
+        } else {
+          interaction.reply({content: "There was an error unlinking step 1. Please try again later.", ephemeral: true})
+        }
+      } else {
+        interaction.reply({content: "You have not been unlinked, as you inputted "+textInp+"./nTo unlink, please type EXACTLY "+'"reset my data please."'+" to properly unlink.", ephemeral: true})
       }
     }
   }
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
     const command = interaction.client.commands.get(interaction.commandName);
-
     if (!command) {
       console.error(`No command matching ${interaction.commandName} was found.`);
       return;

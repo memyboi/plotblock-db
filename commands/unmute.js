@@ -33,13 +33,18 @@ module.exports = {
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
 			var talkingrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
-			guild.members.fetch(""+user.id) .then((member) => {
+			guild.members.fetch(""+user.id) .then(async (member) => {
 				if (member.roles.cache.some(role => role.id == "1084533678849392731") || !member.roles.cache.some(role => role.id == "1084582068316549252")) {
-					//muted, unmute
-					member.roles.remove(role)
-					member.roles.add(talkingrole)
-					interaction.reply({content: "User has been unmuted.", ephemeral: true})
-					user.send({content: "*You have been unmuted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nPlease do re-read the rules so you do not get punished again."})
+					try {
+						//muted, unmute
+						await member.roles.remove(role)
+						await member.roles.add(talkingrole)
+						interaction.reply({content: "User has been unmuted.", ephemeral: true})
+						user.send({content: "*You have been unmuted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nPlease do re-read the rules so you do not get punished again."})
+					} catch(e) {
+						interaction.reply({content: "There was an error unmuting this user!", ephemeral: true})
+					}
+					
 				} else {
 					interaction.reply({content: "This user may be not muted!", ephemeral: true})
 				}
