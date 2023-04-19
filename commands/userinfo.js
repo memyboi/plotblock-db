@@ -21,6 +21,7 @@ module.exports = {
 	async execute(interaction, client) {
 		var user = interaction.options.getUser("user")
 		var detail = interaction.options.getBoolean("detail")
+		if (detail != true) detail = false
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+interaction.user.id) .then((runMember) => {
                 if (runMember.roles.cache.some(role => role.id == "1022631935614406730")) {
