@@ -624,7 +624,14 @@ client.on('interactionCreate', async interaction => {
           } catch(e) {
             console.log(e)
           }
+          client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+            guild.members.fetch(""+interaction.user.id) .then(async (member) => {
+              const role = guild.roles.cache.find(role => role.id == "1022631935614406730")
+              await member.roles.add(role)
+            })
+          })
           interaction.message.edit({embeds: [accepted], components: [okrow]})
+          interaction.deferUpdate()
       });
     } else if (interaction.customId.includes("Declinewith-")) {
       const mcName = interaction.customId.split("-")[1]

@@ -49,20 +49,28 @@ module.exports = {
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
 			var talkingrole = guild.roles.cache.find(role => role.id == "1084582068316549252")
-			guild.members.fetch(""+user.id) .then((member) => {
+			guild.members.fetch(""+user.id) .then(async (member) => {
 				if (length) {
 					var timeout = ms(length)
 					if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id = "1084582068316549252")) {
 						//not muted, mute
-						member.roles.remove(talkingrole)
-						member.roles.add(role)
+						try {
+							await member.roles.remove(talkingrole)
+							await member.roles.add(role)
+						} catch(e) {
+							console.log(e)
+						}
 						if (reason) {
 							interaction.reply({content: "User has been muted for "+ms(ms(length))+". Reason has been given:\n```"+reason+"```", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` for "+ms(ms(length))+" from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
-								setTimeout(() => {
+								setTimeout(async () => {
 									if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id = "1084582068316549252")) {
-										member.roles.remove(role)
-										member.roles.add(talkingrole)
+										try {
+											await member.roles.remove(role)
+											await member.roles.add(talkingrole)
+										} catch(e) {
+											console.log(e)
+										}
 										msg.reply({content: "*This mute has expired.*"})
 									}
 								}, timeout);
@@ -72,10 +80,14 @@ module.exports = {
 						if (!reason) {
 							interaction.reply({content: "User has been muted for "+ms(ms(length))+". No reason given.", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` for "+ms(ms(length))+" from Plot Block [LIFESTEAL]!*\nThere is no reason given for such an outlandish action.\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
-								setTimeout(() => {
+								setTimeout(async () => {
 									if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id = "1084582068316549252")) {
-										member.roles.remove(role)
-										member.roles.add(talkingrole)
+										try {
+											await member.roles.remove(role)
+											await member.roles.add(talkingrole)
+										} catch(e) {
+											console.log(e)
+										}
 										msg.reply({content: "*This mute has expired.*"})
 									}
 								}, timeout);
@@ -87,8 +99,13 @@ module.exports = {
 				} else {
 					if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id == "1084582068316549252")) {
 						//not muted, mute
-						member.roles.remove(talkingrole)
-						member.roles.add(role)
+						try {
+							await member.roles.remove(talkingrole)
+							await member.roles.add(role)
+						} catch(e) {
+							console.log(e)
+						}
+						
 						if (reason) {
 							interaction.reply({content: "User has been muted. Reason has been given:\n```"+reason+"```", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
