@@ -488,7 +488,18 @@ client.on('interactionCreate', async interaction => {
         components: [row],
       })
     } else if (interaction.customId == "RESETALLDATA") {
-      interaction.reply({content: "yes", ephemeral: true})
+      const text = new Discord.TextInputBuilder()
+        .setLabel("Test")
+        .setPlaceholder("Place")
+        .setStyle(Discord.TextInputStyle.Short)
+        .setCustomId("ModalTextInput")
+      const row = new ActionRowBuilder()
+        .addComponents(text)
+      const modal = new ModalBuilder()
+        .setTitle("Are you sure you would like to unlink?")
+        .setCustomId("ResetModal")
+        .setComponents(row)
+      await interaction.showModal(modal)
     } else if (interaction.customId.includes("-go")) {
       const teamschema = require("./schemateam.js")
       const plrschema = require("./schema.js")

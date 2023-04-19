@@ -16,12 +16,16 @@ module.exports = {
 					try {
 						if (findres[0].minecraftUUID != "" && typeof findres[0] != undefined) {
 							const button = new ButtonBuilder()
-							.setLabel("Yes.")
-							.setStyle(ButtonStyle.Success)
-							.setCustomId("RESETALLDATA")
-						const row = new ActionRowBuilder()
-							.addComponents(button)
-						interaction.reply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes.", ephemeral: true, components: [row]})
+								.setLabel("Yes.")
+								.setStyle(ButtonStyle.Danger)
+								.setCustomId("RESETALLDATA")
+							const button2 = new ButtonBuilder()
+								.setLabel("No.")
+								.setStyle(ButtonStyle.Success)
+								.setCustomId("doNotResetLmao")
+							const row = new ActionRowBuilder()
+								.addComponents(button2, button)
+							interaction.reply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes.", ephemeral: true, components: [row]})
 						}
 					} catch(e) {
 						console.log(e)
