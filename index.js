@@ -488,10 +488,10 @@ client.on('interactionCreate', async interaction => {
         components: [row],
       })
     } else if (interaction.customId == "RESETALLDATA") {
-      //By unlinking, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"reset my data please."'+" to reset your data.
+      //By unlinking, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"unlink my accounts please."'+" to reset your data.
       const text = new Discord.TextInputBuilder()
         .setLabel("Reset data below:")
-        .setPlaceholder('Type "reset my data please." to reset your data')
+        .setPlaceholder('Type "unlink my accounts please." to reset your data')
         .setStyle(Discord.TextInputStyle.Short)
         .setCustomId("ModalTextInput")
       const row = new ActionRowBuilder()
@@ -647,7 +647,7 @@ client.on('interactionCreate', async interaction => {
   if (interaction.isModalSubmit()) {
     if (interaction.customId == "ResetModal") {
       const textInp = interaction.fields.getTextInputValue("ModalTextInput")
-      if (textInp == "reset my data please.") {
+      if (textInp == "unlink my accounts please.") {
         const userID = interaction.user.id
         const result = await plrSchema.findOneAndUpdate({
           userID
@@ -675,7 +675,7 @@ client.on('interactionCreate', async interaction => {
           interaction.reply({content: "There was an error unlinking step 1. Please try again later.", ephemeral: true})
         }
       } else {
-        interaction.reply({content: "You have not been unlinked, as you inputted "+textInp+"./nTo unlink, please type EXACTLY "+'"reset my data please."'+" to properly unlink.", ephemeral: true})
+        interaction.reply({content: "You have not been unlinked, as you inputted "+textInp+"./nTo unlink, please type EXACTLY "+'"unlink my accounts please."'+" to properly unlink.", ephemeral: true})
       }
     }
   }
