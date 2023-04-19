@@ -637,6 +637,14 @@ client.on('interactionCreate', async interaction => {
       interaction.message.edit({embeds: [accepted], components: [okrow]})
     }
   };
+  if (interaction.isModalSubmit()) {
+    if (interaction.customId == "ResetModal") {
+      const textInp = interaction.fields.getTextInputValue("ModalTextInput")
+      if (textInp == "reset my data please.") {
+        interaction.reply({content: "You have been unlinked.", ephemeral: true})
+      }
+    }
+  }
   if (interaction.isCommand() || interaction.isChatInputCommand()) {
     const command = interaction.client.commands.get(interaction.commandName);
 
