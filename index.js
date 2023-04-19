@@ -489,8 +489,8 @@ client.on('interactionCreate', async interaction => {
       })
     } else if (interaction.customId == "RESETALLDATA") {
       const text = new Discord.TextInputBuilder()
-        .setLabel("Test")
-        .setPlaceholder("Place")
+        .setLabel("By unlinking, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"reset my data please."'+" to reset your data.")
+        .setPlaceholder('Type "reset my data please." to reset your data')
         .setStyle(Discord.TextInputStyle.Short)
         .setCustomId("ModalTextInput")
       const row = new ActionRowBuilder()
