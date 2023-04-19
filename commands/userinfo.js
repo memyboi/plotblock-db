@@ -10,10 +10,17 @@ module.exports = {
 				.setDescription("The user to list the roles of.")
 				.setRequired(true)
 			)
+		.addBooleanOption(option =>
+			option
+				.setName("detail")
+				.setDescription("If true, the numbers will not be abbreviated.")
+				.setRequired(false)
+		)
 		.setDMPermission(false)
 		,
 	async execute(interaction, client) {
 		var user = interaction.options.getUser("user")
+		var detail = interaction.options.getBoolean("detail")
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+interaction.user.id) .then((runMember) => {
                 if (runMember.roles.cache.some(role => role.id == "1022631935614406730")) {
@@ -27,9 +34,9 @@ module.exports = {
 							let lvls = "None!" //findRes[0].lvls
 							let mcname = "None!" //findRes[0].minecraftUUID (processing needed, https://api.mojang.com/user/profile/)
 		
-							if (typeof findRes[0].cash != undefined) {cash = findRes[0].cash} 
-							if (typeof findRes[0].xp != undefined) {xp = findRes[0].xp}
-							if (typeof findRes[0].lvls != undefined) {lvls = findRes[0].lvls}
+							if (typeof findRes[0].cash != undefined) {if (detail) {cash = new Intl.NumberFormat("en-US", {notation: "compact", maximumFractionDigits: 1}).format(findRes[0].cash)} else {cash = findRes[0].cash}}
+							if (typeof findRes[0].xp != undefined) {if (detail) {xp = new Intl.NumberFormat("en-US", {notation: "compact", maximumFractionDigits: 1}).format(findRes[0].xp)} else {xp = findRes[0].xp}}
+							if (typeof findRes[0].lvls != undefined) {if (detail) {lvls = new Intl.NumberFormat("en-US", {notation: "compact", maximumFractionDigits: 1}).format(findRes[0].lvls)} else {lvls = findRes[0].lvls}}
 							if (typeof findRes[0].minecraftUUID != undefined) {
 								fetch("https://api.mojang.com/user/profile/"+findRes[0].minecraftUUID)
 									.then(data => data.json())

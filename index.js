@@ -487,6 +487,8 @@ client.on('interactionCreate', async interaction => {
         embeds: [tosp2],
         components: [row],
       })
+    } else if (interaction.customId == "RESETALLDATA") {
+      interaction.reply({content: "yes", ephemeral: true})
     } else if (interaction.customId.includes("-go")) {
       const teamschema = require("./schemateam.js")
       const plrschema = require("./schema.js")
