@@ -25,7 +25,7 @@ module.exports = {
 								.setCustomId("doNotResetLmao")
 							const row = new ActionRowBuilder()
 								.addComponents(button2, button)
-							interaction.reply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes.", ephemeral: true, components: [row]})
+							interaction.reply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes./nIn this embed, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"reset my data please."'+" in the text input if you agree to reset your data.", ephemeral: true, components: [row]})
 						}
 					} catch(e) {
 						console.log(e)
