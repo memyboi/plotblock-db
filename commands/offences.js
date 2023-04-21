@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { off } = require('process');
 
 
 module.exports = {
@@ -16,6 +17,18 @@ module.exports = {
                         .setDescription("The user of which you want to get the offences of.")
                         .setRequired(true)
                 )
+                .addStringOption(option =>
+                    option
+                        .setName("offence")
+                        .setDescription("The type of offence to filter for.")
+                        .setChoices(
+                            {name: "All (unstable)", value: "all"},
+                            {name: "Warns", value: "warns"},
+                            {name: "Mutes", value: "mutes"},
+                            {name: "Kicks", value: "kicks"},
+                            {name: "Bans", value: "bans"},
+                        )
+                )
         )
 		,
 	async execute(interaction, client) {
@@ -24,36 +37,64 @@ module.exports = {
         client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then(async (member) => {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
-                    if (cmd == "view") {
-                        const plrSchema = require("../schema.js")
-                        const findRes = await plrSchema.find({ userID: target.id })
-                        try {
-                            let warns = "No data"
-                            let mutes = "No data"
-                            let kicks = "No data"
-                            let bans = "No data"
-                            try {if (findRes[0].warns) {
-                                warns = findRes[0].warns
-                                .map((warn) => "\n> **Warn ID - "+warn.id+"**\n> **Reason:** "+warn.reason+"\n> **Time:** "+warn.timestamp+"\n> ");}} catch(e) {console.log(e)}
-                                try {if (findRes[0].mutes) {
-                                mutes = findRes[0].mutes
-                                .map((mute) => "\n> **Mute ID - "+mute.id+"**\n> **Reason:** "+mute.reason+"\n> **Time:** "+mute.timestamp+"\n> ");}} catch(e) {console.log(e)}
-                            try {if (findRes[0].kicks) {
-                                kicks = findRes[0].kicks
-                                .map((kick) => "\n> **Kick ID - "+kick.id+"**\n> **Reason:** "+kick.reason+"\n> **Time:** "+kick.timestamp+"\n> ");}} catch(e) {console.log(e)}
-                            try {if (findRes[0].bans) {
-                                bans = findRes[0].bans
-                                .map((ban) => "\n> **Ban ID - "+ban.id+"**\n> **Reason:** "+ban.reason+"\n> **Time:** "+ban.timestamp+"\n> ");}} catch(e) {console.log(e)}
-                            
-                            const infoEmbed = new EmbedBuilder()
-                                .setTitle(target.username+"'s offences:")
-                                .setDescription("> Warns => "+warns+"\n> Mutes => "+mutes+"\n> Kicks => "+kicks+"\n> Bans => "+bans)
-                            interaction.reply({embeds: [infoEmbed], ephemeral: true})
-                        } catch(e) {
-                            console.log(e)
-                            interaction.reply({content: "This user may have no offence data!", ephemeral: true})
+                    guild.members.fetch(""+target.id) .then(async (tMember) => {
+                        if (cmd == "view") {
+                            const offence = interaction.options.getUser("offence")
+                            const plrSchema = require("../schema.js")
+                            const findRes = await plrSchema.find({ userID: target.id })
+                            try {
+                                let warns = "No data"
+                                let mutes = "No data"
+                                let kicks = "No data"
+                                let bans = "No data"
+                                try {if (findRes[0].warns) {
+                                    warns = findRes[0].warns
+                                    .map((warn) => "\n> **Warn ID - "+warn.id+"**\n> **Reason:** "+warn.reason+"\n> **Time:** "+warn.timestamp+"\n> ");}} catch(e) {console.log(e)}
+                                    try {if (findRes[0].mutes) {
+                                    mutes = findRes[0].mutes
+                                    .map((mute) => "\n> **Mute ID - "+mute.id+"**\n> **Reason:** "+mute.reason+"\n> **Time:** "+mute.timestamp+"\n> ");}} catch(e) {console.log(e)}
+                                try {if (findRes[0].kicks) {
+                                    kicks = findRes[0].kicks
+                                    .map((kick) => "\n> **Kick ID - "+kick.id+"**\n> **Reason:** "+kick.reason+"\n> **Time:** "+kick.timestamp+"\n> ");}} catch(e) {console.log(e)}
+                                try {if (findRes[0].bans) {
+                                    bans = findRes[0].bans
+                                    .map((ban) => "\n> **Ban ID - "+ban.id+"**\n> **Reason:** "+ban.reason+"\n> **Time:** "+ban.timestamp+"\n> ");}} catch(e) {console.log(e)}
+
+                                let infoEmbed = {}
+                                if (offence == "all") {
+                                    infoEmbed = new EmbedBuilder()
+                                    .setAuthor({ name: target.username, iconURL: tMember.displayAvatarURL()})
+                                    .setTitle(target.username+"'s offences:")
+                                    .setDescription("> Warns => "+warns+"\n> Mutes => "+mutes+"\n> Kicks => "+kicks+"\n> Bans => "+bans)
+                                } else if (offence == "warns") {
+                                    infoEmbed = new EmbedBuilder()
+                                    .setAuthor({ name: target.username, iconURL: tMember.displayAvatarURL()})
+                                    .setTitle(target.username+"'s warns:")
+                                    .setDescription("> Warns => "+warns)
+                                } else if (offence == "mutes") {
+                                    infoEmbed = new EmbedBuilder()
+                                    .setAuthor({ name: target.username, iconURL: tMember.displayAvatarURL()})
+                                    .setTitle(target.username+"'s mutes:")
+                                    .setDescription("> Mutes => "+mutes)
+                                } else if (offence == "kicks") {
+                                    infoEmbed = new EmbedBuilder()
+                                    .setAuthor({ name: target.username, iconURL: tMember.displayAvatarURL()})
+                                    .setTitle(target.username+"'s kicks:")
+                                    .setDescription("> Kicks => "+kicks)
+                                } else if (offence == "bans") {
+                                    infoEmbed = new EmbedBuilder()
+                                    .setAuthor({ name: target.username, iconURL: tMember.displayAvatarURL()})
+                                    .setTitle(target.username+"'s bans:")
+                                    .setDescription("> Bans => "+bans)
+                                }
+                                interaction.reply({embeds: [infoEmbed], ephemeral: true})
+                            } catch(e) {
+                                console.log(e)
+                                interaction.reply({content: "This user may have no offence data!", ephemeral: true})
+                            }
                         }
-                    } 
+                    })
+                     
                 } else {
                     interaction.reply({content: "You must verify in order to run this command!", ephemeral: true})
                 }
