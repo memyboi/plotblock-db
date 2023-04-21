@@ -21,6 +21,7 @@ module.exports = {
                     option
                         .setName("offence")
                         .setDescription("The type of offence to filter for.")
+                        .setRequired(true)
                         .setChoices(
                             {name: "All (unstable)", value: "all"},
                             {name: "Warns", value: "warns"},
@@ -39,7 +40,7 @@ module.exports = {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
                     guild.members.fetch(""+target.id) .then(async (tMember) => {
                         if (cmd == "view") {
-                            const offence = interaction.options.getUser("offence")
+                            const offence = interaction.options.getString("offence")
                             const plrSchema = require("../schema.js")
                             const findRes = await plrSchema.find({ userID: target.id })
                             try {
