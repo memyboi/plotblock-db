@@ -31,17 +31,33 @@ module.exports = {
                         )
                 )
         )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName("remove")
+                .setDescription("Remove an offence of this user.")
+                .addUserOption(option =>
+                    option
+                        .setName("target")
+                        .setDescription("The user if which you want to remove the offence of.")
+                )
+                .addStringOption(option =>
+                    option
+                        .setName("offence")
+                        .setDescription("The id of the offence to remove.")
+                        .setRequired(true)
+                )
+        )
 		,
 	async execute(interaction, client) {
         const target = interaction.options.getUser("target")
+        const offence = interaction.options.getString("offence")
+        const plrSchema = require("../schema.js")
         const cmd = interaction.options.getSubcommand()
         client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then(async (member) => {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
                     guild.members.fetch(""+target.id) .then(async (tMember) => {
                         if (cmd == "view") {
-                            const offence = interaction.options.getString("offence")
-                            const plrSchema = require("../schema.js")
                             const findRes = await plrSchema.find({ userID: target.id })
                             try {
                                 let warns = "No data"
@@ -89,6 +105,16 @@ module.exports = {
                                     .setDescription("> Bans => "+bans)
                                 }
                                 interaction.reply({embeds: [infoEmbed], ephemeral: true})
+                            } catch(e) {
+                                console.log(e)
+                                interaction.reply({content: "This user may have no offence data!", ephemeral: true})
+                            }
+                        } else if (cmd == "remove") {
+                            const findRes = plrSchema.find({ userID: target.id })
+                            try {
+                                const requests = await Request.find({
+                                    itemsList: { $elemMatch: { item: offence }}},);
+                                console.log(requests)
                             } catch(e) {
                                 console.log(e)
                                 interaction.reply({content: "This user may have no offence data!", ephemeral: true})
