@@ -53,6 +53,7 @@ module.exports = {
                                     {name: "Kicks:", value: kicks},
                                     {name: "Bans:", value: bans},
                                 )
+                            interaction.reply({embeds: [infoEmbed], ephemeral: true})
                         } catch(e) {
                             console.log(e)
                             interaction.reply({content: "This user may have no offence data!", ephemeral: true})
