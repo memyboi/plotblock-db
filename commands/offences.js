@@ -34,20 +34,20 @@ module.exports = {
                             let bans = "No data"
                             try {if (findRes[0].warns) {
                                 warns = findRes[0].warns
-                                .map((warn) => "\n> **Warn ID - "+warn.id+"**\n> "+warn.reason+"\n> "+warn.timestamp);}} catch(e) {console.log(e)}
-                            try {if (findRes[0].mutes) {
+                                .map((warn) => "\n> **Warn ID - "+warn.id+"**\n> **Reason:** "+warn.reason+"\n> **Time:** "+warn.timestamp);}} catch(e) {console.log(e)}
+                                try {if (findRes[0].mutes) {
                                 mutes = findRes[0].mutes
-                                .map((mute) => "\n> **Mute ID - "+mute.id+"**\n> "+mute.reason+"\n> "+mute.timestamp);}} catch(e) {console.log(e)}
+                                .map((mute) => "\n> **Mute ID - "+mute.id+"**\n> **Reason:** "+mute.reason+"\n> **Time:** "+mute.timestamp);}} catch(e) {console.log(e)}
                             try {if (findRes[0].kicks) {
                                 kicks = findRes[0].kicks
-                                .map((kick) => "\n> **Kick ID - "+kick.id+"**\n> "+kick.reason+"\n> "+kick.timestamp);}} catch(e) {console.log(e)}
+                                .map((kick) => "\n> **Kick ID - "+kick.id+"**\n> **Reason:** "+kick.reason+"\n> **Time:** "+kick.timestamp);}} catch(e) {console.log(e)}
                             try {if (findRes[0].bans) {
                                 bans = findRes[0].bans
-                                .map((ban) => "\n> **Ban ID - "+ban.id+"**\n> "+ban.reason+"\n> "+ban.timestamp);}} catch(e) {console.log(e)}
+                                .map((ban) => "\n> **Ban ID - "+ban.id+"**\n> **Reason:** "+ban.reason+"\n> **Time:** "+ban.timestamp);}} catch(e) {console.log(e)}
                             
                             const infoEmbed = new EmbedBuilder()
                                 .setTitle(target.username+"'s offences:")
-                                .setDescription("> Warns => "+warns+"\n\n> Mutes => "+mutes+"\n\n> Kicks => "+kicks+"\n\n> Bans => "+bans)
+                                .setDescription("> Warns => "+warns+"\n> \n> Mutes => "+mutes+"\n> \n> Kicks => "+kicks+"\n> \n> Bans => "+bans)
                             interaction.reply({embeds: [infoEmbed], ephemeral: true})
                         } catch(e) {
                             console.log(e)
