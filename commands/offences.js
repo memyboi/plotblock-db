@@ -28,10 +28,10 @@ module.exports = {
                         const plrSchema = require("../schema.js")
                         const findRes = await plrSchema.find({ userID: target.id })
                         try {
-                            const warns = "No data"
-                            const mutes = "No data"
-                            const kicks = "No data"
-                            const bans = "No data"
+                            let warns = "No data"
+                            let mutes = "No data"
+                            let kicks = "No data"
+                            let bans = "No data"
                             try {if (findRes[0].warns) {
                                 warns = findRes[0].warns
                                 .map((warn) => "**Warn ID - "+warn.id+"**/n"+warn.reason+"/n"+warn.timestamp);}} catch(e) {console.log(e)}
