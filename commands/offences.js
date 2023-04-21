@@ -12,7 +12,7 @@ module.exports = {
                 .setDescription("View the offences of this user.")
                 .addUserOption(option =>
                     option
-                        .setName("Target")
+                        .setName("target")
                         .setDescription("The user of which you want to get the offences of.")
                         .setRequired(true)
                 )
