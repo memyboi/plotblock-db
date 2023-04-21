@@ -34,25 +34,20 @@ module.exports = {
                             let bans = "No data"
                             try {if (findRes[0].warns) {
                                 warns = findRes[0].warns
-                                .map((warn) => "**Warn ID - "+warn.id+"**/n"+warn.reason+"/n"+warn.timestamp);}} catch(e) {console.log(e)}
+                                .map((warn) => "**Warn ID - "+warn.id+"**\n"+warn.reason+"\n"+warn.timestamp);}} catch(e) {console.log(e)}
                             try {if (findRes[0].mutes) {
                                 mutes = findRes[0].mutes
-                                .map((mute) => "**Mute ID - "+mute.id+"**/n"+mute.reason+"/n"+mute.timestamp);}} catch(e) {console.log(e)}
+                                .map((mute) => "**Mute ID - "+mute.id+"**\n"+mute.reason+"\n"+mute.timestamp);}} catch(e) {console.log(e)}
                             try {if (findRes[0].kicks) {
                                 kicks = findRes[0].kicks
-                                .map((kick) => "**Kick ID - "+kick.id+"**/n"+kick.reason+"/n"+kick.timestamp);}} catch(e) {console.log(e)}
+                                .map((kick) => "**Kick ID - "+kick.id+"**\n"+kick.reason+"\n"+kick.timestamp);}} catch(e) {console.log(e)}
                             try {if (findRes[0].bans) {
                                 bans = findRes[0].bans
-                                .map((ban) => "**Warn ID - "+ban.id+"**/n"+ban.reason+"/n"+ban.timestamp);}} catch(e) {console.log(e)}
+                                .map((ban) => "**Warn ID - "+ban.id+"**\n"+ban.reason+"\n"+ban.timestamp);}} catch(e) {console.log(e)}
                             
                             const infoEmbed = new EmbedBuilder()
                                 .setTitle(target.username+"'s offences:")
-                                .addFields(
-                                    {name: "Warns:", value: warns},
-                                    {name: "Mutes:", value: mutes},
-                                    {name: "Kicks:", value: kicks},
-                                    {name: "Bans:", value: bans},
-                                )
+                                .setDescription("> Warns => "+warns+"\n> Mutes => "+mutes+"\n> Kicks => "+kicks+"\n> Bans => "+bans)
                             interaction.reply({embeds: [infoEmbed], ephemeral: true})
                         } catch(e) {
                             console.log(e)
