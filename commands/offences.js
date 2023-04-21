@@ -39,6 +39,7 @@ module.exports = {
                     option
                         .setName("target")
                         .setDescription("The user if which you want to remove the offence of.")
+                        .setRequired(true)
                 )
                 .addStringOption(option =>
                     option
