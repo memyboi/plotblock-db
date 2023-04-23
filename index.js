@@ -647,7 +647,8 @@ client.on('interactionCreate', async interaction => {
       const mcName = args[2]
       const allegedUserID = interaction.user.id
       const realUserID = args[1]
-      if (""+realUserID == ""+allegedUserID) {
+      console.log(`NoDM Verify INFO:\n${allegedUserID} - interacted user\n${realUserID} - user in the button customID`)
+      if (parseInt(realUserID) == parseInt(allegedUserID)) {
         const accepted = new EmbedBuilder()
         .setColor('#00ff00')
         .setTitle("Accepted!")
@@ -694,7 +695,8 @@ client.on('interactionCreate', async interaction => {
       const mcName = args[2]
       const allegedUserID = interaction.user.id
       const realUserID = args[1]
-      if (""+realUserID == ""+allegedUserID) {
+      console.log(`NoDM Decline INFO:\n${allegedUserID} - interacted user\n${realUserID} - user in the button customID`)
+      if (parseInt(realUserID) == parseInt(allegedUserID)) {
         const accepted = new EmbedBuilder()
           .setColor('#ff0000')
           .setTitle("Declined.")
@@ -833,7 +835,7 @@ const verifyDiscordUser = async (data) => {
           console.log("A User cannot verify using DMS!!!!!!!\n"+e)
           client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.channels.fetch("1025101523933466634") .then((channel) => {
-              channel.send({content: "<@"+user.id+">", embeds: [verify], components: [rowNoDM]}) .then(async (msg) => {
+              channel.send({content: "<@"+user.id+">", embeds: [NoDMverify], components: [rowNoDM]}) .then(async (msg) => {
                 try {
                   const userID = user.id
                   const result = await plrSchema.findOneAndUpdate({
