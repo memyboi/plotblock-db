@@ -642,6 +642,69 @@ client.on('interactionCreate', async interaction => {
         .setDescription("You have declined to verify to __"+mcName+"__!")
         .setTimestamp()
       interaction.message.edit({embeds: [accepted], components: [okrow]})
+    } else if (interaction.customId.includes("NoDMVerifywith-")) {
+      const args = interaction.customId.split("-")
+      const mcName = args[2]
+      const allegedUserID = interaction.user.id
+      const realUserID = args[1]
+      if (""+realUserID == ""+allegedUserID) {
+        const accepted = new EmbedBuilder()
+        .setColor('#00ff00')
+        .setTitle("Accepted!")
+        .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+        .setDescription("You have verified to __"+mcName+"__!")
+        .setTimestamp()
+      fetch(`https://api.mojang.com/users/profiles/minecraft/${mcName}`)
+        .then(data => data.json())
+        .then(async (player) => {
+          console.log(player)
+          const plrId = player.id
+          try {
+            const result = await plrSchema.findOneAndUpdate({
+              userID
+            }, {
+              userID,
+              minecraftName: mcName,
+              minecraftUUID: plrId,
+              $inc: {
+                cash: 5000
+              }
+            }, {
+              upsert: true,
+              new: true
+            })
+          } catch(e) {
+            console.log(e)
+          }
+          client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+            guild.members.fetch(""+interaction.user.id) .then(async (member) => {
+              const role = guild.roles.cache.find(role => role.id == "1022631935614406730")
+              await member.roles.add(role)
+            })
+          })
+          interaction.message.edit({embeds: [accepted], components: [okrow]})
+          interaction.deferUpdate() 
+        });
+      } else {
+        interaction.reply({content: "This is not your verification prompt!", ephemeral: true})
+      }
+     
+    } else if (interaction.customId.includes("NoDMDeclinewith-")) {
+      const args = interaction.customId.split("-")
+      const mcName = args[2]
+      const allegedUserID = interaction.user.id
+      const realUserID = args[1]
+      if (""+realUserID == ""+allegedUserID) {
+        const accepted = new EmbedBuilder()
+          .setColor('#ff0000')
+          .setTitle("Declined.")
+          .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+          .setDescription("You have declined to verify to __"+mcName+"__!")
+          .setTimestamp()
+        interaction.message.edit({embeds: [accepted], components: [okrow]})
+      } else {
+        interaction.reply({content: "This is not your verification prompt!", ephemeral: true})
+      }
     }
   };
   if (interaction.isModalSubmit()) {
@@ -727,13 +790,30 @@ const verifyDiscordUser = async (data) => {
           .setStyle(ButtonStyle.Danger)
         const row = new ActionRowBuilder()
           .addComponents(accept, decline)
+        const acceptNoDM = new ButtonBuilder()
+          .setCustomId("NoDMVerifywith-"+user.id+"-"+mcName)
+          .setLabel("Accept")
+          .setStyle(ButtonStyle.Success)
+        const declineNoDM = new ButtonBuilder()
+          .setCustomId("NoDMDeclinewith-"+user.id+"-"+mcName)
+          .setLabel("Decline")
+          .setStyle(ButtonStyle.Danger)
+        const rowNoDM = new ActionRowBuilder()
+          .addComponents(acceptNoDM, declineNoDM)
         const verify = new EmbedBuilder()
             .setColor('#ff0000')
             .setTitle("Verification")
             .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
             .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
             .setTimestamp()
-        user.send({embeds: [verify], components: [row]}) .then(async () => {
+          const NoDMverify = new EmbedBuilder()
+            .setColor('#ff0000')
+            .setTitle("Verification (<@"+user.id+">")
+            .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
+            .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
+            .setFooter({text: "Request ends in 60s!"})
+            .setTimestamp()
+        try {user.send({embeds: [verify], components: [row]}) .then(async () => {
           try {
             const userID = user.id
             const result = await plrSchema.findOneAndUpdate({
@@ -749,7 +829,34 @@ const verifyDiscordUser = async (data) => {
             console.log(e)
           }
           goneGood = true
-        })
+        })} catch(e){
+          console.log(e)
+          client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+            guild.channels.fetch("1025101523933466634") .then((channel) => {
+              channel.send({content: "<@"+user.id+">", embeds: [verify], components: [rowNoDM]}) .then(async (msg) => {
+                try {
+                  const userID = user.id
+                  const result = await plrSchema.findOneAndUpdate({
+                    userID
+                  }, {
+                    userID,
+                    lastVerificationTimestamp: 0,
+                  }, {
+                    upsert: true,
+                    new: true
+                  })
+                } catch(e) {
+                  console.log(e)
+                }
+                goneGood = true
+                setTimeout(() => {
+                  msg.delete()
+                }, 60000);
+              })
+            })
+          })
+        }
+        
       } catch(e) {}
     } catch(e) {
       console.log(e)

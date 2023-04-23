@@ -8,7 +8,7 @@ module.exports = {
 			option
 				.setName("page")
 				.setDescription("The page of the help command that you view.")
-				.setMaxValue(4)
+				.setMaxValue(5)
 				.setMinValue(1)
 		)
 		,
@@ -69,6 +69,16 @@ module.exports = {
 			.addFields(
 			{ name: "Who created me?", value: "DeadFry42#5445", inline: true },
 			{ name: "What is my purpose?", value: "My purpose is to keep the server's teams organised and to do other stuff related to this server.", inline: true },
+			)
+			.setTimestamp()
+		const helpEmbed5 = new EmbedBuilder()
+			.setColor('#ff0000')
+			.setTitle("Clan help:")
+			.setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
+			.setDescription("/help page 5")
+			.addFields(
+			{ name: "What are clans?", value: "Clans are a official way of creating a group of players. Clans are usually made with a group of friends, or a few people who have similar interests or goals. The point of clans is to allow for easier communication and disallows for combat. It also lets players see players nametags when they are on the same team.", inline: true },
+			{ name: "How can you make a clan?", value: "You can make a clan by running </clan create:1094716461605470269>. The requirements are: 250 cash, minimum of level 5.", inline: true },
 			)
 			.setTimestamp()
 		var page = interaction.options.getNumber("page")
