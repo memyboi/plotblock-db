@@ -320,21 +320,14 @@ module.exports = {
                                 if (cash < 0) {
                                     interaction.reply({content: "You must have 250 cash to create a clan!", ephemeral: true})
                                 } else {
-                                    //create a popup
-                                    const modal = new ModalBuilder()
-                                        .setTitle("generic")
-                                        .setCustomId("createclan")
-                                        .addComponents(
-                                            new ActionRowBuilder()
-                                            .addComponents(
-                                                new ButtonBuilder()
-                                                    .setLabel("Create")
-                                                    .setStyle(ButtonStyle.Success)
-                                                    .setCustomId("yes")
-                                            )
-                                        )
+                                    const createButton = new ButtonBuilder()
+                                        .setLabel("Create")
+                                        .setStyle(ButtonStyle.Primary)
+                                        .setCustomId("createaclan")
+                                    const actionRow = new ActionRowBuilder()
+                                        .addComponents(createButton)
 
-                                    await interaction.showModal(modal)
+                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 250 cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow] ephemeral: true})
                                 }
                             }
                             
