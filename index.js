@@ -296,7 +296,7 @@ client.on('messageCreate', async (message) => {
   if (message.guild && !message.author.bot) {
     if (message.channel.id == "1025101523933466634") { //verification channel
       try {
-        if (message.author.user.id+"" != "529331877727698954") {
+        if (message.author.id+"" != "529331877727698954") {
           message.delete()
         }
       } catch(e) {
