@@ -327,7 +327,7 @@ module.exports = {
                                     const actionRow = new ActionRowBuilder()
                                         .addComponents(createButton)
 
-                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 250 cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow] ephemeral: true})
+                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 250 cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow], ephemeral: true})
                                 }
                             }
                             
