@@ -813,7 +813,7 @@ const verifyDiscordUser = async (data) => {
             .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
             .setFooter({text: "Request ends in 60s!"})
             .setTimestamp()
-        try {user.send({embeds: [verify], components: [row]}) .then(async () => {
+          user.send({embeds: [verify], components: [row]}) .then(async () => {
           try {
             const userID = user.id
             const result = await plrSchema.findOneAndUpdate({
@@ -829,8 +829,8 @@ const verifyDiscordUser = async (data) => {
             console.log(e)
           }
           goneGood = true
-        })} catch(e){
-          console.log(e)
+        }) .catch((e) => {
+          console.log("A User cannot verify using DMS!!!!!!!\n"+e)
           client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.channels.fetch("1025101523933466634") .then((channel) => {
               channel.send({content: "<@"+user.id+">", embeds: [verify], components: [rowNoDM]}) .then(async (msg) => {
@@ -855,8 +855,8 @@ const verifyDiscordUser = async (data) => {
               })
             })
           })
-        }
-        
+        })
+          
       } catch(e) {}
     } catch(e) {
       console.log(e)
