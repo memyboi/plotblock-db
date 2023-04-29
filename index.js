@@ -642,7 +642,7 @@ client.on('interactionCreate', async interaction => {
         .setDescription("You have declined to verify to __"+mcName+"__!")
         .setTimestamp()
       interaction.message.edit({embeds: [accepted], components: [okrow]})
-    } else if (interaction.customId.includes("NoDMVerifywith-")) {
+    } else if (interaction.customId.includes("NoDMVW-")) {
       const args = interaction.customId.split("-")
       const mcName = args[2]
       const allegedUserID = interaction.user.id
@@ -690,7 +690,7 @@ client.on('interactionCreate', async interaction => {
         interaction.reply({content: "This is not your verification prompt!", ephemeral: true})
       }
      
-    } else if (interaction.customId.includes("NoDMDeclinewith-")) {
+    } else if (interaction.customId.includes("NoDMDW-")) {
       const args = interaction.customId.split("-")
       const mcName = args[2]
       const allegedUserID = interaction.user.id
@@ -793,11 +793,11 @@ const verifyDiscordUser = async (data) => {
         const row = new ActionRowBuilder()
           .addComponents(accept, decline)
         const acceptNoDM = new ButtonBuilder()
-          .setCustomId("NoDMVerifywith-"+user.id+"-"+mcName)
+          .setCustomId("NoDMVW-"+user.id+"-"+mcName)
           .setLabel("Accept")
           .setStyle(ButtonStyle.Success)
         const declineNoDM = new ButtonBuilder()
-          .setCustomId("NoDMDeclinewith-"+user.id+"-"+mcName)
+          .setCustomId("NoDMDW-"+user.id+"-"+mcName)
           .setLabel("Decline")
           .setStyle(ButtonStyle.Danger)
         const rowNoDM = new ActionRowBuilder()
