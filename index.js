@@ -705,7 +705,16 @@ client.on('interactionCreate', async interaction => {
           .setAuthor({ name: interaction.user.username, iconURL: `https://cdn.discordapp.com/avatars/${interaction.user.id}/${interaction.user.avatar}`})
           .setDescription("You have declined to verify to __"+mcName+"__!")
           .setTimestamp()
-        interaction.message.edit({embeds: [accepted], components: [okrow]})
+        interaction.message.edit({embeds: [accepted], components: [okrow]}) .then(() => {
+          setTimeout(() => {
+            try {
+              interaction.message.delete()
+            } catch(e) {
+
+            }
+          }, 5000);
+          
+        })
       } else {
         interaction.reply({content: "This is not your verification prompt!", ephemeral: true})
       }
@@ -854,7 +863,12 @@ const verifyDiscordUser = async (data) => {
                 }
                 goneGood = true
                 setTimeout(() => {
-                  msg.delete()
+                  try {
+                    msg.delete()
+                  } catch(e) {
+      
+                  }
+                  
                 }, 60000);
               })
             })
