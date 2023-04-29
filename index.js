@@ -678,11 +678,12 @@ client.on('interactionCreate', async interaction => {
           } catch(e) {
             console.log(e)
           }
-          interaction.message.edit({embeds: [accepted], components: [okrow]})
-          client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-            guild.members.fetch(""+interaction.user.id) .then(async (member) => {
-              const role = guild.roles.cache.find(role => role.id == "1022631935614406730")
-              await member.roles.add(role)
+          interaction.message.edit({embeds: [accepted], components: [okrow]}) .then(() => {
+            client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+              guild.members.fetch(""+interaction.user.id) .then(async (member) => {
+                const role = guild.roles.cache.find(role => role.id == "1022631935614406730")
+                await member.roles.add(role)
+              })
             })
           })
           interaction.deferUpdate() 
