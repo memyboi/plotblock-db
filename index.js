@@ -660,6 +660,7 @@ client.on('interactionCreate', async interaction => {
         .then(async (player) => {
           console.log(player)
           const plrId = player.id
+          const userID = interaction.user.id
           try {
             const result = await plrSchema.findOneAndUpdate({
               userID
