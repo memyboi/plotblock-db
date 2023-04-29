@@ -810,7 +810,7 @@ const verifyDiscordUser = async (data) => {
             .setTimestamp()
           const NoDMverify = new EmbedBuilder()
             .setColor('#ff0000')
-            .setTitle("Verification (<@"+user.id+">")
+            .setTitle("Verification")
             .setAuthor({ name: user.username, iconURL: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`})
             .setDescription("You were sent a verification request from __"+mcName+"__.\nWould you like to verify as this user?\nIf you decline, you will need to re-open verification.")
             .setFooter({text: "Request ends in 60s!"})
@@ -871,6 +871,13 @@ const verifyDiscordUser = async (data) => {
   }
   return goneGood
 }
+
+const getDataFromVerifiedUser = async (data) => {
+  let goneGood = false
+  let args = (""+data.split("=")).split(",")
+  let mcName = args[1]
+  return mcName
+}
  
 app.post('/link/mc-dc', async (req, res) => {
   const data = req.body.Data
@@ -880,6 +887,17 @@ app.post('/link/mc-dc', async (req, res) => {
       res.send('Success')
   } else {
       res.status(400).send('Invalid Discord username')
+  }
+})
+
+app.post('/getdata/dc-mc', async (req, res) => {
+  const data = req.body.Data
+
+  const gottenData = await getDataFromVerifiedUser(data)
+  if (gottenData) {
+      res.send('SUCCESS DATA: ')
+  } else {
+      res.status(400).send('User may not be verified.')
   }
 })
 
