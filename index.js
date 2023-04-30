@@ -501,6 +501,20 @@ client.on('interactionCreate', async interaction => {
         .setCustomId("ResetModal")
         .setComponents(row)
       await interaction.showModal(modal)
+    } else if (interaction.customId == "createaclan") {
+      //By unlinking, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"unlink my accounts please."'+" to reset your data.
+      const text = new Discord.TextInputBuilder()
+        .setLabel("Test1")
+        .setPlaceholder('placeholderForTest1')
+        .setStyle(Discord.TextInputStyle.Short)
+        .setCustomId("test1")
+      const row = new ActionRowBuilder()
+        .addComponents(text)
+      const modal = new ModalBuilder()
+        .setTitle("Create a clan.")
+        .setCustomId("ClanCreateModal")
+        .setComponents(row)
+      await interaction.showModal(modal)
     } else if (interaction.customId.includes("-go")) {
       const teamschema = require("./schemateam.js")
       const plrschema = require("./schema.js")

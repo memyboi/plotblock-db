@@ -49,7 +49,7 @@ module.exports = {
 							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
 						}
 					} catch(e) {
-						console.log("There was an error while opening up verification..")
+						console.log("There was an error while opening up verification..\n"+e)
 					}
 					
 				}
