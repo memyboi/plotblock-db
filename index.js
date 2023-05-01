@@ -628,9 +628,6 @@ client.on('interactionCreate', async interaction => {
               userID,
               minecraftName: mcName,
               minecraftUUID: plrId,
-              $inc: {
-                cash: 5000
-              }
             }, {
               upsert: true,
               new: true
@@ -682,9 +679,6 @@ client.on('interactionCreate', async interaction => {
               userID,
               minecraftName: mcName,
               minecraftUUID: plrId,
-              $inc: {
-                cash: 5000
-              }
             }, {
               upsert: true,
               new: true
