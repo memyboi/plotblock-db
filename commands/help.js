@@ -78,7 +78,7 @@ module.exports = {
 			.setDescription("/help page 5")
 			.addFields(
 			{ name: "What are clans?", value: "Clans are a official way of creating a group of players. Clans are usually made with a group of friends, or a few people who have similar interests or goals. The point of clans is to allow for easier communication and disallows for combat. It also lets players see players nametags when they are on the same team.", inline: true },
-			{ name: "How can you make a clan?", value: "You can make a clan by running </clan create:1094716461605470269>. The requirements are: 250 cash, minimum of level 5.", inline: true },
+			{ name: "How can you make a clan?", value: "You can make a clan by running </clan create:1094716461605470269>. The requirements are: 1k cash, minimum of level 5.", inline: true },
 			)
 			.setTimestamp()
 		var page = interaction.options.getNumber("page")
@@ -87,6 +87,7 @@ module.exports = {
 			if (page==2) interaction.reply({embeds: [helpEmbed2], ephemeral: true})
 			if (page==3) interaction.reply({embeds: [helpEmbed3], ephemeral: true})
 			if (page==4) interaction.reply({embeds: [helpEmbed4], ephemeral: true})
+			if (page==5) interaction.reply({embeds: [helpEmbed5], ephemeral: true})
 		} else {
 			interaction.reply({embeds: [helpEmbed], ephemeral: true})
 		}

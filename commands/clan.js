@@ -24,7 +24,7 @@ module.exports = {
 		.addSubcommand(subcommand =>
             subcommand
                 .setName("create")
-                .setDescription("Create a clan (requirements: 250 cash, minimum lvl 5)")
+                .setDescription("Create a clan (requirements: 1k cash, minimum lvl 5)")
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -267,6 +267,7 @@ module.exports = {
 
                             async function getUserNameAndDiscrimFromId(userid) {
                                 client.users.fetch(""+userid) .then((user) => {
+                                    console.log(user)
                                     return user.username+"#"+user.discriminator
                                 })
                             }
@@ -314,7 +315,7 @@ module.exports = {
                             console.log(e)
                         }
                     }else if (cmd == "create") {
-                        //create a clan, needs 2 be lvl 5, costs 250 cash. popup w/ fancy menu thingy
+                        //create a clan, needs 2 be lvl 5, costs 1k cash. popup w/ fancy menu thingy
                         console.log("ceat cmd!1!111")
                         const findRes = await plrSchema.find({ userID: interaction.user.id })
                         try {
@@ -324,7 +325,7 @@ module.exports = {
                                 interaction.reply({content: "You must be level 5 to create a clan!", ephemeral: true})
                             } else {
                                 if (cash < 0) {
-                                    interaction.reply({content: "You must have 250 cash to create a clan!", ephemeral: true})
+                                    interaction.reply({content: "You must have 1k cash to create a clan!", ephemeral: true})
                                 } else {
                                     const createButton = new ButtonBuilder()
                                         .setLabel("Create")
@@ -333,7 +334,7 @@ module.exports = {
                                     const actionRow = new ActionRowBuilder()
                                         .addComponents(createButton)
 
-                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 250 cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow], ephemeral: true})
+                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 1k cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow], ephemeral: true})
                                 }
                             }
                             

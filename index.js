@@ -609,6 +609,8 @@ client.on('interactionCreate', async interaction => {
         .setCustomId("ClanCreateModal")
         .setComponents(row, rowdesc, rowcolour)
       await interaction.showModal(modal)
+    } else if (interaction.customId == "ClanCreateModal") {
+      interaction.reply({content: "Are you sure you want to make a clan? This will take 1k of your cash.\nYour clan information:", ephemeral: true})
     } else if (interaction.customId.includes("-go")) {
       const teamschema = require("./schemateam.js")
       const plrschema = require("./schema.js")
