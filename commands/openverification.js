@@ -49,7 +49,22 @@ module.exports = {
 							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
 						}
 					} catch(e) {
-						console.log("There was an error while opening up verification..\n"+e)
+						try {
+							const userID = user.id
+							const result = await plrSchema.findOneAndUpdate({
+								userID
+							}, {
+								userID,
+								lastVerificationTimestamp: Date.now()
+							}, {
+								upsert: true,
+								new: true
+							})
+							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
+						} catch(e2) {
+							interaction.reply({content: "Opening verification has failed!\nPlease report this to a developer, as there may be an issue with the database."})
+							console.log(`Error while opening verification. Error 1 (fail mcuuid check):\n${e}\nError 2 (fail add lat):\n${e2}`)
+						}
 					}
 					
 				}
