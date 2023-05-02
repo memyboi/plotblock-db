@@ -124,6 +124,20 @@ for (const file of commandFiles) {
 	}
 }
 
+function getUserFromMention(mention) {
+	if (!mention) return;
+
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.cache.get(mention);
+	}
+}
+
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -312,6 +326,13 @@ client.on('messageCreate', async (message) => {
       //probably discadia webhook
       message.embeds.forEach((embed) => {
         console.log(embed)
+        const desc = embed.description
+        const descArgs = desc.split(" ")
+        console.log(descArgs)
+        const mentionPlain = descArgs[0]
+        console.log(mentionPlain)
+        const userThatVoted = getUserFromMention(mentionPlain)
+        console.log(userThatVoted.username)
       });
     }
   }
