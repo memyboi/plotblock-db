@@ -265,6 +265,12 @@ module.exports = {
                                 case 7: icon = "https://i.imgur.com/GgmEb1r.png"; break;
                             }
 
+                            async function getUserNameAndDiscrimFromId(userid) {
+                                client.users.fetch(""+userid) .then((user) => {
+                                    return user.username+"#"+user.discriminator
+                                })
+                            }
+
                             let leader = "None!"
                             let members = "No members!"
                             let allies = "No allies."
@@ -285,7 +291,7 @@ module.exports = {
                             .map((war) => war.title+"");}} catch(e) {}
                             try {if (clan.blacklist) {
                                 blacklist = clan.blacklist
-                            .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
+                            .map(async (member) => await getUserNameAndDiscrimFromId(member.user.id));}} catch(e) {}
 
                             client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                                 guild.members.fetch(""+leaderID) .then((member) => {
