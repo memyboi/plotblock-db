@@ -274,7 +274,7 @@ module.exports = {
                                 })
                             }
 
-                            let leader = "None!"
+                            let leader = "bro's team has noone leading it"
                             let members = "bro's team is bone dry"
                             let allies = "No allies."
                             let truces = "No truces."
@@ -294,11 +294,13 @@ module.exports = {
                                         count++
                                         if (count >= clan.users.length && membs.length == clan.users.length) {
                                             res()
+                                            console.log(membs)
                                             if (!membs) { members = membs }
                                         }
                                     }
                                     if (count >= clan.users.length && membs.length == clan.users.length) {
                                         res()
+                                        console.log(membs)
                                         if (!membs) { members = membs }
                                     }
                                 } catch(e) {
@@ -328,11 +330,13 @@ module.exports = {
                                             count++
                                             if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                                 res()
+                                                console.log(nonomembs)
                                                 if (!nonomembs) { blacklist = nonomembs }
                                             }
                                         }
                                         if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                             res()
+                                            console.log(nonomembs)
                                             if (!nonomembs) { blacklist = nonomembs }
                                         }
                                     } catch(e) {
