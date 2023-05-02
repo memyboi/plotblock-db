@@ -280,7 +280,7 @@ module.exports = {
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
                             try {if (clan.users) {
-                                const membs = {}
+                                const membs = []
                                 clan.users.forEach(async (member) => {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
                                 })//
