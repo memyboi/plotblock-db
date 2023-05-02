@@ -288,7 +288,7 @@ module.exports = {
                                     count++
                                     console.log("member being added")
                                     if (count >= clan.users.length) {
-                                        res()
+                                        res()//
                                     }
                                 }
                                 if (count >= clan.users.length) {
