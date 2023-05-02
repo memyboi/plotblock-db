@@ -286,13 +286,15 @@ module.exports = {
                                 for (const i in clan.users) {
                                     const member = clan.users[i]
                                     console.log(member)
-                                    await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
+                                    await client.users.fetch(""+member.user.id) .then(async (user) => {
+                                        await membs.push(user.username+"#"+user.discriminator)
+                                    })
                                     count++
-                                    if (count >= clan.users.length) {
+                                    if (count >= clan.users.length && membs.length == clan.users.length) {
                                         res()
                                     }
                                 }
-                                if (count >= clan.users.length) {
+                                if (count >= clan.users.length && membs.length == clan.users.length) {
                                     res()
                                 }
                             }) .then(() => {
