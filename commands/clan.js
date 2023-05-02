@@ -281,7 +281,7 @@ module.exports = {
                             let blacklist = "No blacklisted members."
                             try {if (clan.users) {
                                 members = clan.users
-                            .map((member) => member.user.username+"#"+member.user.discriminator);}} catch(e) {}
+                            .map(async (member) => await getUserNameAndDiscrimFromId(member.user.id));}} catch(e) {}
                             try {if (clan.allies) {
                                 allies = clan.allies
                             .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
@@ -293,7 +293,7 @@ module.exports = {
                             .map((war) => war.title+"");}} catch(e) {}
                             try {if (clan.blacklist) {
                                 blacklist = clan.blacklist
-                            .map(async (member) => { client.users.fetch(""+member.user.id) .then((user) => { return user.username+"#"+user.discriminator }) });}} catch(e) {}
+                            .map(async (blacklistedMember) => await getUserNameAndDiscrimFromId(blacklistedMember.user.id));}} catch(e) {}
 
                             client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                                 guild.members.fetch(""+leaderID) .then((member) => {
