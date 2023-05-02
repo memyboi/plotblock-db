@@ -12,7 +12,7 @@ module.exports = {
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+user.id) .then(async (member) => {
 				if (member.roles.cache.some(role => role.id === "1022631935614406730")) {
-					interaction.reply({content: "You are already verified!", ephemeral: true})
+					interaction.editReply({content: "You are already verified!", ephemeral: true})
 				} else {
 					const plrSchema = require("../schema.js")
 					const findRes = await plrSchema.find({ userID: user.id })
@@ -23,7 +23,7 @@ module.exports = {
 								.then(data => data.json())
 								.then(async (player) => {
 									mcname = player.name
-									interaction.reply({content: "You already have a verified minecraft account ("+mcname+")!", ephemeral: true})
+									interaction.editReply({content: "You already have a verified minecraft account ("+mcname+")!", ephemeral: true})
 									try {
 										const verifyRole = guild.roles.cache.find(role => role.id === "1022631935614406730")
 										await member.roles.add(verifyRole)
@@ -46,7 +46,7 @@ module.exports = {
 							} catch(e) {
 								console.log(e)
 							}
-							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
+							interaction.editReply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
 						}
 					} catch(e) {
 						try {
@@ -60,9 +60,9 @@ module.exports = {
 								upsert: true,
 								new: true
 							})
-							interaction.reply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
+							interaction.editReply({content: "Verification for your account has opened for 5 minutes!", ephemeral: true})
 						} catch(e2) {
-							interaction.reply({content: "Opening verification has failed!\nPlease report this to a developer, as there may be an issue with the database."})
+							interaction.editReply({content: "Opening verification has failed!\nPlease report this to a developer, as there may be an issue with the database."})
 							console.log(`Error while opening verification. Error 1 (fail mcuuid check):\n${e}\nError 2 (fail add lat):\n${e2}`)
 						}
 					}

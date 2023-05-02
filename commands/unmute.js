@@ -39,14 +39,14 @@ module.exports = {
 						//muted, unmute
 						await member.roles.remove(role)
 						await member.roles.add(talkingrole)
-						interaction.reply({content: "User has been unmuted.", ephemeral: true})
+						interaction.editReply({content: "User has been unmuted.", ephemeral: true})
 						user.send({content: "*You have been unmuted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nPlease do re-read the rules so you do not get punished again."})
 					} catch(e) {
-						interaction.reply({content: "There was an error unmuting this user!", ephemeral: true})
+						interaction.editReply({content: "There was an error unmuting this user!", ephemeral: true})
 					}
 					
 				} else {
-					interaction.reply({content: "This user may be not muted!", ephemeral: true})
+					interaction.editReply({content: "This user may be not muted!", ephemeral: true})
 				}
 			})
 		})
