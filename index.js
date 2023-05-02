@@ -351,7 +351,7 @@ client.on('messageCreate', async (message) => {
             })
             try {
               if (result.votes > 1) {
-                user.send({content: "**Hey!**\nThanks for voting! You have recieved 250 cash as a reward!"})
+                user.send({content: "**Hey!**\nThanks for voting! You have recieved 250 cash as a reward!\nYou now have " + result.cash + " cash! (+250)"})
               } else {
                 try {
                   const result = await plrSchema.findOneAndUpdate({
@@ -365,7 +365,7 @@ client.on('messageCreate', async (message) => {
                     upsert: true,
                     new: true
                   })
-                  user.send({content: "**Hey!**\nThanks for voting! Thank you for helping support this server, and as a first time vote, you will recieve an extra 50 cash ontop of your promised 250!"})
+                  user.send({content: "**Hey!**\nThanks for voting! Thank you for helping support this server, and as a first time vote, you will recieve an extra 50 cash ontop of your promised 250!\nYou now have "+result.cash+" cash! (+300)"})
                 } catch(e) {
                   console.log("vote error - first vote. details:\n"+e)
                 }
