@@ -124,7 +124,7 @@ for (const file of commandFiles) {
 	}
 }
 
-function getUserFromMention(mention) {
+function getUserFromMention(mention, callback) {
 	if (!mention) return;
 
 	if (mention.startsWith('<@') && mention.endsWith('>')) {
@@ -134,7 +134,7 @@ function getUserFromMention(mention) {
 			mention = mention.slice(1);
 		}
 
-		return client.users.cache.get(mention);
+		client.users.fetch(""+mention) .then((user) => callback)
 	}
 }
 
@@ -331,8 +331,9 @@ client.on('messageCreate', async (message) => {
         console.log(descArgs)
         const mentionPlain = descArgs[0]
         console.log(mentionPlain)
-        const userThatVoted = getUserFromMention(mentionPlain)
-        console.log(userThatVoted.username)
+        getUserFromMention(mentionPlain, (user) => {
+          console.log(user.username+" has voted! give them lots of money and praise (yipeee )")
+        })
       });
     }
   }
