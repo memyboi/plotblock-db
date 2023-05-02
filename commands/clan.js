@@ -287,9 +287,13 @@ module.exports = {
                                     for (const member in clan.users) {
                                         await membs.push(await getUserNameAndDiscrimFromId(member.id))
                                         count++
+                                        console.log("member being added")
                                         if (count == clan.users.length) {
-                                            res
+                                            res()
                                         }
+                                    }
+                                    if (count == clan.users.length) {
+                                        res()
                                     }
                                 }) .then(() => {
                                     members = membs.map((string) => string);
