@@ -326,7 +326,7 @@ module.exports = {
                                             .setFooter({text: "---\nClan code - "+clanCode})
                                             .setThumbnail(icon)
     
-                                        interaction.editReply({embeds: [emb], ephemeral: true})
+                                        try {interaction.editReply({embeds: [emb], ephemeral: true})} catch(e) {console.log(e); interaction.reply({embeds: [emb], ephemeral: true})}
                                     })
                                 })
                             }) .catch(e => {
