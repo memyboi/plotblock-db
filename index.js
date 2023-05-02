@@ -583,7 +583,7 @@ client.on('interactionCreate', async interaction => {
         .setStyle(Discord.TextInputStyle.Short)
         .setCustomId("clanname")
         .setMinLength(3)
-        .setMaxLength(7)
+        .setMaxLength(15)
       const row = new ActionRowBuilder()
         .addComponents(text)
       const textdesc = new Discord.TextInputBuilder()
