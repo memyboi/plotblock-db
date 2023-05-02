@@ -282,11 +282,11 @@ module.exports = {
                             let blacklist = "No blacklisted members."
                             let membs = []
                             const funny = new Promise(async (res, rej) => {
-                                                            let count = 1
+                                let count = 1
                                 for (const member in clan.users) {
+                                    console.log(member)
                                     await membs.push(await getUserNameAndDiscrimFromId(member.id))
                                     count++
-                                    console.log("member being added")
                                     if (count >= clan.users.length) {
                                         res()//
                                     }
