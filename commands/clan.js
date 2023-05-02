@@ -283,7 +283,7 @@ module.exports = {
                                 const membs = {}
                                 clan.users.forEach(async (member) => {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
-                                })
+                                })//
                                 members = membs
                                 .map(async (string) => string);
                             }} catch(e) {}
