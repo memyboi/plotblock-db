@@ -284,7 +284,7 @@ module.exports = {
                             let nonomembs = []
                             new Promise(async (res, rej) => {
                                 try {
-                                    let count = 1
+                                    let count = 0
                                     for (const i in clan.users) {
                                         const member = clan.users[i]
                                         await client.users.fetch(""+member.user.id) .then(async (user) => {
@@ -318,7 +318,7 @@ module.exports = {
                                 
                                 new Promise(async (res, rej) => {
                                     try {
-                                        let count = 1
+                                        let count = 0
                                         for (const i in clan.blacklist) {
                                             const member = clan.blacklist[i]
                                             await client.users.fetch(""+member.user.id) .then(async (user) => {
