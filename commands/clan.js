@@ -269,7 +269,7 @@ module.exports = {
                             async function getUserNameAndDiscrimFromId(userid) {
                                 await client.users.fetch(""+userid) .then(async (user) => {
                                     return await user.username+"#"+user.discriminator
-                                }) .catch(e => {
+                                }) .catch(e => {//
                                     return "invalid user"
                                 })
                             }
