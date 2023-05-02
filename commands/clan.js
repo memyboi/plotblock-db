@@ -266,7 +266,7 @@ module.exports = {
                             }
 
                             async function getUserNameAndDiscrimFromId(userid) {
-                                client.users.fetch(""+userid) .then((user) => {
+                                await client.users.fetch(""+userid) .then((user) => {
                                     return user.username+"#"+user.discriminator
                                 })
                             }
