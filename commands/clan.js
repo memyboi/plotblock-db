@@ -283,7 +283,8 @@ module.exports = {
                             let membs = []
                             const funny = new Promise(async (res, rej) => {
                                 let count = 1
-                                for (const member in clan.users) {
+                                for (const i in clan.users) {
+                                    const member = clan.users[i]
                                     console.log(member)
                                     await membs.push(await getUserNameAndDiscrimFromId(member.id))
                                     count++
