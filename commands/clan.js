@@ -293,7 +293,7 @@ module.exports = {
                             .map((war) => war.title+"");}} catch(e) {}
                             try {if (clan.blacklist) {
                                 blacklist = clan.blacklist
-                            .map(async (member) => { await getUserNameAndDiscrimFromId(member.id) });}} catch(e) {}
+                            .map(async (member) => { client.users.fetch(""+member.user.id) .then((user) => { return user.username+"#"+user.discriminator }) });}} catch(e) {}
 
                             client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                                 guild.members.fetch(""+leaderID) .then((member) => {
