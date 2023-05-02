@@ -134,7 +134,9 @@ function getUserFromMention(mention, callback) {
 			mention = mention.slice(1);
 		}
 
-		client.users.fetch(""+mention) .then((user) => callback)
+		client.users.fetch(""+mention) .then((user) => {
+      callback(user)
+    })
 	}
 }
 
