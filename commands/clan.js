@@ -289,14 +289,15 @@ module.exports = {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
                                     count++
                                     if (count >= clan.users.length) {
-                                        res()//
+                                        res()
                                     }
                                 }
                                 if (count >= clan.users.length) {
                                     res()
                                 }
                             }) .then(() => {
-                                members = membs.map((string) => string);
+                                console.log(membs)
+                                members = membs
 
                                 try {if (clan.allies) {
                                     allies = clan.allies
