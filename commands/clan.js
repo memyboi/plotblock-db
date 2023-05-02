@@ -238,6 +238,7 @@ module.exports = {
                             interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
                         }
                     } else if (cmd == "info") {
+                        interaction.deferReply()
                         //string "clan"
                         //make an embed with clan info.
                         const clanCodeOld = interaction.options.getString("clan")
@@ -280,11 +281,19 @@ module.exports = {
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
                             try {if (clan.users) {
-                                let membs = []
-                                for (const member in clan.users) {
-                                    await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
-                                }
-                                members = membs.map((string) => string);
+                                const funny = new Promise(async (res, rej) => {
+                                    let membs = []
+                                    let count = 1
+                                    for (const member in clan.users) {
+                                        await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
+                                        count++
+                                        if (count == clan.users.length) {
+                                            res
+                                        }
+                                    }
+                                }) .then(() => {
+                                    members = membs.map((string) => string);
+                                })
                             }} catch(e) {}
                             try {if (clan.allies) {
                                 allies = clan.allies
@@ -311,12 +320,12 @@ module.exports = {
                                         .setFooter({text: "---\nClan code - "+clanCode})
                                         .setThumbnail(icon)
 
-                                    interaction.reply({embeds: [emb], ephemeral: true})
+                                    interaction.editReply({embeds: [emb], ephemeral: true})
                                 })
                             })
                             
                         } catch(e) {
-                            interaction.reply({content: "The clan could not be found!", ephemeral: true})
+                            interaction.editReply({content: "The clan could not be found!", ephemeral: true})
                             console.log(e)
                         }
                     }else if (cmd == "create") {
