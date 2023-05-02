@@ -66,7 +66,6 @@ module.exports = {
 							console.log(`Error while opening verification. Error 1 (fail mcuuid check):\n${e}\nError 2 (fail add lat):\n${e2}`)
 						}
 					}
-					
 				}
 			})
 		})

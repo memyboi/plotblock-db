@@ -306,6 +306,14 @@ client.on('messageCreate', async (message) => {
     if (getRandomArbitrary(1, 3) == 1) {
       doXp(message)
     }
+  } else if (message.author.bot) {
+    //check if in funny discadia votes channel
+    if (message.channel.id == "1099013400765415486") {
+      //probably discadia webhook
+      msg.embeds.forEach((embed) => {
+        console.log(embed)
+      });
+    }
   }
 })
 
