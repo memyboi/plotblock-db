@@ -287,11 +287,11 @@ module.exports = {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.id))
                                     count++
                                     console.log("member being added")
-                                    if (count == clan.users.length) {
+                                    if (count >= clan.users.length) {
                                         res()
                                     }
                                 }
-                                if (count == clan.users.length) {
+                                if (count >= clan.users.length) {
                                     res()
                                 }
                             }) .then(() => {
