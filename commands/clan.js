@@ -327,6 +327,7 @@ module.exports = {
                                 })
                             }) .catch(e => {
                                 interaction.editReply({content: "There was an error getting this clans data!", ephemeral: true})
+                                console.log(e)
                             }) 
                             
                             
