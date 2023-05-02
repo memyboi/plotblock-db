@@ -18,7 +18,7 @@ module.exports = {
 		)
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) { interaction.deferReply({ephemeral: true})
 		var user = interaction.options.getUser("user")
 		var detail = interaction.options.getBoolean("detail")
 		if (detail != true) detail = false
@@ -62,16 +62,16 @@ module.exports = {
 											.setDescription(`\n> minecraft name => ${mcname}\n> clan => ${teamname}\n> cash => `+"$"+`${cash}\n> xp => X:${xp}\n> lvls => L:${lvls}\n> roles => ${memberRoles}`)
 											.setColor("#ff0000")
 										
-										interaction.reply({embeds: [exampleEmbed], ephemeral: true});
+										interaction.editReply({embeds: [exampleEmbed], ephemeral: true});
 									})
 							} 
 						} catch(e) {
 							console.log(e)
-							interaction.reply({content: user.username+" does not have any user data!", ephemeral: true});
+							interaction.editReply({content: user.username+" does not have any user data!", ephemeral: true});
 						}
 					})
                 } else {
-                    interaction.reply({content: "You must verify in order to run this command!", ephemeral: true})
+                    interaction.editReply({content: "You must verify in order to run this command!", ephemeral: true})
                 }
             })
 		})
