@@ -135,7 +135,7 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.SendMessages)
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
+	async execute(interaction, client) {
         client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then(async (member) => {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
@@ -145,7 +145,7 @@ module.exports = {
                     const teamSchema = require("../schemateam.js")
                     const plrSchema = require("../schema.js")
                     //temp:
-                    if (interaction.user.username != "DeadFry42" && interaction.user.username != "deadfry-alt") return interaction.editReply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
+                    if (interaction.user.username != "DeadFry42" && interaction.user.username != "deadfry-alt") return interaction.reply({content: "This command is WIP, and so you cannot use it yet. DeadFry42 & deadfry-alt can use it for testing purposes, however.", ephemeral: true})
 
                     if (cmd == "list") {
                         const result = await teamSchema.find({ public: true })
@@ -233,9 +233,9 @@ module.exports = {
                             if (checkifpossible(0) == true) {rightchosen = right} else {rightchosen = rightdis}
                             var row = new ActionRowBuilder()
                                 .addComponents(leftchosen, rightchosen)
-                            interaction.editReply({embeds: [embed], components: [row], ephemeral: true})
+                            interaction.reply({embeds: [embed], components: [row], ephemeral: true})
                         } else {
-                            interaction.editReply({content: "There was an error getting the team data.", ephemeral: true})
+                            interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
                         }
                     } else if (cmd == "info") {
                         //string "clan"
@@ -305,12 +305,12 @@ module.exports = {
                                         .setFooter({text: "---\nClan code - "+clanCode})
                                         .setThumbnail(icon)
 
-                                    interaction.editReply({embeds: [emb], ephemeral: true})
+                                    interaction.reply({embeds: [emb], ephemeral: true})
                                 })
                             })
                             
                         } catch(e) {
-                            interaction.editReply({content: "The clan could not be found!", ephemeral: true})
+                            interaction.reply({content: "The clan could not be found!", ephemeral: true})
                             console.log(e)
                         }
                     }else if (cmd == "create") {
@@ -321,10 +321,10 @@ module.exports = {
                             const cash = findRes[0].cash
                             const lvls = findRes[0].lvls
                             if (lvls < 5) {
-                                interaction.editReply({content: "You must be level 5 to create a clan!", ephemeral: true})
+                                interaction.reply({content: "You must be level 5 to create a clan!", ephemeral: true})
                             } else {
                                 if (cash < 0) {
-                                    interaction.editReply({content: "You must have 1k cash to create a clan!", ephemeral: true})
+                                    interaction.reply({content: "You must have 1k cash to create a clan!", ephemeral: true})
                                 } else {
                                     const createButton = new ButtonBuilder()
                                         .setLabel("Create")
@@ -333,7 +333,7 @@ module.exports = {
                                     const actionRow = new ActionRowBuilder()
                                         .addComponents(createButton)
 
-                                    interaction.editReply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 1k cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow], ephemeral: true})
+                                    interaction.reply({content: "Make sure you have read the help (page 5) for clans. The clan system is quite complex.\nTo make a clan, you must pay 1k cash. Please press on the button below to start the clan creating process. (Your cash will be deducted once you submit the form)", components: [actionRow], ephemeral: true})
                                 }
                             }
                             
@@ -374,7 +374,7 @@ module.exports = {
                         }
                     }
                 } else {
-                    interaction.editReply({content: "You must verify in order to run this command!", ephemeral: true})
+                    interaction.reply({content: "You must verify in order to run this command!", ephemeral: true})
                 }
             })
         })
