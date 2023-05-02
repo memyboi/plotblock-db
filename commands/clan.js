@@ -280,12 +280,11 @@ module.exports = {
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
                             try {if (clan.users) {
-                                const membs = []
-                                clan.users.forEach(async (member) => {
+                                let membs = []
+                                for (const member in clan.users) {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
-                                })//
-                                members = membs
-                                .map(async (string) => string);
+                                }
+                                members = membs.map((string) => string);
                             }} catch(e) {}
                             try {if (clan.allies) {
                                 allies = clan.allies
