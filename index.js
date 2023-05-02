@@ -308,9 +308,9 @@ client.on('messageCreate', async (message) => {
     }
   } else if (message.author.bot) {
     //check if in funny discadia votes channel
-    if (message.channel.id == "1099013400765415486") {
+    if (message.channel.id == "1099013400765415486" && message.author.user.id == "1099013419824316466") {
       //probably discadia webhook
-      msg.embeds.forEach((embed) => {
+      message.embeds.forEach((embed) => {
         console.log(embed)
       });
     }
