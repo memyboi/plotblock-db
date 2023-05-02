@@ -3,11 +3,11 @@ const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('disc
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('userinfo')
-		.setDescription('Lists the roles of a user')
+		.setDescription('Lists all the statistics of a user.')
 		.addUserOption(option => 
 			option
 				.setName("user")
-				.setDescription("The user to list the roles of.")
+				.setDescription("The user to list the statistics of.")
 				.setRequired(true)
 			)
 		.addBooleanOption(option =>
