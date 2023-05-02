@@ -49,7 +49,7 @@ module.exports = {
                 )
         )
 		,
-	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
+	async execute(interaction, client) {
         const target = interaction.options.getUser("target")
         const offence = interaction.options.getString("offence")
         const plrSchema = require("../schema.js")
@@ -105,10 +105,10 @@ module.exports = {
                                     .setTitle(target.username+"'s bans:")
                                     .setDescription("> Bans => "+bans)
                                 }
-                                interaction.editReply({embeds: [infoEmbed], ephemeral: true})
+                                interaction.reply({embeds: [infoEmbed], ephemeral: true})
                             } catch(e) {
                                 console.log(e)
-                                interaction.editReply({content: "This user may have no offence data!", ephemeral: true})
+                                interaction.reply({content: "This user may have no offence data!", ephemeral: true})
                             }
                         } else if (cmd == "remove") {
                             const findRes = plrSchema.find({ userID: target.id })
@@ -118,13 +118,13 @@ module.exports = {
                                 console.log(requests)
                             } catch(e) {
                                 console.log(e)
-                                interaction.editReply({content: "This user may have no offence data!", ephemeral: true})
+                                interaction.reply({content: "This user may have no offence data!", ephemeral: true})
                             }
                         }
                     })
                      
                 } else {
-                    interaction.editReply({content: "You must verify in order to run this command!", ephemeral: true})
+                    interaction.reply({content: "You must verify in order to run this command!", ephemeral: true})
                 }
             })
         })

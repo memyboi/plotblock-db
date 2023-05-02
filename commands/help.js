@@ -12,7 +12,7 @@ module.exports = {
 				.setMinValue(1)
 		)
 		,
-	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
+	async execute(interaction, client) {
 		const helpEmbed = new EmbedBuilder()
 			.setColor('#ff0000')
 			.setTitle("Help help:")
@@ -83,13 +83,13 @@ module.exports = {
 			.setTimestamp()
 		var page = interaction.options.getNumber("page")
 		if (page) {
-			if (page==1) interaction.editReply({embeds: [helpEmbed1], ephemeral: true})
-			if (page==2) interaction.editReply({embeds: [helpEmbed2], ephemeral: true})
-			if (page==3) interaction.editReply({embeds: [helpEmbed3], ephemeral: true})
-			if (page==4) interaction.editReply({embeds: [helpEmbed4], ephemeral: true})
-			if (page==5) interaction.editReply({embeds: [helpEmbed5], ephemeral: true})
+			if (page==1) interaction.reply({embeds: [helpEmbed1], ephemeral: true})
+			if (page==2) interaction.reply({embeds: [helpEmbed2], ephemeral: true})
+			if (page==3) interaction.reply({embeds: [helpEmbed3], ephemeral: true})
+			if (page==4) interaction.reply({embeds: [helpEmbed4], ephemeral: true})
+			if (page==5) interaction.reply({embeds: [helpEmbed5], ephemeral: true})
 		} else {
-			interaction.editReply({embeds: [helpEmbed], ephemeral: true})
+			interaction.reply({embeds: [helpEmbed], ephemeral: true})
 		}
 	},
 };

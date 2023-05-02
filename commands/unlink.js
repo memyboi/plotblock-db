@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Remove your linked minecraft account.')
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
+	async execute(interaction, client) {
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then(async (member) => {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
@@ -25,14 +25,14 @@ module.exports = {
 								.setCustomId("doNotResetLmao")
 							const row = new ActionRowBuilder()
 								.addComponents(button2, button)
-							interaction.editReply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes./nIn this embed, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"unlink my accounts please."'+" in the text input if you agree to reset your data.", ephemeral: true, components: [row]})
+							interaction.reply({content: "Are you sure you would like to unlink?\nThere will be a pop-up that gives you more detail if you press Yes./nIn this embed, you agree to be unverified, and your data will be removed. The minecraft account that is associated with your account can continue playing, however any features that are dependant on the discord to minecraft link will be unnaccessible. Please type "+'"unlink my accounts please."'+" in the text input if you agree to reset your data.", ephemeral: true, components: [row]})
 						}
 					} catch(e) {
 						console.log(e)
-						interaction.editReply({content: "Your data is unavailable!", ephemeral: true})
+						interaction.reply({content: "Your data is unavailable!", ephemeral: true})
 					}
                 } else {
-                    interaction.editReply({content: "You must have a verified role to unlink!", ephemeral: true})
+                    interaction.reply({content: "You must have a verified role to unlink!", ephemeral: true})
                 }
             })
         })
