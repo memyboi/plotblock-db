@@ -280,53 +280,55 @@ module.exports = {
                             let truces = "No truces."
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
-                            try {if (clan.users) {
-                                const funny = new Promise(async (res, rej) => {
-                                    let membs = []
-                                    let count = 1
-                                    for (const member in clan.users) {
-                                        await membs.push(await getUserNameAndDiscrimFromId(member.id))
-                                        count++
-                                        console.log("member being added")
-                                        if (count == clan.users.length) {
-                                            res()
-                                        }
-                                    }
+                            const funny = new Promise(async (res, rej) => {
+                                let membs = []
+                                let count = 1
+                                for (const member in clan.users) {
+                                    await membs.push(await getUserNameAndDiscrimFromId(member.id))
+                                    count++
+                                    console.log("member being added")
                                     if (count == clan.users.length) {
                                         res()
                                     }
-                                }) .then(() => {
-                                    members = membs.map((string) => string);
+                                }
+                                if (count == clan.users.length) {
+                                    res()
+                                }
+                            }) .then(() => {
+                                members = membs.map((string) => string);
+
+                                try {if (clan.allies) {
+                                    allies = clan.allies
+                                .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
+                                try {if (clan.truces) {
+                                    truces = clan.truces
+                                .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);}} catch(e) {}
+                                try {if (clan.wars) {
+                                    wars = clan.wars
+                                .map((war) => war.title+"");}} catch(e) {}
+                                try {if (clan.blacklist) {
+                                    blacklist = clan.blacklist
+                                .map(async (blacklistedMember) => await getUserNameAndDiscrimFromId(blacklistedMember.user.id));}} catch(e) {}
+    
+                                client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+                                    guild.members.fetch(""+leaderID) .then((member) => {
+                                        console.log("leaderfound")
+                                        leader = member.user.username+"#"+member.user.discriminator
+    
+                                        var emb = new EmbedBuilder()
+                                            .setTitle(clanName)
+                                            .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
+                                            .setColor(clanColour)
+                                            .setFooter({text: "---\nClan code - "+clanCode})
+                                            .setThumbnail(icon)
+    
+                                        interaction.editReply({embeds: [emb], ephemeral: true})
+                                    })
                                 })
-                            }} catch(e) {}
-                            try {if (clan.allies) {
-                                allies = clan.allies
-                            .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
-                            try {if (clan.truces) {
-                                truces = clan.truces
-                            .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);}} catch(e) {}
-                            try {if (clan.wars) {
-                                wars = clan.wars
-                            .map((war) => war.title+"");}} catch(e) {}
-                            try {if (clan.blacklist) {
-                                blacklist = clan.blacklist
-                            .map(async (blacklistedMember) => await getUserNameAndDiscrimFromId(blacklistedMember.user.id));}} catch(e) {}
-
-                            client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-                                guild.members.fetch(""+leaderID) .then((member) => {
-                                    console.log("leaderfound")
-                                    leader = member.user.username+"#"+member.user.discriminator
-
-                                    var emb = new EmbedBuilder()
-                                        .setTitle(clanName)
-                                        .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
-                                        .setColor(clanColour)
-                                        .setFooter({text: "---\nClan code - "+clanCode})
-                                        .setThumbnail(icon)
-
-                                    interaction.editReply({embeds: [emb], ephemeral: true})
-                                })
-                            })
+                            }) .catch(e => {
+                                interaction.editReply({content: "There was an error getting this clans data!", ephemeral: true})
+                            }) 
+                            
                             
                         } catch(e) {
                             interaction.editReply({content: "The clan could not be found!", ephemeral: true})
