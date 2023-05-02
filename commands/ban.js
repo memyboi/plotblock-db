@@ -37,7 +37,7 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
 		.setDMPermission(false)//uwu
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
 		var appealable = interaction.options.getBoolean("appealable")
@@ -50,14 +50,14 @@ module.exports = {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned. No reason given.", ephemeral: true})
+							interaction.editReply({content: "User has been banned. No reason given.", ephemeral: true})
 						})
 					})
 				}) .catch(() => {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator. User has not been able to receive the message.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
+							interaction.editReply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
 						})
 					})
 				})
@@ -68,14 +68,14 @@ module.exports = {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned. No reason given.", ephemeral: true})
+							interaction.editReply({content: "User has been banned. No reason given.", ephemeral: true})
 						})
 					})
 				}) .catch(() => {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator. User has not been able to receive the message.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
+							interaction.editReply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
 						})
 					})
 				})
@@ -90,14 +90,14 @@ module.exports = {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: reason, deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
+							interaction.editReply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 						})
 					})
 				}) .catch(() => {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator. User has not been able to receive the message.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
+							interaction.editReply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
 						})
 					})
 				})
@@ -108,14 +108,14 @@ module.exports = {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: reason, deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
+							interaction.editReply({content: "User has been banned. Reason has been given:\n```"+reason+"```", ephemeral: true})
 						})
 					})
 				}) .catch(() => {
 					client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 						guild.members.fetch(""+user.id) .then((member) => {
 							member.ban({reason: "No reason given by the moderator. User has not been able to receive the message.", deleteMessageSeconds: 60 * 60 * 24 * 7 })
-							interaction.reply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
+							interaction.editReply({content: "User has been banned, however they were unable to receive the message in DMs.", ephemeral: true})
 						})
 					})
 				})

@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Open up verification for 5 minutes')
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		var user = interaction.user
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			guild.members.fetch(""+user.id) .then(async (member) => {

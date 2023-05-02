@@ -12,7 +12,7 @@ module.exports = {
 				.setMinValue(1)
 		)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		const helpEmbed = new EmbedBuilder()
 			.setColor('#ff0000')
 			.setTitle("Help help:")

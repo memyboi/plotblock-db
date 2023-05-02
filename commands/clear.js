@@ -14,9 +14,9 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		var amnt = parseInt(interaction.options.getNumber("amount"))
 		interaction.channel.bulkDelete(amnt)
-		interaction.reply({content:amnt+" message(s) have been cleared!", ephemeral: true})
+		interaction.editReply({content:amnt+" message(s) have been cleared!", ephemeral: true})
 	},
 };

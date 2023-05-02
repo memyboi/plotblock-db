@@ -49,7 +49,7 @@ module.exports = {
                 )
         )
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
         const target = interaction.options.getUser("target")
         const offence = interaction.options.getString("offence")
         const plrSchema = require("../schema.js")

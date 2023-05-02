@@ -27,7 +27,7 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers)
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		var user = interaction.options.getUser("user")
 
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {

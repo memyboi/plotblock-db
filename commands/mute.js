@@ -39,12 +39,12 @@ module.exports = {
 		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers)
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		var user = interaction.options.getUser("user")
 		var reason = interaction.options.getString("reason")
 		var length = interaction.options.getString("time")
 
-		if (!ms(ms(length)) && length) return interaction.reply({content:"You have inputted an invalid amount of time!"}) 
+		if (!ms(ms(length)) && length) return interaction.editReply({content:"You have inputted an invalid amount of time!"}) 
 		
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
 			var role = guild.roles.cache.find(role => role.id == "1084533678849392731")
@@ -61,7 +61,7 @@ module.exports = {
 							console.log(e)
 						}
 						if (reason) {
-							interaction.reply({content: "User has been muted for "+ms(ms(length))+". Reason has been given:\n```"+reason+"```", ephemeral: true})
+							interaction.editReply({content: "User has been muted for "+ms(ms(length))+". Reason has been given:\n```"+reason+"```", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` for "+ms(ms(length))+" from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
 								setTimeout(async () => {
 									if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id = "1084582068316549252")) {
@@ -78,7 +78,7 @@ module.exports = {
 							
 						} 
 						if (!reason) {
-							interaction.reply({content: "User has been muted for "+ms(ms(length))+". No reason given.", ephemeral: true})
+							interaction.editReply({content: "User has been muted for "+ms(ms(length))+". No reason given.", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` for "+ms(ms(length))+" from Plot Block [LIFESTEAL]!*\nThere is no reason given for such an outlandish action.\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
 								setTimeout(async () => {
 									if (member.roles.cache.some(role => role.id == "1084533678849392731") && !member.roles.cache.some(role => role.id = "1084582068316549252")) {
@@ -94,7 +94,7 @@ module.exports = {
 							})
 						} 
 					} else {
-						interaction.reply({content: "User may already be muted! Use", ephemeral: true})
+						interaction.editReply({content: "User may already be muted! Use", ephemeral: true})
 					}
 				} else {
 					if (!member.roles.cache.some(role => role.id == "1084533678849392731") && member.roles.cache.some(role => role.id == "1084582068316549252")) {
@@ -107,18 +107,18 @@ module.exports = {
 						}
 						
 						if (reason) {
-							interaction.reply({content: "User has been muted. Reason has been given:\n```"+reason+"```", ephemeral: true})
+							interaction.editReply({content: "User has been muted. Reason has been given:\n```"+reason+"```", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nThe reason given is: \n```"+reason+"```\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
 							})
 							
 						} 
 						if (!reason) {
-							interaction.reply({content: "User has been muted. No reason given.", ephemeral: true})
+							interaction.editReply({content: "User has been muted. No reason given.", ephemeral: true})
 							user.send({content: "*You have been muted by `"+interaction.user.username+"` from Plot Block [LIFESTEAL]!*\nThere is no reason given for such an outlandish action.\nPlease refrain from breaking the rules once more. If you feel you are not familiar with the rules, please re-read the rules."}) .then((msg) => {
 							})
 						} 
 					} else {
-						interaction.reply({content: "User may already be muted!", ephemeral: true})
+						interaction.editReply({content: "User may already be muted!", ephemeral: true})
 					}
 				}
 				

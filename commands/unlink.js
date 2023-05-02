@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription('Remove your linked minecraft account.')
 		.setDMPermission(false)
 		,
-	async execute(interaction, client) {
+	async execute(interaction, client) {interaction.deferReply({ephemeral: true})
 		client.guilds.fetch(""+process.env.guildid) .then((guild) => {
             guild.members.fetch(""+interaction.user.id) .then(async (member) => {
                 if (member.roles.cache.some(role => role.id == "1022631935614406730")) {
