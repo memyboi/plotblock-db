@@ -287,21 +287,18 @@ module.exports = {
                                     let count = 1
                                     for (const i in clan.users) {
                                         const member = clan.users[i]
-                                        console.log(member)
                                         await client.users.fetch(""+member.user.id) .then(async (user) => {
                                             await membs.push(user.username+"#"+user.discriminator)
                                         })
                                         count++
                                         if (count >= clan.users.length && membs.length == clan.users.length) {
                                             res()
-                                            console.log(membs)
-                                            if (!membs) { members = membs }
+                                            if (membs === undefined || membs.length == 0) { members = membs }
                                         }
                                     }
                                     if (count >= clan.users.length && membs.length == clan.users.length) {
                                         res()
-                                        console.log(membs)
-                                        if (!membs) { members = membs }
+                                        if (membs === undefined || membs.length == 0) { members = membs }
                                     }
                                 } catch(e) {
                                     console.log(e)
@@ -330,14 +327,12 @@ module.exports = {
                                             count++
                                             if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                                 res()
-                                                console.log(nonomembs)
-                                                if (!nonomembs) { blacklist = nonomembs }
+                                                if (nonomembs === undefined || nonomembs.length == 0) { members = nonomembs }
                                             }
                                         }
                                         if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                             res()
-                                            console.log(nonomembs)
-                                            if (!nonomembs) { blacklist = nonomembs }
+                                            if (nonomembs === undefined || nonomembs.length == 0) { members = nonomembs }
                                         }
                                     } catch(e) {
                                         console.log(e)
