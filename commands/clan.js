@@ -268,6 +268,8 @@ module.exports = {
                             async function getUserNameAndDiscrimFromId(userid) {
                                 await client.users.fetch(""+userid) .then(async (user) => {
                                     return await user.username+"#"+user.discriminator
+                                }) .catch(e => {
+                                    return "invalid user"
                                 })
                             }
 
@@ -278,8 +280,13 @@ module.exports = {
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
                             try {if (clan.users) {
-                                members = clan.users
-                            .map(async (member) => await getUserNameAndDiscrimFromId(member.user.id));}} catch(e) {}
+                                const membs = {}
+                                clan.users.forEach(async (member) => {
+                                    await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
+                                })
+                                members = membs
+                                .map(async (string) => string);
+                            }} catch(e) {}
                             try {if (clan.allies) {
                                 allies = clan.allies
                             .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
