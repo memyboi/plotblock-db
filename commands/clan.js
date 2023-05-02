@@ -238,7 +238,7 @@ module.exports = {
                             interaction.reply({content: "There was an error getting the team data.", ephemeral: true})
                         }
                     } else if (cmd == "info") {
-                        interaction.deferReply()
+                        interaction.deferReply({ephemeral: true})
                         //string "clan"
                         //make an embed with clan info.
                         const clanCodeOld = interaction.options.getString("clan")
