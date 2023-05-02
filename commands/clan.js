@@ -286,7 +286,7 @@ module.exports = {
                                 for (const i in clan.users) {
                                     const member = clan.users[i]
                                     console.log(member)
-                                    await membs.push(await getUserNameAndDiscrimFromId(member.id))
+                                    await membs.push(await getUserNameAndDiscrimFromId(member.user.id))
                                     count++
                                     if (count >= clan.users.length) {
                                         res()//
