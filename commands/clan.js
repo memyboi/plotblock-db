@@ -280,9 +280,9 @@ module.exports = {
                             let truces = "No truces."
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
+                            let membs = []
                             const funny = new Promise(async (res, rej) => {
-                                let membs = []
-                                let count = 1
+                                                            let count = 1
                                 for (const member in clan.users) {
                                     await membs.push(await getUserNameAndDiscrimFromId(member.id))
                                     count++
