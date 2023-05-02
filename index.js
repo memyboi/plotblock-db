@@ -333,8 +333,49 @@ client.on('messageCreate', async (message) => {
         console.log(descArgs)
         const mentionPlain = descArgs[0]
         console.log(mentionPlain)
-        getUserFromMention(mentionPlain, (user) => {
-          console.log(user.username+" has voted! give them lots of money and praise (yipeee )")
+        getUserFromMention(mentionPlain, async (user) => {
+          console.log(user.username+" has voted! give them lots of money and praise (yipeee)")
+          try {
+            const result = await plrSchema.findOneAndUpdate({
+              userID
+            }, {
+              userID,
+              $inc: {
+                cash: 250,
+                votes: 1
+              }
+            }, {
+              upsert: true,
+              new: true
+            })
+            try {
+              if (result[0].votes > 1) {
+                user.send({content: "**Hey!**\nThanks for voting! You have recieved 250 cash as a reward!"})
+              } else {
+                try {
+                  const result = await plrSchema.findOneAndUpdate({
+                    userID
+                  }, {
+                    userID,
+                    $inc: {
+                      cash: 50
+                    }
+                  }, {
+                    upsert: true,
+                    new: true
+                  })
+                  user.send({content: "**Hey!**\nThanks for voting! Thank you for helping support this server, and as a first time vote, you will recieve an extra 50 cash ontop of your promised 250!"})
+                } catch(e) {
+                  console.log("vote error - first vote. details:\n"+e)
+                }
+              }
+            } catch(e) {
+              console.log("Err while sending msg to user. details:\n"+e)
+            }
+            
+          } catch(e) {
+            console.log("err with adding initial 250. details:\n"+e)
+          }
         })
       });
     }
