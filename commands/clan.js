@@ -294,10 +294,12 @@ module.exports = {
                                         count++
                                         if (count >= clan.users.length && membs.length == clan.users.length) {
                                             res()
+                                            if (!membs) { members = membs }
                                         }
                                     }
                                     if (count >= clan.users.length && membs.length == clan.users.length) {
                                         res()
+                                        if (!membs) { members = membs }
                                     }
                                 } catch(e) {
                                     console.log(e)
@@ -305,7 +307,6 @@ module.exports = {
                                 }
                             }) .then(() => {
                                 console.log(membs)
-                                if (!membs) { members = membs }
                                 try {if (!clan.allies) {} else {
                                     allies = clan.allies
                                 .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
@@ -327,17 +328,18 @@ module.exports = {
                                             count++
                                             if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                                 res()
+                                                if (!nonomembs) { blacklist = nonomembs }
                                             }
                                         }
                                         if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
                                             res()
+                                            if (!nonomembs) { blacklist = nonomembs }
                                         }
                                     } catch(e) {
                                         console.log(e)
                                         rej()
                                     }
                                 }) .then(() => {
-                                    if (!nonomembs) { blacklist = nonomembs }
                                     client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                                         guild.members.fetch(""+leaderID) .then((member) => {
                                             console.log("leaderfound")
@@ -350,7 +352,11 @@ module.exports = {
                                                 .setFooter({text: "---\nClan code - "+clanCode})
                                                 .setThumbnail(icon)
         
-                                            try {interaction.editReply({embeds: [emb], ephemeral: true})} catch(e) {console.log(e); interaction.reply({embeds: [emb], ephemeral: true})}
+                                            interaction.editReply({embeds: [emb], ephemeral: true}) .catch(() => {
+                                                interaction.reply({embeds: [emb], ephemeral: true}) .catch((e) => {
+                                                    console.log(e)
+                                                })
+                                            })
                                         })
                                     })
                                 })
