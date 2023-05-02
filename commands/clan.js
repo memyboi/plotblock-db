@@ -275,7 +275,7 @@ module.exports = {
                             }
 
                             let leader = "None!"
-                            let members = "No members!"
+                            let members = "bro's team is bone dry"
                             let allies = "No allies."
                             let truces = "No truces."
                             let wars = "No concurrent wars."
@@ -305,9 +305,7 @@ module.exports = {
                                 }
                             }) .then(() => {
                                 console.log(membs)
-                                if (membs != []) {
-                                    members = membs
-                                }
+                                if (!membs) { members = membs }
                                 try {if (!clan.allies) {} else {
                                     allies = clan.allies
                                 .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
@@ -339,9 +337,7 @@ module.exports = {
                                         rej()
                                     }
                                 }) .then(() => {
-                                    if (nonomembs != []) {
-                                        blacklist = nonomembs
-                                    }
+                                    if (!nonomembs) { blacklist = nonomembs }
                                     client.guilds.fetch(""+process.env.guildid) .then((guild) => {
                                         guild.members.fetch(""+leaderID) .then((member) => {
                                             console.log("leaderfound")
