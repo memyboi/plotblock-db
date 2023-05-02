@@ -336,6 +336,7 @@ client.on('messageCreate', async (message) => {
         getUserFromMention(mentionPlain, async (user) => {
           console.log(user.username+" has voted! give them lots of money and praise (yipeee)")
           try {
+            const userID = user.id
             const result = await plrSchema.findOneAndUpdate({
               userID
             }, {
