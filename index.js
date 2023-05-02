@@ -350,7 +350,7 @@ client.on('messageCreate', async (message) => {
               new: true
             })
             try {
-              if (result[0].votes > 1) {
+              if (result.votes > 1) {
                 user.send({content: "**Hey!**\nThanks for voting! You have recieved 250 cash as a reward!"})
               } else {
                 try {
