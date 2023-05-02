@@ -281,52 +281,81 @@ module.exports = {
                             let wars = "No concurrent wars."
                             let blacklist = "No blacklisted members."
                             let membs = []
-                            const funny = new Promise(async (res, rej) => {
-                                let count = 1
-                                for (const i in clan.users) {
-                                    const member = clan.users[i]
-                                    console.log(member)
-                                    await client.users.fetch(""+member.user.id) .then(async (user) => {
-                                        await membs.push(user.username+"#"+user.discriminator)
-                                    })
-                                    count++
+                            let nonomembs = []
+                            new Promise(async (res, rej) => {
+                                try {
+                                    let count = 1
+                                    for (const i in clan.users) {
+                                        const member = clan.users[i]
+                                        console.log(member)
+                                        await client.users.fetch(""+member.user.id) .then(async (user) => {
+                                            await membs.push(user.username+"#"+user.discriminator)
+                                        })
+                                        count++
+                                        if (count >= clan.users.length && membs.length == clan.users.length) {
+                                            res()
+                                        }
+                                    }
                                     if (count >= clan.users.length && membs.length == clan.users.length) {
                                         res()
                                     }
-                                }
-                                if (count >= clan.users.length && membs.length == clan.users.length) {
-                                    res()
+                                } catch(e) {
+                                    console.log(e)
+                                    rej()
                                 }
                             }) .then(() => {
                                 console.log(membs)
-                                members = membs
-
-                                try {if (clan.allies) {
+                                if (membs != []) {
+                                    members = membs
+                                }
+                                try {if (!clan.allies) {} else {
                                     allies = clan.allies
                                 .map((allyTeam) => allyTeam.teamName+" - "+allyTeam.teamShort);}} catch(e) {}
-                                try {if (clan.truces) {
+                                try {if (!clan.truces) {} else {
                                     truces = clan.truces
                                 .map((truce) => truce.teamName+" - Expires: "+truce.ExpiryDate);}} catch(e) {}
-                                try {if (clan.wars) {
+                                try {if (!clan.wars) {} else {
                                     wars = clan.wars
                                 .map((war) => war.title+"");}} catch(e) {}
-                                try {if (clan.blacklist) {
-                                    blacklist = clan.blacklist
-                                .map(async (blacklistedMember) => await getUserNameAndDiscrimFromId(blacklistedMember.user.id));}} catch(e) {}
-    
-                                client.guilds.fetch(""+process.env.guildid) .then((guild) => {
-                                    guild.members.fetch(""+leaderID) .then((member) => {
-                                        console.log("leaderfound")
-                                        leader = member.user.username+"#"+member.user.discriminator
-    
-                                        var emb = new EmbedBuilder()
-                                            .setTitle(clanName)
-                                            .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
-                                            .setColor(clanColour)
-                                            .setFooter({text: "---\nClan code - "+clanCode})
-                                            .setThumbnail(icon)
-    
-                                        try {interaction.editReply({embeds: [emb], ephemeral: true})} catch(e) {console.log(e); interaction.reply({embeds: [emb], ephemeral: true})}
+                                
+                                new Promise(async (res, rej) => {
+                                    try {
+                                        let count = 1
+                                        for (const i in clan.blacklist) {
+                                            const member = clan.blacklist[i]
+                                            await client.users.fetch(""+member.user.id) .then(async (user) => {
+                                                await nonomembs.push(user.username+"#"+user.discriminator)
+                                            })
+                                            count++
+                                            if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
+                                                res()
+                                            }
+                                        }
+                                        if (count >= clan.blacklist.length && nonomembs.length == clan.blacklist.length) {
+                                            res()
+                                        }
+                                    } catch(e) {
+                                        console.log(e)
+                                        rej()
+                                    }
+                                }) .then(() => {
+                                    if (nonomembs != []) {
+                                        blacklist = nonomembs
+                                    }
+                                    client.guilds.fetch(""+process.env.guildid) .then((guild) => {
+                                        guild.members.fetch(""+leaderID) .then((member) => {
+                                            console.log("leaderfound")
+                                            leader = member.user.username+"#"+member.user.discriminator
+        
+                                            var emb = new EmbedBuilder()
+                                                .setTitle(clanName)
+                                                .setDescription("**Full description => **"+clanDesc+"\n**Leader => **"+leader+"\n**Current members => **"+members+"\n**Allies => **"+allies+"\n**Truces => **"+truces+"\n**Wars => **"+wars+"\n**Blacklisted members => **"+blacklist)
+                                                .setColor(clanColour)
+                                                .setFooter({text: "---\nClan code - "+clanCode})
+                                                .setThumbnail(icon)
+        
+                                            try {interaction.editReply({embeds: [emb], ephemeral: true})} catch(e) {console.log(e); interaction.reply({embeds: [emb], ephemeral: true})}
+                                        })
                                     })
                                 })
                             }) .catch(e => {
